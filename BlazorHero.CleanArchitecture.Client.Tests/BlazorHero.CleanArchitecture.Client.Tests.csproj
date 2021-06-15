@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <Import Project="..\Test.Build.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorHero.CleanArchitecture.Infrastructure\BlazorHero.CleanArchitecture.Infrastructure.csproj" />
+    <ProjectReference Include="..\BlazorHero.CleanArchitecture\Client\BlazorHero.CleanArchitecture.Client.csproj" />
+  </ItemGroup>
+
+</Project>

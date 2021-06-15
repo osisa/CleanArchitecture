@@ -7,9 +7,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{0317DF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{275B08FA-6837-4A32-B890-0ADE2DE4C3F7}"
 	ProjectSection(SolutionItems) = preProject
+		AssemblyInfo.cs = AssemblyInfo.cs
+		Directory.Build.props = Directory.Build.props
 		Features.md = Features.md
 		LICENSE = LICENSE
+		Package.Build.props = Package.Build.props
 		README.md = README.md
+		SolutionInfo.cs = SolutionInfo.cs
+		SolutionInfo.vb = SolutionInfo.vb
+		SolutionInfoTest.cs = SolutionInfoTest.cs
+		Test.Build.props = Test.Build.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{885BB018-5B07-4038-B061-71B70188933B}"
@@ -44,6 +51,30 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHero.CleanArchitecture.Client.Infrastructure", "BlazorHero.CleanArchitecture.Client.Infrastructure\BlazorHero.CleanArchitecture.Client.Infrastructure.csproj", "{6B3A1D03-E35E-4579-A24A-E3343D024B4B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHero.CleanArchitecture.Infrastructure.Shared", "BlazorHero.CleanArchitecture.Infrastructure.Shared\BlazorHero.CleanArchitecture.Infrastructure.Shared.csproj", "{BFAD2E2A-8C7C-4357-9C81-D2ECDEEFC0F1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHero.CleanArchitecture.Common", "BlazorHero.CleanArchitecture.Common\BlazorHero.CleanArchitecture.Common.csproj", "{6F07D94C-7F6E-41BC-B32E-A612272823D2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHero.CleanArchitecture.Common.Tests", "BlazorHero.CleanArchitecture.Common.Tests\BlazorHero.CleanArchitecture.Common.Tests.csproj", "{2204D4DA-05F7-4FED-87D4-0E5CD3C906FB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHero.CleanArchitecture.TestInfrastructure", "BlazorHero.CleanArchitecture.TestInfrastructure\BlazorHero.CleanArchitecture.TestInfrastructure.csproj", "{1F0EBC33-B126-413F-931E-E989F0C64685}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHero.CleanArchitecture.TestInfrastructure.Tests", "BlazorHero.CleanArchitecture.TestInfrastructure.Tests\BlazorHero.CleanArchitecture.TestInfrastructure.Tests.csproj", "{3D75C37B-17D4-44D4-BF12-8C9CEA166031}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Client.Tests", "BlazorHero.CleanArchitecture.Client.Tests\BlazorHero.CleanArchitecture.Client.Tests.csproj", "{F650E8AC-6A4D-49A0-BA33-9E97C89396DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Server.Tests", "BlazorHero.CleanArchitecture.Server.Tests\BlazorHero.CleanArchitecture.Server.Tests.csproj", "{94D73357-634C-4FEC-A004-10BF097FEF45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Shared.Tests", "BlazorHero.CleanArchitecture.Shared.Tests\BlazorHero.CleanArchitecture.Shared.Tests.csproj", "{2A12C208-017A-4DF5-A630-6F99EAD77FBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Infrastructure.Tests", "BlazorHero.CleanArchitecture.Infrastructure.Tests\BlazorHero.CleanArchitecture.Infrastructure.Tests.csproj", "{CEB83CF7-F089-42F4-AA61-11CA2EFB02F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Infrastructure.Shared.Tests", "BlazorHero.CleanArchitecture.Infrastructure.Shared.Tests\BlazorHero.CleanArchitecture.Infrastructure.Shared.Tests.csproj", "{700D2045-4706-4669-97F4-80992BA86532}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Application.Tests", "BlazorHero.CleanArchitecture.Application.Tests\BlazorHero.CleanArchitecture.Application.Tests.csproj", "{5C8BC56F-5759-4259-936D-F29F84274C85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Domain.Tests", "BlazorHero.CleanArchitecture.Domain.Tests\BlazorHero.CleanArchitecture.Domain.Tests.csproj", "{6BF93A83-3D97-45BC-91C1-CF538F9C222F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Client.Infrastructure.Tests", "BlazorHero.CleanArchitecture.Client.Infrastructure.Tests\BlazorHero.CleanArchitecture.Client.Infrastructure.Tests.csproj", "{38911F9F-9D67-4271-91D3-5F0F8D51E57D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +114,54 @@ Global
 		{BFAD2E2A-8C7C-4357-9C81-D2ECDEEFC0F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFAD2E2A-8C7C-4357-9C81-D2ECDEEFC0F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFAD2E2A-8C7C-4357-9C81-D2ECDEEFC0F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F07D94C-7F6E-41BC-B32E-A612272823D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F07D94C-7F6E-41BC-B32E-A612272823D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F07D94C-7F6E-41BC-B32E-A612272823D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F07D94C-7F6E-41BC-B32E-A612272823D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2204D4DA-05F7-4FED-87D4-0E5CD3C906FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2204D4DA-05F7-4FED-87D4-0E5CD3C906FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2204D4DA-05F7-4FED-87D4-0E5CD3C906FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2204D4DA-05F7-4FED-87D4-0E5CD3C906FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F0EBC33-B126-413F-931E-E989F0C64685}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F0EBC33-B126-413F-931E-E989F0C64685}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F0EBC33-B126-413F-931E-E989F0C64685}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F0EBC33-B126-413F-931E-E989F0C64685}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D75C37B-17D4-44D4-BF12-8C9CEA166031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D75C37B-17D4-44D4-BF12-8C9CEA166031}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D75C37B-17D4-44D4-BF12-8C9CEA166031}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D75C37B-17D4-44D4-BF12-8C9CEA166031}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F650E8AC-6A4D-49A0-BA33-9E97C89396DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F650E8AC-6A4D-49A0-BA33-9E97C89396DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F650E8AC-6A4D-49A0-BA33-9E97C89396DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F650E8AC-6A4D-49A0-BA33-9E97C89396DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94D73357-634C-4FEC-A004-10BF097FEF45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94D73357-634C-4FEC-A004-10BF097FEF45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94D73357-634C-4FEC-A004-10BF097FEF45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94D73357-634C-4FEC-A004-10BF097FEF45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A12C208-017A-4DF5-A630-6F99EAD77FBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A12C208-017A-4DF5-A630-6F99EAD77FBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A12C208-017A-4DF5-A630-6F99EAD77FBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A12C208-017A-4DF5-A630-6F99EAD77FBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEB83CF7-F089-42F4-AA61-11CA2EFB02F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEB83CF7-F089-42F4-AA61-11CA2EFB02F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEB83CF7-F089-42F4-AA61-11CA2EFB02F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEB83CF7-F089-42F4-AA61-11CA2EFB02F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{700D2045-4706-4669-97F4-80992BA86532}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{700D2045-4706-4669-97F4-80992BA86532}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{700D2045-4706-4669-97F4-80992BA86532}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{700D2045-4706-4669-97F4-80992BA86532}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C8BC56F-5759-4259-936D-F29F84274C85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C8BC56F-5759-4259-936D-F29F84274C85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C8BC56F-5759-4259-936D-F29F84274C85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C8BC56F-5759-4259-936D-F29F84274C85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BF93A83-3D97-45BC-91C1-CF538F9C222F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BF93A83-3D97-45BC-91C1-CF538F9C222F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BF93A83-3D97-45BC-91C1-CF538F9C222F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BF93A83-3D97-45BC-91C1-CF538F9C222F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38911F9F-9D67-4271-91D3-5F0F8D51E57D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38911F9F-9D67-4271-91D3-5F0F8D51E57D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38911F9F-9D67-4271-91D3-5F0F8D51E57D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38911F9F-9D67-4271-91D3-5F0F8D51E57D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +181,18 @@ Global
 		{34B1D3CA-BBB6-449E-82A7-DF2BDBC9838F} = {0317DF35-F5C5-4986-BA37-40C28554268F}
 		{6B3A1D03-E35E-4579-A24A-E3343D024B4B} = {885BB018-5B07-4038-B061-71B70188933B}
 		{BFAD2E2A-8C7C-4357-9C81-D2ECDEEFC0F1} = {39A93E2F-51DE-47C0-93AF-A24561630C18}
+		{6F07D94C-7F6E-41BC-B32E-A612272823D2} = {34B1D3CA-BBB6-449E-82A7-DF2BDBC9838F}
+		{2204D4DA-05F7-4FED-87D4-0E5CD3C906FB} = {34B1D3CA-BBB6-449E-82A7-DF2BDBC9838F}
+		{1F0EBC33-B126-413F-931E-E989F0C64685} = {34B1D3CA-BBB6-449E-82A7-DF2BDBC9838F}
+		{3D75C37B-17D4-44D4-BF12-8C9CEA166031} = {34B1D3CA-BBB6-449E-82A7-DF2BDBC9838F}
+		{F650E8AC-6A4D-49A0-BA33-9E97C89396DE} = {885BB018-5B07-4038-B061-71B70188933B}
+		{94D73357-634C-4FEC-A004-10BF097FEF45} = {BAC861DD-C8B1-40D7-AE95-BCA8FA3F8966}
+		{2A12C208-017A-4DF5-A630-6F99EAD77FBB} = {34B1D3CA-BBB6-449E-82A7-DF2BDBC9838F}
+		{CEB83CF7-F089-42F4-AA61-11CA2EFB02F3} = {39A93E2F-51DE-47C0-93AF-A24561630C18}
+		{700D2045-4706-4669-97F4-80992BA86532} = {39A93E2F-51DE-47C0-93AF-A24561630C18}
+		{5C8BC56F-5759-4259-936D-F29F84274C85} = {D564603F-8CDE-4D4C-9683-67FA9DCE7F12}
+		{6BF93A83-3D97-45BC-91C1-CF538F9C222F} = {D564603F-8CDE-4D4C-9683-67FA9DCE7F12}
+		{38911F9F-9D67-4271-91D3-5F0F8D51E57D} = {885BB018-5B07-4038-B061-71B70188933B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED3E6669-AEC5-4A3B-9E57-2A81DE87BAAF}

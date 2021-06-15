@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+	<Import Project="..\Test.Build.props" />
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="5.0.7" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\BlazorHero.CleanArchitecture.Application\BlazorHero.CleanArchitecture.Application.csproj" />
+	  <ProjectReference Include="..\BlazorHero.CleanArchitecture.Client.Infrastructure\BlazorHero.CleanArchitecture.Client.Infrastructure.csproj" />
+	  <ProjectReference Include="..\BlazorHero.CleanArchitecture.TestInfrastructure\BlazorHero.CleanArchitecture.TestInfrastructure.csproj" />
+	  <ProjectReference Include="..\BlazorHero.CleanArchitecture\Server\BlazorHero.CleanArchitecture.Server.csproj" />
+	</ItemGroup>
+</Project>
