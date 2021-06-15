@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{275B08FA-6837-4A32-B890-0ADE2DE4C3F7}"
 	ProjectSection(SolutionItems) = preProject
 		AssemblyInfo.cs = AssemblyInfo.cs
+		BlazorHero.CleanArchitecture.DotSettings = BlazorHero.CleanArchitecture.DotSettings
 		Directory.Build.props = Directory.Build.props
 		Features.md = Features.md
 		LICENSE = LICENSE
@@ -62,8 +63,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHero.CleanArchitectur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Client.Tests", "BlazorHero.CleanArchitecture.Client.Tests\BlazorHero.CleanArchitecture.Client.Tests.csproj", "{F650E8AC-6A4D-49A0-BA33-9E97C89396DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Server.Tests", "BlazorHero.CleanArchitecture.Server.Tests\BlazorHero.CleanArchitecture.Server.Tests.csproj", "{94D73357-634C-4FEC-A004-10BF097FEF45}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Shared.Tests", "BlazorHero.CleanArchitecture.Shared.Tests\BlazorHero.CleanArchitecture.Shared.Tests.csproj", "{2A12C208-017A-4DF5-A630-6F99EAD77FBB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Infrastructure.Tests", "BlazorHero.CleanArchitecture.Infrastructure.Tests\BlazorHero.CleanArchitecture.Infrastructure.Tests.csproj", "{CEB83CF7-F089-42F4-AA61-11CA2EFB02F3}"
@@ -75,6 +74,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Domain.Tests", "BlazorHero.CleanArchitecture.Domain.Tests\BlazorHero.CleanArchitecture.Domain.Tests.csproj", "{6BF93A83-3D97-45BC-91C1-CF538F9C222F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Client.Infrastructure.Tests", "BlazorHero.CleanArchitecture.Client.Infrastructure.Tests\BlazorHero.CleanArchitecture.Client.Infrastructure.Tests.csproj", "{38911F9F-9D67-4271-91D3-5F0F8D51E57D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHero.CleanArchitecture.Server.Tests", "BlazorHero.CleanArchitecture\Server.Tests\BlazorHero.CleanArchitecture.Server.Tests\BlazorHero.CleanArchitecture.Server.Tests.csproj", "{EB6AAEC5-A3F8-4590-B5A7-4EE607AF21C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -134,10 +135,6 @@ Global
 		{F650E8AC-6A4D-49A0-BA33-9E97C89396DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F650E8AC-6A4D-49A0-BA33-9E97C89396DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F650E8AC-6A4D-49A0-BA33-9E97C89396DE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{94D73357-634C-4FEC-A004-10BF097FEF45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{94D73357-634C-4FEC-A004-10BF097FEF45}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{94D73357-634C-4FEC-A004-10BF097FEF45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{94D73357-634C-4FEC-A004-10BF097FEF45}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2A12C208-017A-4DF5-A630-6F99EAD77FBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2A12C208-017A-4DF5-A630-6F99EAD77FBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A12C208-017A-4DF5-A630-6F99EAD77FBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -162,6 +159,10 @@ Global
 		{38911F9F-9D67-4271-91D3-5F0F8D51E57D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38911F9F-9D67-4271-91D3-5F0F8D51E57D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38911F9F-9D67-4271-91D3-5F0F8D51E57D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB6AAEC5-A3F8-4590-B5A7-4EE607AF21C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB6AAEC5-A3F8-4590-B5A7-4EE607AF21C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB6AAEC5-A3F8-4590-B5A7-4EE607AF21C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB6AAEC5-A3F8-4590-B5A7-4EE607AF21C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -186,13 +187,13 @@ Global
 		{1F0EBC33-B126-413F-931E-E989F0C64685} = {34B1D3CA-BBB6-449E-82A7-DF2BDBC9838F}
 		{3D75C37B-17D4-44D4-BF12-8C9CEA166031} = {34B1D3CA-BBB6-449E-82A7-DF2BDBC9838F}
 		{F650E8AC-6A4D-49A0-BA33-9E97C89396DE} = {885BB018-5B07-4038-B061-71B70188933B}
-		{94D73357-634C-4FEC-A004-10BF097FEF45} = {BAC861DD-C8B1-40D7-AE95-BCA8FA3F8966}
 		{2A12C208-017A-4DF5-A630-6F99EAD77FBB} = {34B1D3CA-BBB6-449E-82A7-DF2BDBC9838F}
 		{CEB83CF7-F089-42F4-AA61-11CA2EFB02F3} = {39A93E2F-51DE-47C0-93AF-A24561630C18}
 		{700D2045-4706-4669-97F4-80992BA86532} = {39A93E2F-51DE-47C0-93AF-A24561630C18}
 		{5C8BC56F-5759-4259-936D-F29F84274C85} = {D564603F-8CDE-4D4C-9683-67FA9DCE7F12}
 		{6BF93A83-3D97-45BC-91C1-CF538F9C222F} = {D564603F-8CDE-4D4C-9683-67FA9DCE7F12}
 		{38911F9F-9D67-4271-91D3-5F0F8D51E57D} = {885BB018-5B07-4038-B061-71B70188933B}
+		{EB6AAEC5-A3F8-4590-B5A7-4EE607AF21C7} = {BAC861DD-C8B1-40D7-AE95-BCA8FA3F8966}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED3E6669-AEC5-4A3B-9E57-2A81DE87BAAF}

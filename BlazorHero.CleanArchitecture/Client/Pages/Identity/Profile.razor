@@ -5,18 +5,18 @@
                 <div class="d-flex justify-center mb-4">
                     @if (!string.IsNullOrEmpty(@ImageDataUrl))
                     {
-                        <MudAvatar Image="@ImageDataUrl" Style="height:250px; width:250px;"> </MudAvatar>
+                        <MudAvatar Image="@ImageDataUrl" Style="height: 250px; width: 250px;"> </MudAvatar>
                     }
                     else
                     {
-                        <MudAvatar Color="Color.Secondary" Style="height:250px; width:250px;">@FirstLetterOfName</MudAvatar>
+                        <MudAvatar Color="Color.Secondary" Style="height: 250px; width: 250px;">@FirstLetterOfName</MudAvatar>
                     }
                 </div>
                 <MudText Typo="Typo.h6" Align="Align.Center">@profileModel.FirstName @profileModel.LastName</MudText>
                 <MudText Align="Align.Center">@profileModel.Email</MudText>
             </MudCardContent>
             <MudCardActions Class="d-flex justify-center">
-                <InputFile id="fileInput" OnChange="UploadFiles" hidden />
+                <InputFile id="fileInput" OnChange="UploadFiles" hidden/>
                 <MudButton HtmlTag="label"
                            Variant="Variant.Text"
                            Color="Color.Primary"
@@ -49,16 +49,16 @@
                 <MudCardContent>
                     <MudGrid>
                         <MudItem xs="12" md="6">
-                            <MudTextField @bind-Value="@profileModel.FirstName" For="@(() => profileModel.FirstName)" Label="@localizer["First Name"]" Variant="Variant.Outlined" Required="true" />
+                            <MudTextField @bind-Value="@profileModel.FirstName" For="@(() => profileModel.FirstName)" Label="@localizer["First Name"]" Variant="Variant.Outlined" Required="true"/>
                         </MudItem>
                         <MudItem xs="12" md="6">
-                            <MudTextField @bind-Value="@profileModel.LastName" For="@(() => profileModel.LastName)" Label="@localizer["Last Name"]" Variant="Variant.Outlined" Required="true" />
+                            <MudTextField @bind-Value="@profileModel.LastName" For="@(() => profileModel.LastName)" Label="@localizer["Last Name"]" Variant="Variant.Outlined" Required="true"/>
                         </MudItem>
                         <MudItem xs="12" md="6">
-                            <MudTextField @bind-Value="@profileModel.PhoneNumber" For="@(() => profileModel.PhoneNumber)" Label="@localizer["Phone Number"]" Variant="Variant.Outlined" />
+                            <MudTextField @bind-Value="@profileModel.PhoneNumber" For="@(() => profileModel.PhoneNumber)" Label="@localizer["Phone Number"]" Variant="Variant.Outlined"/>
                         </MudItem>
                         <MudItem xs="12" md="6">
-                            <MudTextField @bind-Value="@profileModel.Email" Label="@localizer["Email"]" For="@(() => profileModel.Email)" Variant="Variant.Outlined" InputType="InputType.Email" Disabled=true />
+                            <MudTextField @bind-Value="@profileModel.Email" Label="@localizer["Email"]" For="@(() => profileModel.Email)" Variant="Variant.Outlined" InputType="InputType.Email" Disabled=true/>
                         </MudItem>
                     </MudGrid>
                 </MudCardContent>

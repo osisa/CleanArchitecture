@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
-	<Import Project="..\Test.Build.props" />
+	<Import Project="..\..\..\Test.Build.props" />
 
 	<ItemGroup>
 	  <None Remove="appsettings.Development.json" />
@@ -40,9 +40,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\BlazorHero.CleanArchitecture.Application\BlazorHero.CleanArchitecture.Application.csproj" />
-	  <ProjectReference Include="..\BlazorHero.CleanArchitecture.Client.Infrastructure\BlazorHero.CleanArchitecture.Client.Infrastructure.csproj" />
-	  <ProjectReference Include="..\BlazorHero.CleanArchitecture.TestInfrastructure\BlazorHero.CleanArchitecture.TestInfrastructure.csproj" />
-	  <ProjectReference Include="..\BlazorHero.CleanArchitecture\Server\BlazorHero.CleanArchitecture.Server.csproj" />
+	  <ProjectReference Include="..\..\..\BlazorHero.CleanArchitecture.TestInfrastructure\BlazorHero.CleanArchitecture.TestInfrastructure.csproj" />
+	  <ProjectReference Include="..\..\Server\BlazorHero.CleanArchitecture.Server.csproj" />
 	</ItemGroup>
 </Project>
