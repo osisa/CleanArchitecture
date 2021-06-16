@@ -17,26 +17,26 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         [TestMethod]
         public void GetAll()
         {
-            // arrange
+            // Arrange
             var unitUnderTest = CreateUnitUnderTest();
 
-            // act
+           // Act
             var result = unitUnderTest.GetAllAsync().Result;
 
-            // assert
+            // Assert
             result.Data.Count.Should().Be(SeededUserCount);
         }
 
         [TestMethod]
         public void Get()
         {
-            // arrange
+            // Arrange
             var unitUnderTest = CreateUnitUnderTest();
 
-            // act
+           // Act
             var result = unitUnderTest.GetAsync(Id).Result;
 
-            // assert
+            // Assert
             result.Data.Id.Should().Be(Id);
         }
         

@@ -7,6 +7,10 @@
 	<Import Project="..\..\..\Test.Build.props" />
 
 	<ItemGroup>
+	  <Compile Remove="TestInfrastructure\TestUserService.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="appsettings.Development.json" />
 	  <None Remove="appsettings.json" />
 	  <None Remove="appsettings.Test.json" />

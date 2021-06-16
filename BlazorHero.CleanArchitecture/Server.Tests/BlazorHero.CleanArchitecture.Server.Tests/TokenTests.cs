@@ -24,14 +24,14 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         [TestMethod]
         public void UserManager()
         {
-            // arrange
+            // Arrange
             var hostBuilder = CreateWebHost();
             var services = hostBuilder.Build().Services;
             
-            // act
+           // Act
             var result = services.GetService<UserManager<BlazorHeroUser>>();
 
-            // assert
+            // Assert
             result.Should().NotBeNull();
         }
         

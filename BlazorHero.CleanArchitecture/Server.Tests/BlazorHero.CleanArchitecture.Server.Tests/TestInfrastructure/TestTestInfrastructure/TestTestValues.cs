@@ -20,14 +20,14 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure.TestTestI
         [TestMethod]
         public void ConstructorCreateWebHost()
         {
-            // arrange
+            // Arrange
             var hostBuilder = TestValues.CreateWebHostBuilder();
             var services = hostBuilder.Build().Services;
 
-            // act
+           // Act
             var result = services.GetService<IConfiguration>();
 
-            // assert
+            // Assert
             result.Should().NotBeNull();
         }
 

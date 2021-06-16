@@ -39,14 +39,14 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         [TestMethod]
         public void UserManagerOfBlazorHerUser()
         {
-            // arrange
+            // Arrange
             var hostBuilder = CreateWebHostBuilder();
             var services = hostBuilder.Build().Services;
             
-            // act
+           // Act
             var result = services.GetService<UserManager<BlazorHeroUser>>();
 
-            // assert
+            // Assert
             result.Should().NotBeNull();
             result.Should().BeOfType<UserManager<BlazorHeroUser>>();
         }
@@ -58,7 +58,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var hostBuilder = CreateWebHostBuilder();
             var services = hostBuilder.Build().Services;
 
-            // Act
+           // Act
             var result = services.GetService<IUserService>();
 
             // Assert
@@ -73,7 +73,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var hostBuilder = CreateWebHostBuilder();
             var services = hostBuilder.Build().Services;
 
-            // Act
+           // Act
             var result = services.GetService<UserManager<BlazorHeroUser>>();
 
             // Assert
@@ -88,7 +88,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var hostBuilder = CreateWebHostBuilder();
             var services = hostBuilder.Build().Services;
             
-            // Act
+           // Act
             var result =services.GetService<IMapper>();
 
             // Assert
@@ -103,7 +103,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var hostBuilder = CreateWebHostBuilder();
             var services = hostBuilder.Build().Services;
             
-            // Act
+           // Act
             var result = services.GetService<RoleManager<IdentityRole>>();
 
             // Assert
@@ -118,7 +118,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var hostBuilder = CreateWebHostBuilder();
             var services = hostBuilder.Build().Services;
             
-            // Act
+           // Act
             var result = services.GetService<IMailService > ();
 
             // Assert
@@ -143,7 +143,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var serviceProvider = services.GetRequiredService<IServiceProvider>();
             var logger = services.GetRequiredService<ILogger<UserManager<BlazorHeroUser>>>();
             
-            // Act
+           // Act
             var result = new UserManager<BlazorHeroUser>(userStore,options, passwordHasher, userValidation, passwordValidator, lookupNormalizer, errors, serviceProvider, logger);
 
             // Assert
@@ -158,7 +158,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var hostBuilder = CreateWebHostBuilder();
             var services = hostBuilder.Build().Services;
 
-            // Act
+           // Act
             var result = services.GetService<IConfigurationProvider>();
 
             // Assert
@@ -177,7 +177,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var context = services.GetRequiredService<BlazorHeroContext>();
             var errors = services.GetRequiredService<IdentityErrorDescriber>();
             
-            // Act
+           // Act
             var result = new UserStore<BlazorHeroUser, IdentityRole, BlazorHeroContext, string, IdentityUserClaim<string>, IdentityUserRole<string>, IdentityUserLogin<string>, IdentityUserToken<string>, IdentityRoleClaim<string>>(context,errors);
 
             // Assert
@@ -193,7 +193,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var hostBuilder = CreateWebHostBuilder();
             var services = hostBuilder.Build().Services;
             
-            // Act
+           // Act
             var result = services.GetRequiredService<IUserStore<BlazorHeroUser>>(); ;
 
             // Assert
@@ -209,7 +209,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var services = hostBuilder.Build().Services;
 
 
-            // Act
+           // Act
             var result = services.GetRequiredService<IOptions<IdentityOptions>>(); ;
 
             // Assert
@@ -224,7 +224,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var hostBuilder = CreateWebHostBuilder();
             var services = hostBuilder.Build().Services;
             
-            // Act
+           // Act
             var result = services.GetRequiredService<IPasswordHasher<BlazorHeroUser>>(); ;
 
             // Assert
@@ -239,7 +239,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var hostBuilder = CreateWebHostBuilder();
             var services = hostBuilder.Build().Services;
             
-            // Act
+           // Act
             var result = services.GetRequiredService<IEnumerable<IUserValidator<BlazorHeroUser>>>().ToArray(); 
 
             // Assert
@@ -255,7 +255,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var hostBuilder = CreateWebHostBuilder();
             var services = hostBuilder.Build().Services;
            
-            // Act
+           // Act
             var result = services.GetRequiredService<ILookupNormalizer>(); ;
 
             // Assert
@@ -270,7 +270,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var hostBuilder = CreateWebHostBuilder();
             var services = hostBuilder.Build().Services;
 
-            // Act
+           // Act
             var result = services.GetRequiredService<IdentityErrorDescriber>(); ;
 
             // Assert
@@ -285,7 +285,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var hostBuilder = CreateWebHostBuilder();
             var services = hostBuilder.Build().Services;
 
-            // Act
+           // Act
             var result = services.GetRequiredService<IServiceProvider>(); ;
 
             // Assert
@@ -300,7 +300,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var hostBuilder = CreateWebHostBuilder();
             var services = hostBuilder.Build().Services;
 
-            // Act
+           // Act
             var result = services.GetRequiredService<ILogger<UserManager<BlazorHeroUser>>>(); ;
 
             // Assert
@@ -321,7 +321,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var mailService = services.GetRequiredService<IMailService>();
             var localizer = services.GetRequiredService<IStringLocalizer<UserService>>();
 
-            // Act
+           // Act
             var result = new UserService(userManager, mapper, roleManager, mailService, localizer);
 
             // Assert

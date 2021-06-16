@@ -1,16 +1,8 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="o.s.i.s.a. GmbH" file="TestValues.cs">
-//    (c) 2014. See licence text in binary folder.
-// </copyright>
-//  --------------------------------------------------------------------------------------------------------------------
-
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 
 using Blazored.LocalStorage;
 
-using BlazorHero.CleanArchitecture.Application.Models.Identity;
 using BlazorHero.CleanArchitecture.Client.Infrastructure.Authentication;
 using BlazorHero.CleanArchitecture.Client.Infrastructure.Managers.Audit;
 using BlazorHero.CleanArchitecture.Client.Infrastructure.Managers.Catalog.Brand;
@@ -27,8 +19,6 @@ using BlazorHero.CleanArchitecture.Client.Infrastructure.Managers.Preferences;
 
 using Bunit;
 
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -48,7 +38,6 @@ namespace BlazorHero.CleanArchitecture.Client.Tests.TestInfrastructure
 
         public static TestContext GetBlazorTestContext()
         {
-
             using var ctx = new TestContext();
             ctx.Services.AddSingleton<IUserManager, UserManager>();
             ctx.Services.AddSingleton<IRoleManager, RoleManager>();
@@ -72,26 +61,18 @@ namespace BlazorHero.CleanArchitecture.Client.Tests.TestInfrastructure
             ctx.Services.AddSingleton<IResizeObserver, ResizeObserver>();
 
             ctx.Services.AddLocalization(
-                options =>
-                {
-                    options.ResourcesPath = "Resources";
-                });
+                options => { options.ResourcesPath = "Resources"; });
 
-            ctx.JSInterop.SetupVoid("Blazor._internal.InputFile.init", _=>true); //.SetResult("bUnit is awesome");
-            ctx.JSInterop.Setup<IEnumerable<BoundingClientRect>>("mudResizeObserver.connect", _=>true).SetResult(new List<BoundingClientRect>(new BoundingClientRect[] { new BoundingClientRect(), new BoundingClientRect() }));
-            
-            var l = new Dictionary<string,object>();
-            var x = JsonConvert.SerializeObject(l);
-            var code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(x));
+            ctx.JSInterop.SetupVoid("Blazor._internal.InputFile.init", _ => true); //.SetResult("bUnit is awesome");
+            ctx.JSInterop.Setup<IEnumerable<BoundingClientRect>>("mudResizeObserver.connect", _ => true).SetResult(new List<BoundingClientRect>(new BoundingClientRect[] { new BoundingClientRect(), new BoundingClientRect() }));
+
+            var dictionary = new Dictionary<string, object>();
+            var serializeObject = JsonConvert.SerializeObject(dictionary);
+            var base64UrlEncode = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(serializeObject));
 
             var mock = ctx.Services.AddMockHttpClient();
-            ctx.JSInterop.Setup<String>("localStorage.getItem", _=>true).SetResult("Permission." + code);
 
-            //var x = new ResizeObserver();
-            //x.Unobserve()
-            //ctx.JSInterop.Mode = JSRuntimeMode.Loose;
-
-           
+            ctx.JSInterop.Setup<string>("localStorage.getItem", _ => true).SetResult("Permission." + base64UrlEncode);
 
             return ctx;
         }

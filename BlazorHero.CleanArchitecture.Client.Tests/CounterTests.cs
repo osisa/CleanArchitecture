@@ -27,7 +27,7 @@ namespace BlazorHero.CleanArchitecture.Client.Tests
             // Arrange
             using var ctx = GetBlazorTestContext();
             
-            // Act
+           // Act
             var cut = ctx.RenderComponent<Account>();
 
             // Assert

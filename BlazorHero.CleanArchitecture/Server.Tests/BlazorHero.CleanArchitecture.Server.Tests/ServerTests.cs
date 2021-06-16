@@ -1,13 +1,9 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="o.s.i.s.a. GmbH" file="ServerTests.cs">
-//    (c) 2014. See licence text in binary folder.
-// </copyright>
-//  --------------------------------------------------------------------------------------------------------------------
-
+﻿using System;
 using System.Linq;
 
 using BlazorHero.CleanArchitecture.Application.Interfaces.Services.Identity;
 using BlazorHero.CleanArchitecture.Application.Models.Identity;
+using BlazorHero.CleanArchitecture.TestInfrastructure;
 
 using FluentAssertions;
 
@@ -15,12 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using static BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure.TestValues;
-
-using Environments = BlazorHero.CleanArchitecture.TestInfrastructure.Environments;
 
 namespace BlazorHero.CleanArchitecture.Server.Tests
 {
@@ -30,213 +21,124 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         #region Public Methods and Operators
 
         [TestMethod]
-        public void CreateHost()
+        public void Configuration_ForWebHostBuilder_ShouldNotBeNull()
         {
-            // arrange
-            var args = new string[] { };
-            var hostBuilder = Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(
-                    webBuilder =>
-                    {
-                        webBuilder.UseStaticWebAssets();
-                        webBuilder.UseStartup<Startup>();
-                    });
+            // Arrange
+            var webHostBuilder = CreateWebHostBuilder();
+            var services = webHostBuilder.Build().Services;
 
-            var services = hostBuilder.Build().Services;
-
-            // act
-            //var result = services.GetService<IUserManager>();
+            // Act
             var result = services.GetService<IConfiguration>();
 
-            // assert
-            result.Should().NotBeNull();
-        }
-        
-        [TestMethod]
-        public void UserManager()
-        {
-            // arrange
-            var hostBuilder = CreateWebHost();
-            var services = hostBuilder.Build().Services;
-            
-            // act
-            var result = services.GetService<UserManager<BlazorHeroUser>>();
-
-            // assert
+            // Assert
             result.Should().NotBeNull();
         }
 
         [TestMethod]
-        public void UserManagerUsersArrayLength()
+        public void CreateWebHostBuilder_ShouldReturnNotNullServices()
         {
-            // arrange
-            var hostBuilder = CreateWebHost();
-            var services = hostBuilder.Build().Services;
-            var userManager= services.GetRequiredService<UserManager<BlazorHeroUser>>();
+            // Arrange
+            var hostBuilder = CreateWebHostBuilder();
 
-            // act
-            var result = userManager.Users.ToArray();
+            // Act
+            var result = hostBuilder.Build().Services;
 
-            // assert
+            // Assert
             result.Should().NotBeNull();
-            result.Length.Should().Be(2);
         }
 
         [TestMethod]
-        public void GetAllUsersAsync()
+        public void GetAll_ForWebHostBuilder_ShouldNotBeNull()
         {
-            // arrange
-            var hostBuilder = CreateWebHost();
+            // Arrange
+            var hostBuilder = CreateWebHostBuilder();
             var services = hostBuilder.Build().Services;
             var userService = services.GetRequiredService<IUserService>();
 
-            // act
+            // Act
             var result = userService.GetAllAsync().Result.Data;
 
-            // assert
+            // Assert
             result.Should().NotBeNull();
             result.Count.Should().Be(2);
         }
 
         [TestMethod]
-        public void Run()
+        public void IUserService_ForWebHostBuilder_ShouldNotBeNull()
         {
             // Arrange
-            var args = new string[] { };
+            var hostBuilder = CreateWebHostBuilder();
+            var services = hostBuilder.Build().Services;
+
+            // Act
+            var result = services.GetService<IUserService>();
+
+            // Assert
+            result.Should().NotBeNull();
+        }
+
+        [TestMethod]
+        public void Services_ForProgramCreatedHostBuilder_ShouldNotBeNull()
+        {
+            // Arrange
+            var args = Array.Empty<string>();
             var hostBuilder = Program.CreateHostBuilder(args);
             var host = hostBuilder.Build();
 
             // Act
             var result = host.Services;
-            
+
             // Assert
             result.Should().NotBeNull();
         }
 
-        //[TestMethod]
-        //public void Run2()
-        //{
-        //    // Arrange
-        //    var args = new string[] { };
-        //    var hostBuilder = Host.CreateDefaultBuilder(args)
-        //        .ConfigureWebHostDefaults(
-        //            webBuilder =>
-        //            {
-        //                webBuilder.UseStaticWebAssets();
-        //                webBuilder.UseStartup<Startup>();
-        //            });
-        //    var host = hostBuilder.Build();
-
-        //    // Act
-        //    var result = host.Services.GetService<IUserService>();
-
-        //    // Assert
-        //    result.Should().NotBeNull();
-        //}
-
         [TestMethod]
-        public void UserService()
+        public void UserManager_BlazorHeroUser_ForWebHostBuilder_ShouldNotBeNull()
         {
             // Arrange
-            var host = CreateWebHost().Build();
-            
+            var hostBuilder = CreateWebHostBuilder();
+            var services = hostBuilder.Build().Services;
+
             // Act
-            var result = host.Services.GetService<IUserService>();
+            var result = services.GetService<UserManager<BlazorHeroUser>>();
 
             // Assert
             result.Should().NotBeNull();
         }
 
-        //[TestMethod]
-        //public void Main()
-        //{
-        //    // Arrange
-        //    var args = new string[] { };
-
-        //    // Act
-        //    Action result=()=>Program.Main(args);
-
-        //    // Assert
-        //    result.Should().NotThrow();
-        //}
-
-        //[TestMethod]
-        //public void TestServerRun()
-        //{
-        //    // arrange
-        //    var webHostBuilder = CreateWebHost();
-
-        //    //new WebHostBuilder()
-        //    //    //.UseEnvironment("Test") // You can set the environment you want (development, staging, production)
-        //    //    .UseEnvironment("Development") // You can set the environment you want (development, staging, production)
-        //    //    .UseConfiguration(new ConfigurationBuilder()
-        //    //        .AddJsonFile("appsettings.json") //the file is set to be copied to the output directory if newer
-        //    //        .Build()
-        //    //    )
-        //    //    .UseStartup<Startup>(); // Startup class of your web app project
-
-        //    using (var server = new TestServer(webHostBuilder))
-        //    {
-        //        using (var client = server.CreateClient())
-        //        {
-        //            // act
-        //            string result = client.GetStringAsync("/Login").Result;
-
-        //            // assert
-        //            result.Should().Contain("temperatureF");
-        //        }
-        //    }
-        //}
-
-        //[TestMethod]
-        //public void EnsureConfig()
-        //{
-        //    // arrange
-        //    var args = new string[] { };
-        //    var hostBuilder = Host.CreateDefaultBuilder(args)
-        //        .ConfigureWebHostDefaults(
-        //            webBuilder =>
-        //            {
-        //                webBuilder.UseStaticWebAssets();
-        //                webBuilder.UseStartup<Startup>();
-        //            });
-        //    var host= hostBuilder.Build();
-            
-        //    // act
-        //    var result = host.Services.GetRequiredService<IConfiguration>();
-
-        //    // assert
-        //    result.Should().NotBeNull();
-        //}
-        
         [TestMethod]
-        public void EnsureConfigurationForWebHostBuilder()
+        public void UserManager_Users_ForWebHostBuilder_ShouldNotBeNull()
         {
-            // arrange
-            var webHostBuilder = CreateWebHostBuilder();
-            var services = webHostBuilder.Build().Services;
+            // Arrange
+            var hostBuilder = CreateWebHostBuilder();
+            var services = hostBuilder.Build().Services;
+            var userManager = services.GetRequiredService<UserManager<BlazorHeroUser>>();
 
-            // act
-            var result = services.GetService<IConfiguration>();
+            // Act
+            var result = userManager.Users.ToArray();
 
-            // assert
+            // Assert
             result.Should().NotBeNull();
+            result.Length.Should().Be(2);
         }
-        
-        private static IWebHostBuilder CreateWebHost(string environment=Environments.Development)
+
+        #endregion
+
+        #region Methods
+
+        private static IWebHostBuilder CreateWebHostBuilder(string environment = Environments.Development)
         {
             return
                 new WebHostBuilder()
                     // PowerShell: set $env:ASPNETCORE_ENVIRONMENT = 'Development'
-                    
                     .UseEnvironment(environment) // You can set the environment you want (development, staging, production)
-                    .UseConfiguration(new ConfigurationBuilder()
-                        // ReSharper disable once StringLiteralTypo
-                        .AddJsonFile($"appsettings.{environment}.json") //the file is set to be copied to the output directory if newer
-                        .Build()
+                    .UseConfiguration(
+                        new ConfigurationBuilder()
+                            // ReSharper disable once StringLiteralTypo
+                            .AddJsonFile($"appsettings.{environment}.json") //the file is set to be copied to the output directory if newer
+                            .Build()
                     )
                     .UseStartup<Startup>(); // Startup class of your web app project
-
         }
 
         #endregion

@@ -39,20 +39,10 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         [TestMethod]
         public void GetAll()
         {
-            // arrange
+            // Arrange
             var webHostBuilder = CreateWebHostBuilder();
-
-            //new WebHostBuilder()
-            //    .UseEnvironment("Test") // You can set the environment you want (development, staging, production)
-            //    //.UseEnvironment("Development") // You can set the environment you want (development, staging, production)
-            //    .UseConfiguration(
-            //        new ConfigurationBuilder()
-            //            .AddJsonFile("appsettings.Development.json") //the file is set to be copied to the output directory if newer
-            //            .Build()
-            //    )
-            //    .UseStartup<TestStartup>(); // Startup class of your web app project
-
-            // act
+            
+           // Act
             using (var server = new TestServer(webHostBuilder))
             {
                 using (var client = server.CreateClient())
@@ -71,18 +61,18 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         [TestMethod]
         public void GetById()
         {
-            // arrange
+            // Arrange
             var webHostBuilder = CreateWebHostBuilder();
 
-            // act
+           // Act
             using (var server = new TestServer(webHostBuilder))
 
             using (var client = server.CreateClient())
             {
-                // act
+               // Act
                 var result = client.GetAsync<Result<UserResponse>>($"/api/identity/user/{Id}");
 
-                // assert
+                // Assert
                 result.Succeeded.Should().BeTrue();
                 result.Data.Should().BeEquivalentTo(TestValues.UserResponse);
             }
@@ -91,18 +81,18 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         //[TestMethod]
         //public void ConfirmEmailAsync()
         //{
-        //    // arrange
+        //    // Arrange
         //    var webHostBuilder = CreateWebHostBuilder();
 
-        //    // act
+        //   // Act
         //    using (var server = new TestServer(webHostBuilder))
         //    {
         //        using (var client = server.CreateClient())
         //        {
-        //            // act
+        //           // Act
         //            var result = client.GetAsync($"/api/identity/user/confirm-email?userId={Id}&code={Code}").Result;
 
-        //            // assert
+        //            // Assert
         //            result.EnsureSuccessStatusCode();
         //        }
         //    }
@@ -112,15 +102,15 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         [TestMethod]
         public void ConfirmEmailAsync()
         {
-            // arrange
+            // Arrange
             var webHostBuilder = CreateWebHostBuilder();
 
-            // act
+           // Act
             using (var server = new TestServer(webHostBuilder))
             {
                 using (var client = server.CreateClient())
                 {
-                    // act
+                   // Act
                     
                     var userManager = server.Services.GetRequiredService<UserManager<BlazorHeroUser>>();
                     var userStore = server.Services.GetRequiredService<IUserStore<BlazorHeroUser>>();
@@ -128,10 +118,10 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
                     var code = userManager.GenerateEmailConfirmationTokenAsync(user).Result;
                     var code64 = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-                    // act
+                   // Act
                     var result = client.GetAsync($"/api/identity/user/confirm-email?userId={Id}&code={code64}").Result;
 
-                    // assert
+                    // Assert
                     result.EnsureSuccessStatusCode();
                 }
             }
@@ -140,10 +130,10 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         [TestMethod]
         public void ForgotPasswordAsync()
         {
-            // arrange
+            // Arrange
             var webHostBuilder = CreateWebHostBuilder();
 
-            // act
+           // Act
             using (var server = new TestServer(webHostBuilder))
             {
                 using (var client = server.CreateClient())
@@ -155,11 +145,11 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
                     req.Content = httpContent;
                     req.Headers.Add("origin",Origin);
 
-                    // act
+                   // Act
                     //var result = client.PostAsync("/api/identity/user/forgot-password", ForgotPasswordRequest);
                     var result = client.SendAsync(req).Result;
 
-                    // assert
+                    // Assert
                     result.EnsureSuccessStatusCode();
                 }
             }
@@ -168,34 +158,34 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         [TestMethod]
         public void CheckOrigin()
         {
-            // arrange
+            // Arrange
             var origin = Origin;
             var route = Route;
 
-            // act
+           // Act
             var result =new Uri(string.Concat($"{origin}/", route));
 
-            // assert
+            // Assert
             result.Should().NotBeNull();
         }
 
         //[TestMethod]
         //public void ForgotPasswordAsyn2()
         //{
-        //    // arrange
+        //    // Arrange
         //    var webHostBuilder = CreateWebHostBuilder();
 
-        //    // act
+        //   // Act
         //    using (var server = new TestServer(webHostBuilder))
         //    {
 
 
         //        using (var client = server.CreateClient())
         //        {
-        //            // act
+        //           // Act
         //            var result = client.PostAsync("/api/identity/user/forgot-password", ForgotPasswordRequest);
 
-        //            // assert
+        //            // Assert
         //            result.EnsureSuccessStatusCode();
         //        }
         //    }
@@ -204,17 +194,17 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         //[TestMethod]
         //public void GetRolesAsync()
         //{
-        //    // arrange
+        //    // Arrange
         //    var webHostBuilder = CreateWebHostBuilder();
 
-        //    // act
+        //   // Act
         //    using (var server = new TestServer(webHostBuilder))
         //    using (var client = server.CreateClient())
         //    {
-        //        // act
+        //       // Act
         //        var result = client.GetAsync<Result<UserRolesResponse>>($"/api/identity/user/roles/{Id}");
 
-        //        // assert
+        //        // Assert
         //        result.Succeeded.Should().BeTrue();
         //        result.Data.UserRoles.Should().BeEquivalentTo(TestValues.UserRolesResponse.UserRoles);
         //    }
@@ -223,17 +213,17 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         [TestMethod]
         public void GetRolesForUserIdAsync()
         {
-            // arrange
+            // Arrange
             var webHostBuilder = CreateWebHostBuilder();
 
-            // act
+           // Act
             using (var server = new TestServer(webHostBuilder))
             using (var client = server.CreateClient())
             {
-                // act
+               // Act
                 var result = client.GetAsync<Result<UserRolesResponse>>($"/api/identity/user/roles/{Id}");
 
-                // assert
+                // Assert
                 result.Succeeded.Should().BeTrue();
                 result.Data.UserRoles.Should().BeEquivalentTo(TestValues.UserRolesResponse.UserRoles);
             }
@@ -242,18 +232,18 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         [TestMethod]
         public void RegisterAsync()
         {
-            // arrange
+            // Arrange
             var webHostBuilder = CreateWebHostBuilder();
 
-            // act
+           // Act
             using (var server = new TestServer(webHostBuilder))
             using (var client = server.CreateClient())
             {
-                // act
+               // Act
                 //client.
                 var result = client.PostAsync("/api/identity/user", RegisterRequest);
 
-                // assert
+                // Assert
                 result.EnsureSuccessStatusCode();
             }
         }
@@ -261,17 +251,17 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         [TestMethod]
         public void ResetPasswordAsync()
         {
-            // arrange
+            // Arrange
             var webHostBuilder = CreateWebHostBuilder();
 
-            // act
+           // Act
             using (var server = new TestServer(webHostBuilder))
             using (var client = server.CreateClient())
             {
-                // act
+               // Act
                 var result = client.PostAsync("/api/identity/user/reset-password", ResetPasswordRequest);
 
-                // assert
+                // Assert
                 result.EnsureSuccessStatusCode();
             }
         }
@@ -280,14 +270,14 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         [TestMethod]
         public void GetAuthenticationHandler()
         {
-            // arrange
+            // Arrange
             var webHostBuilder = CreateWebHostBuilder();
             var host = webHostBuilder.Build();
 
-            // act
+           // Act
             var result = host.Services.GetService<IAuthenticationHandler>();
 
-            // assert
+            // Assert
             result.Should().NotBeNull();
         }
 
@@ -295,17 +285,17 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         [TestMethod]
         public void ToggleUserStatusAsync()
         {
-            // arrange
+            // Arrange
             var webHostBuilder = CreateWebHostBuilder();
 
-            // act
+           // Act
             using (var server = new TestServer(webHostBuilder))
             using (var client = server.CreateClient())
             {
-                // act
+               // Act
                 var result = client.PostAsync("/api/identity/user/toggle-status", ToggleUserStatusRequest);
 
-                // assert
+                // Assert
                 result.EnsureSuccessStatusCode();
             }
         }
@@ -313,17 +303,17 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         [TestMethod]
         public void UpdateRolesAsync()
         {
-            // arrange
+            // Arrange
             var webHostBuilder = CreateWebHostBuilder();
 
-            // act
+           // Act
             using (var server = new TestServer(webHostBuilder))
             using (var client = server.CreateClient())
             {
-                // act
+               // Act
                 var result = client.PutAsync($"/api/identity/user/roles/{Id}", UpdateUserRolesRequest);
 
-                // assert
+                // Assert
                 result.EnsureSuccessStatusCode();
             }
         }
@@ -344,7 +334,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
 //[TestMethod]
 //public void RegisterAsync2()
 //{
-//    // arrange
+//    // Arrange
 //    var startupAssembly = typeof(UserController)
 //        .GetTypeInfo()
 //        .Assembly;
@@ -355,13 +345,13 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
 //        .UseEnvironment("Development")
 //        .UseStartup<TestStartup<UserController>>();
 
-//    // act
+//   // Act
 //    using (var server = new TestServer(webHostBuilder))
 //    using (var client = server.CreateClient())
 //    {
 //        string result = client.GetStringAsync("api/identity/user/RegisterAsync").Result;
 
-//        // assert
+//        // Assert
 //        result.Should().Contain("Chilly");
 //        Messages.Count.Should().Be(1);
 //    }
@@ -370,19 +360,19 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
 //[TestMethod]
 //public void ProbeControllerGet()
 //{
-//    // arrange
+//    // Arrange
 //    var webHostBuilder = new WebHostBuilder()
 //        .UseEnvironment("Test")
 //        .UseStartup<TestStartup<ProbeController>>();
 
-//    // act
+//   // Act
 //    using (var server = new TestServer(webHostBuilder))
 //    using (var client = server.CreateClient())
 //    {
-//        // act
+//       // Act
 //        string result = client.GetStringAsync("/Probe").Result;
 
-//        // assert
+//        // Assert
 //        result.Should().Contain("ok");
 //    }
 //}
@@ -390,19 +380,19 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
 //[TestMethod]
 //public void ProbeControllerPing()
 //{
-//    // arrange
+//    // Arrange
 //    var webHostBuilder = new WebHostBuilder()
 //        .UseEnvironment("Test")
 //        .UseStartup<TestStartup<ProbeController>>();
 
-//    // act
+//   // Act
 //    using (var server = new TestServer(webHostBuilder))
 //    using (var client = server.CreateClient())
 //    {
-//        // act
+//       // Act
 //        var  result=client.GetStringAsync("/Probe/Ping").Result;
 
-//        // assert
+//        // Assert
 //        result.Should().Contain("PingResult");
 //    }
 //}
@@ -410,19 +400,19 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
 //[TestMethod]
 //public void ProbeControllerPingId()
 //{
-//    // arrange
+//    // Arrange
 //    var webHostBuilder = new WebHostBuilder()
 //        .UseEnvironment("Test")
 //        .UseStartup<TestStartup<ProbeController>>();
 
-//    // act
+//   // Act
 //    using (var server = new TestServer(webHostBuilder))
 //    using (var client = server.CreateClient())
 //    {
-//        // act
+//       // Act
 //        var result = client.GetStringAsync($"/Probe/PingId/{Id}").Result;
 
-//        // assert
+//        // Assert
 //        result.Should().Contain(Id);
 //    }
 //}
@@ -430,21 +420,21 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
 //[TestMethod]
 //public void ProbeControllerPingPushId()
 //{
-//    // arrange
+//    // Arrange
 //    var webHostBuilder = new WebHostBuilder()
 //        .UseEnvironment("Test")
 //        .UseStartup<TestStartup<ProbeController>>();
 
 //    StringContent httpContent = new StringContent("", System.Text.Encoding.UTF8, "application/json");
 
-//    // act
+//   // Act
 //    using (var server = new TestServer(webHostBuilder))
 //    using (var client = server.CreateClient())
 //    {
-//        // act
+//       // Act
 //        var result = client.PostAsync("/Probe/PingPushId", httpContent).Result;
 
-//        // assert
+//        // Assert
 //        var text = result.Content.ReadAsStringAsync().Result;
 //        text.Should().Contain("PingPushId");
 //    }
@@ -453,7 +443,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
 //[TestMethod]
 //public void WeatherForecast()
 //{
-//    // arrange
+//    // Arrange
 //    var webHostBuilder =
 //        new WebHostBuilder()
 //            .UseEnvironment("Test") // You can set the environment you want (development, staging, production)
@@ -462,10 +452,10 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
 //    using (var server = new TestServer(webHostBuilder))
 //    using (var client = server.CreateClient())
 //    {
-//        // act
+//       // Act
 //        string result = client.GetStringAsync("/WeatherForecast").Result;
 
-//        // assert
+//        // Assert
 //        result.Should().Contain("ok");
 //    }
 //}
@@ -613,12 +603,12 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
 //[TestMethod]
 //public void Constructor()
 //{
-//    // arrange
+//    // Arrange
 
-//    // act
+//   // Act
 //    var result = CreateUnitUnderTest();
 
-//    // assert
+//    // Assert
 //    result.Should().NotBeNull();
 //    Messages.Count.Should().Be(0);
 //}
@@ -626,7 +616,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
 //[TestMethod]
 //public void PingPushRequest()
 //{
-//    // arrange
+//    // Arrange
 //    var registerRequest = new RegisterRequest
 //                          {
 //                              ActivateUser = true,
@@ -648,14 +638,14 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
 
 //    StringContent httpContent = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
 
-//    // act
+//   // Act
 //    using (var server = new TestServer(webHostBuilder))
 //    using (var client = server.CreateClient())
 //    {
-//        // act
+//       // Act
 //        var result = client.PostAsync("/Probe/PingPushRequest", httpContent).Result;
 
-//        // assert
+//        // Assert
 //        var response = result.Content.ReadAsStringAsync().Result;//ReadFromJsonAsync<RegisterRequest>().Result;
 //        response.Should().Be(TestUser.Email);
 //    }

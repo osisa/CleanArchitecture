@@ -21,13 +21,13 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         [TestMethod]
         public void GetAll()
         {
-            // arrange
+            // Arrange
             var unitUnderTest = CreateUnitUnderTest();
 
-            // act
+           // Act
             var result =  unitUnderTest.GetAll().Result;
 
-            // assert
+            // Assert
             var okObjectResult = (OkObjectResult)result;
             var resultValue = (IResult<List<UserResponse>>)okObjectResult.Value;
             resultValue.Data.Count.Should().Be(SeededUserCount);
