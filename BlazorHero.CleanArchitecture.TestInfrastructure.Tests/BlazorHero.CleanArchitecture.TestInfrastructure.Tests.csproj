@@ -7,6 +7,25 @@
   <Import Project="..\Test.Build.props" />
 
   <ItemGroup>
+    <Compile Remove="History\**" />
+    <Compile Remove="Scenario\**" />
+    <Compile Remove="Then\**" />
+    <Compile Remove="When\**" />
+    <EmbeddedResource Remove="History\**" />
+    <EmbeddedResource Remove="Scenario\**" />
+    <EmbeddedResource Remove="Then\**" />
+    <EmbeddedResource Remove="When\**" />
+    <None Remove="History\**" />
+    <None Remove="Scenario\**" />
+    <None Remove="Then\**" />
+    <None Remove="When\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="MockHttpClientTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BlazorHero.CleanArchitecture.Common\BlazorHero.CleanArchitecture.Common.csproj" />
     <ProjectReference Include="..\BlazorHero.CleanArchitecture.TestInfrastructure\BlazorHero.CleanArchitecture.TestInfrastructure.csproj" />
   </ItemGroup>
