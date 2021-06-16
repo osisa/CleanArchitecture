@@ -53,6 +53,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
                     options.DefaultChallengeScheme = TestAuthenticationHandler.AuthScheme;
                 }).AddScheme<AuthenticationSchemeOptions, TestAuthenticationHandler>(TestAuthenticationHandler.AuthScheme, _ => { });
 
+            services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
             services.AddApplicationLayer();
             services.AddApplicationServices();
             services.AddSharedInfrastructure(_configuration);
@@ -68,6 +69,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
                 config.AssumeDefaultVersionWhenUnspecified = true;
                 config.ReportApiVersions = true;
             });
+            services.AddLazyCache();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -83,7 +85,8 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Files")),
                 RequestPath = new PathString("/Files")
             });
-            
+
+            app.UseRequestLocalizationByCulture();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

@@ -8,6 +8,8 @@ using BlazorHero.CleanArchitecture.Client.Pages.Identity;
 
 using Bunit;
 
+using FluentAssertions;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using static BlazorHero.CleanArchitecture.Client.Tests.TestInfrastructure.TestValues;
@@ -24,13 +26,12 @@ namespace BlazorHero.CleanArchitecture.Client.Tests
         {
             // Arrange
             using var ctx = GetBlazorTestContext();
-
+            
             // Act
             var cut = ctx.RenderComponent<Account>();
 
             // Assert
-            //cut.MarkupMatches("<h1>Hello world from Blazor</h1>");
-            cut.MarkupMatches("<h1>Counter</h1><p>Current count: 0</p><button class=\"btn btn-primary\" >Click me</button>");
+            cut.FindAll("div").Count.Should().Be(45);
         }
 
         #endregion

@@ -20,6 +20,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using static BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure.TestValues;
 
+using Environments = BlazorHero.CleanArchitecture.TestInfrastructure.Environments;
+
 namespace BlazorHero.CleanArchitecture.Server.Tests
 {
     [TestClass]
@@ -186,61 +188,51 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         //    }
         //}
 
-        [TestMethod]
-        public void EnsureConfig()
-        {
-            // arrange
-            var args = new string[] { };
-            var hostBuilder = Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(
-                    webBuilder =>
-                    {
-                        webBuilder.UseStaticWebAssets();
-                        webBuilder.UseStartup<Startup>();
-                    });
-            var host= hostBuilder.Build();
+        //[TestMethod]
+        //public void EnsureConfig()
+        //{
+        //    // arrange
+        //    var args = new string[] { };
+        //    var hostBuilder = Host.CreateDefaultBuilder(args)
+        //        .ConfigureWebHostDefaults(
+        //            webBuilder =>
+        //            {
+        //                webBuilder.UseStaticWebAssets();
+        //                webBuilder.UseStartup<Startup>();
+        //            });
+        //    var host= hostBuilder.Build();
             
-            // act
-            var result = host.Services.GetRequiredService<IConfiguration>();
+        //    // act
+        //    var result = host.Services.GetRequiredService<IConfiguration>();
 
-            // assert
-            result.Should().NotBeNull();
-        }
+        //    // assert
+        //    result.Should().NotBeNull();
+        //}
         
         [TestMethod]
-        public void EnsureConfig2()
+        public void EnsureConfigurationForWebHostBuilder()
         {
             // arrange
-            //var webHostBuilder =
-            //    new WebHostBuilder()
-            //        //.UseEnvironment("Test") // You can set the environment you want (development, staging, production)
-            //        .UseEnvironment("Development") // You can set the environment you want (development, staging, production)
-            //        .UseConfiguration(new ConfigurationBuilder()
-            //            .AddJsonFile("appsettings.json") //the file is set to be copied to the output directory if newer
-            //            .Build()
-            //        )
-            //        .UseStartup<Startup>(); // Startup class of your web app project
-
             var webHostBuilder = CreateWebHostBuilder();
             var services = webHostBuilder.Build().Services;
-            
 
             // act
             var result = services.GetService<IConfiguration>();
 
             // assert
             result.Should().NotBeNull();
-
         }
         
-        private static IWebHostBuilder CreateWebHost()
+        private static IWebHostBuilder CreateWebHost(string environment=Environments.Development)
         {
             return
                 new WebHostBuilder()
-                    //.UseEnvironment("Test") // You can set the environment you want (development, staging, production)
-                    .UseEnvironment("Development") // You can set the environment you want (development, staging, production)
+                    // PowerShell: set $env:ASPNETCORE_ENVIRONMENT = 'Development'
+                    
+                    .UseEnvironment(environment) // You can set the environment you want (development, staging, production)
                     .UseConfiguration(new ConfigurationBuilder()
-                        .AddJsonFile("appsettings.json") //the file is set to be copied to the output directory if newer
+                        // ReSharper disable once StringLiteralTypo
+                        .AddJsonFile($"appsettings.{environment}.json") //the file is set to be copied to the output directory if newer
                         .Build()
                     )
                     .UseStartup<Startup>(); // Startup class of your web app project

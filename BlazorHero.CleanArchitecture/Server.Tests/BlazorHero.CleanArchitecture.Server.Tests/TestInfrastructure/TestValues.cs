@@ -60,7 +60,9 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
         //    #endregion
         //}
 
-        public const string Id = "5282230c-9c44-4ae4-8234-0176cde4228e";
+        public const int SeededUserCount = 2;
+
+        public const string Id = "4734f9bf-4a08-4973-9e33-1aaf44ddc620";//"5282230c-9c44-4ae4-8234-0176cde4228e";
 
         public const string Origin = "https://example.net";
 
@@ -213,7 +215,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
                     //.UseEnvironment("Development") // You can set the environment you want (development, staging, production)
                     .UseConfiguration(
                         new ConfigurationBuilder()
-                            .AddJsonFile("appsettings.Test.json") //the file is set to be copied to the output directory if newer
+                            .AddJsonFile("appsettings.Development.json") //the file is set to be copied to the output directory if newer
                             .Build()
                     )
                     .UseStartup<TestStartup>()

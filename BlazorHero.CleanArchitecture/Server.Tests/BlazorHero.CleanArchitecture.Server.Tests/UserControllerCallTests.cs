@@ -57,7 +57,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             {
                 using (var client = server.CreateClient())
                 {
-                    var result = client.GetAsync<Result<List<UserResponse>>>("/api/identity/user/getall");
+                    var result = client.GetAsync<Result<List<UserResponse>>>("/api/identity/user");
 
                     result.Succeeded.Should().BeTrue();
 
@@ -251,7 +251,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             {
                 // act
                 //client.
-                var result = client.PostAsync("/api/identity/user/register", RegisterRequest);
+                var result = client.PostAsync("/api/identity/user", RegisterRequest);
 
                 // assert
                 result.EnsureSuccessStatusCode();
@@ -303,7 +303,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             using (var client = server.CreateClient())
             {
                 // act
-                var result = client.PostAsync("/api/identity/user/toggle-status", TestValues.ToggleUserStatusRequest);
+                var result = client.PostAsync("/api/identity/user/toggle-status", ToggleUserStatusRequest);
 
                 // assert
                 result.EnsureSuccessStatusCode();
@@ -321,7 +321,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             using (var client = server.CreateClient())
             {
                 // act
-                var result = client.PutAsync($"/api/identity/user/roles/{Id}", TestValues.UpdateUserRolesRequest);
+                var result = client.PutAsync($"/api/identity/user/roles/{Id}", UpdateUserRolesRequest);
 
                 // assert
                 result.EnsureSuccessStatusCode();

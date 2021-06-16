@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BlazorHero.CleanArchitecture.Server.Controllers.Identity
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/identity/user")]
     [ApiController]
     public class UserController : ControllerBase
@@ -20,6 +20,7 @@ namespace BlazorHero.CleanArchitecture.Server.Controllers.Identity
         }
 
         //[Authorize(Policy = Permissions.Users.View)]
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -51,7 +52,7 @@ namespace BlazorHero.CleanArchitecture.Server.Controllers.Identity
         }
 
         [AllowAnonymous]
-        [HttpPost]
+        [HttpPost()]
         public async Task<IActionResult> RegisterAsync(RegisterRequest request)
         {
             var origin = Request.Headers["origin"];

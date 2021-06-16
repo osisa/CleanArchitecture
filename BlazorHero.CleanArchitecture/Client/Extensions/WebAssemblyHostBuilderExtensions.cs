@@ -19,7 +19,7 @@ namespace BlazorHero.CleanArchitecture.Client.Extensions
 {
     public static class WebAssemblyHostBuilderExtensions
     {
-        private const string ClientName = "BlazorHero.API";
+        public const string ClientName = "BlazorHero.API";
 
         public static WebAssemblyHostBuilder AddRootComponents(this WebAssemblyHostBuilder builder)
         {
@@ -72,6 +72,8 @@ namespace BlazorHero.CleanArchitecture.Client.Extensions
             return builder;
         }
 
+
+
         public static IServiceCollection AddManagers(this IServiceCollection services)
         {
             var managers = typeof(IManager);
@@ -98,7 +100,7 @@ namespace BlazorHero.CleanArchitecture.Client.Extensions
             return services;
         }
 
-        private static void RegisterPermissionClaimPolicyByModule(AuthorizationOptions options, string module)
+        public static void RegisterPermissionClaimPolicyByModule(AuthorizationOptions options, string module)
         {
             var allPermissions = PermissionModules.GeneratePermissionsForModule(module);
             foreach (var permission in allPermissions)

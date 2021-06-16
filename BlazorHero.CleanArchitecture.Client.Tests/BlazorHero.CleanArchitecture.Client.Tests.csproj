@@ -7,7 +7,8 @@
   <Import Project="..\Test.Build.props" />
 
   <ItemGroup>
-    <ProjectReference Include="..\BlazorHero.CleanArchitecture.Infrastructure\BlazorHero.CleanArchitecture.Infrastructure.csproj" />
+	  <PackageReference Include="RichardSzalay.MockHttp" Version="6.0.0" />
+	  <ProjectReference Include="..\BlazorHero.CleanArchitecture.Infrastructure\BlazorHero.CleanArchitecture.Infrastructure.csproj" />
     <ProjectReference Include="..\BlazorHero.CleanArchitecture\Client\BlazorHero.CleanArchitecture.Client.csproj" />
   </ItemGroup>
 

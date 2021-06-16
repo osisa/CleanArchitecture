@@ -88,7 +88,7 @@ The easiest way to get started with Blazor Hero is to install the [NuGet package
 4. Open up Command Prompt and run `dotnet new --install BlazorHero.CleanArchitecture` to install the project template
 5. Create a folder for your solution and cd into it (the template will use it as project name)
 6. Run `dotnet new BlazorHero.CleanArchitecture` to create a new Solution with all the Awsomeness 🕶️ of BlazorHero 🦸
-7. Set the Envioroment Varible in DOS shell: `set DOTNET_ENVIRONMENT=Test`
+7. Set the Envioroment Varible in DOS shell: `set DOTNET_ENVIRONMENT=Test` or `set $env:DOTNET_ENVIRONMENT = 'Development'`
 8. Run database initialization: open youre server folder, run: `dotnet ef database update --startup-project {Solution}\Server\{Solution}.Server.csproj -- --environment Development` (or a other spcifice Environment Production or Test) [.EF Commands](https://docs.microsoft.com/en-us/ef/core/cli/dotnet) (*BUG - for some reasons this works only in old Command-Prompt by setting environment variable before as described in 7.)
 
 What to do next? Read the [entire guide on my blog](https://codewithmukesh.com/blog/blazor-hero-quick-start-guide/).

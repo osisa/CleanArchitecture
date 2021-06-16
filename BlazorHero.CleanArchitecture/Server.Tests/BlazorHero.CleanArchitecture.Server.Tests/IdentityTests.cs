@@ -214,7 +214,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
 
             // Assert
             result.Should().NotBeNull();
-            result.GetType().FullName.Should().StartWith("Microsoft.Extensions.Options.UnnamedOptionsManager`");
+            result.GetType().FullName.Should().StartWith("Microsoft.Extensions.Options.OptionsManager`1[[Microsoft.AspNetCore.Identity.IdentityOptions,");
         }
 
         [TestMethod]
