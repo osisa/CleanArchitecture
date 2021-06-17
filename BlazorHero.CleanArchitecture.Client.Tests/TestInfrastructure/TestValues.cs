@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 
 using Blazored.LocalStorage;
@@ -76,6 +77,9 @@ namespace BlazorHero.CleanArchitecture.Client.Tests.TestInfrastructure
 
             return ctx;
         }
+
+
+    
 
         #endregion
     }

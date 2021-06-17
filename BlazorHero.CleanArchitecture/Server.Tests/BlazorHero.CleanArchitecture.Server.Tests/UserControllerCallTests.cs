@@ -141,7 +141,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
                     var req = new HttpRequestMessage(HttpMethod.Post, "/api/identity/user/forgot-password");
                     var data = JsonConvert.SerializeObject(ForgotPasswordRequest);
 
-                    StringContent httpContent = new(data, System.Text.Encoding.UTF8, "application/json");
+                    StringContent httpContent = new(data, Encoding.UTF8, "application/json");
                     req.Content = httpContent;
                     req.Headers.Add("origin",Origin);
 
@@ -321,7 +321,6 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         #endregion
     }
 }
-
 
 ///// <summary>
 /////     Gets or sets the test context.

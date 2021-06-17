@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 
+using BlazorHero.CleanArchitecture.Application.Interfaces.Services;
 using BlazorHero.CleanArchitecture.Application.Interfaces.Services.Identity;
 using BlazorHero.CleanArchitecture.Application.Models.Identity;
+using BlazorHero.CleanArchitecture.Server.Services;
 using BlazorHero.CleanArchitecture.TestInfrastructure;
 
 using FluentAssertions;
@@ -16,7 +18,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace BlazorHero.CleanArchitecture.Server.Tests
 {
     [TestClass]
-    public class ServerTests
+    public class HostServicesTests
     {
         #region Public Methods and Operators
 
@@ -46,23 +48,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             // Assert
             result.Should().NotBeNull();
         }
-
-        [TestMethod]
-        public void GetAll_ForWebHostBuilder_ShouldNotBeNull()
-        {
-            // Arrange
-            var hostBuilder = CreateWebHostBuilder();
-            var services = hostBuilder.Build().Services;
-            var userService = services.GetRequiredService<IUserService>();
-
-            // Act
-            var result = userService.GetAllAsync().Result.Data;
-
-            // Assert
-            result.Should().NotBeNull();
-            result.Count.Should().Be(2);
-        }
-
+        
         [TestMethod]
         public void IUserService_ForWebHostBuilder_ShouldNotBeNull()
         {
@@ -83,10 +69,9 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             // Arrange
             var args = Array.Empty<string>();
             var hostBuilder = Program.CreateHostBuilder(args);
-            var host = hostBuilder.Build();
 
             // Act
-            var result = host.Services;
+            var result = hostBuilder.Build().Services;
 
             // Assert
             result.Should().NotBeNull();
@@ -112,14 +97,28 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             // Arrange
             var hostBuilder = CreateWebHostBuilder();
             var services = hostBuilder.Build().Services;
-            var userManager = services.GetRequiredService<UserManager<BlazorHeroUser>>();
 
             // Act
-            var result = userManager.Users.ToArray();
+            var result = services.GetRequiredService<UserManager<BlazorHeroUser>>();
 
             // Assert
             result.Should().NotBeNull();
-            result.Length.Should().Be(2);
+            result.Users.ToArray().Length.Should().Be(2);
+        }
+
+        [TestMethod]
+        public void ICurrentUserService_ForWebHostBuilder_ShouldNotBeNull()
+        {
+            // Arrange
+            var hostBuilder = CreateWebHostBuilder();
+            var services = hostBuilder.Build().Services;
+
+            // Act
+            var result = services.GetRequiredService<ICurrentUserService>();
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<CurrentUserService>();
         }
 
         #endregion
@@ -127,20 +126,31 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         #region Methods
 
         private static IWebHostBuilder CreateWebHostBuilder(string environment = Environments.Development)
-        {
-            return
-                new WebHostBuilder()
-                    // PowerShell: set $env:ASPNETCORE_ENVIRONMENT = 'Development'
-                    .UseEnvironment(environment) // You can set the environment you want (development, staging, production)
-                    .UseConfiguration(
-                        new ConfigurationBuilder()
-                            // ReSharper disable once StringLiteralTypo
-                            .AddJsonFile($"appsettings.{environment}.json") //the file is set to be copied to the output directory if newer
-                            .Build()
-                    )
-                    .UseStartup<Startup>(); // Startup class of your web app project
-        }
+            => new WebHostBuilder()
+                .UseEnvironment(environment) // You can set the environment you want (development, staging, production)
+                .UseConfiguration(
+                    new ConfigurationBuilder()
+                        .AddJsonFile($"appsettings.{environment}.json") //the file is set to be copied to the output directory if newer
+                        .Build()
+                )
+                .UseStartup<Startup>(); // Startup class of your web app project
 
         #endregion
     }
 }
+
+//[TestMethod]
+//public void GetAll_ForWebHostBuilder_ShouldNotBeNull()
+//{
+//    // Arrange
+//    var hostBuilder = CreateWebHostBuilder();
+//    var services = hostBuilder.Build().Services;
+//    var userService = services.GetRequiredService<IUserService>();
+
+//    // Act
+//    var result = services.GetRequiredService<IUserService>();//userService.GetAllAsync().Result.Data;
+
+//    // Assert
+//    result.Should().NotBeNull();
+//    result.Count.Should().Be(2);
+//}

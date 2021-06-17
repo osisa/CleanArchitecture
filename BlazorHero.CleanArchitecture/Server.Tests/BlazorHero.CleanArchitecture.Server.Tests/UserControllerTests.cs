@@ -16,7 +16,7 @@ using static BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure.TestVa
 namespace BlazorHero.CleanArchitecture.Server.Tests
 {
     [TestClass]
-    public class UserControllerTest
+    public class UserControllerTests
     {
         [TestMethod]
         public void GetAll()

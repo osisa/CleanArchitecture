@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 
 using BlazorHero.CleanArchitecture.Application.Requests.Identity;
 using BlazorHero.CleanArchitecture.Application.Responses.Identity;
@@ -128,7 +129,14 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
                 )
                 .UseStartup<TestStartup>()
                 .ConfigureServices(s => s.AddTestUser(DefaultUser))
-                .ConfigureServices(s => s.AddSingleton<IAuthenticationHandler, TestAuthenticationHandler>()); // Startup class of your web app project
+                .ConfigureServices(s => s.AddSingleton<IAuthenticationHandler, TestAuthenticationHandler>()) // Startup class of your web app project
+                .ConfigureServices(s => s.AddHttpContextAccessor());
+        }
+
+
+        public static ClaimsPrincipal CreateClaimsPrincipal()
+        {
+            return new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, Id) }));
         }
 
         #endregion

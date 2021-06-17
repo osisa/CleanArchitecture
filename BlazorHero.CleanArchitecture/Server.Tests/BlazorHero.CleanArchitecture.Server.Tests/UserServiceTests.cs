@@ -10,7 +10,7 @@ using static BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure.TestVa
 namespace BlazorHero.CleanArchitecture.Server.Tests
 {
     [TestClass]
-    public class UserServiceTest
+    public class UserServiceTests
     {
         #region Public Methods and Operators
 

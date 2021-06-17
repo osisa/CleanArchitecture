@@ -35,8 +35,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
         {
             services.AddSignalR();
             services.AddDatabase(_configuration);
-
-
+            
             services
                 .AddMvc()
                 .AddApplicationPart(typeof(UserController).Assembly)
