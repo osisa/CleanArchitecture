@@ -1,10 +1,11 @@
-﻿using BlazorHero.CleanArchitecture.Server.Permission;
+﻿
+using BlazorHero.CleanArchitecture.Server.Permission;
 
 using FluentAssertions;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BlazorHero.CleanArchitecture.Server.Tests.Permission
+namespace BlazorHero.CleanArchitecture.Server.Tests
 {
     [TestClass]
     public class PermissionAuthorizationHandlerTests

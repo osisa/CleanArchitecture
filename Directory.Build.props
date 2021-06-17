@@ -17,7 +17,9 @@
     <LibraryFramework>netstandard2.0</LibraryFramework>
     <RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>
     <GetVersion>true</GetVersion>
+
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+
     <PackageVersion Condition=" '$(UseFullSemVerForNuGet)' == 'false' ">$(GitVersion_NuGetVersion)</PackageVersion>
     <PackageVersion Condition=" '$(UseFullSemVerForNuGet)' == 'true' ">$(GitVersion_FullSemVer)</PackageVersion>
     <!--<Nullable>enable</Nullable>-->
@@ -80,4 +82,25 @@
   <Target Name="Info">
     <Message Text='TargetFramework=$(MSBuildProject) is "$(TargetFramework)" $(DefineConstants).  - $(SolutionPackageVersion)' />
   </Target>
+
+	<!--<Target Name="AddInternalsVisibleTo" BeforeTargets="BeforeCompile">
+		--><!-- Add default suffix if there is no InternalsVisibleTo or InternalsVisibleToSuffix defined --><!--
+		<ItemGroup Condition="@(InternalsVisibleToSuffix->Count()) == 0 AND @(InternalsVisibleTo->Count()) == 0">
+			<InternalsVisibleToSuffix Include=".Tests" />
+		</ItemGroup>
+
+		--><!-- Handle InternalsVisibleTo --><!--
+		<ItemGroup Condition="'@(InternalsVisibleTo->Count())' &gt; 0">
+			<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+				<_Parameter1>%(InternalsVisibleTo.Identity)</_Parameter1>
+			</AssemblyAttribute>
+		</ItemGroup>
+
+		--><!-- Handle InternalsVisibleToSuffix --><!--
+		<ItemGroup Condition="@(InternalsVisibleToSuffix->Count()) &gt; 0">
+			<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+				<_Parameter1>$(AssemblyName)%(InternalsVisibleToSuffix.Identity)</_Parameter1>
+			</AssemblyAttribute>
+		</ItemGroup>
+	</Target>-->
 </Project>
