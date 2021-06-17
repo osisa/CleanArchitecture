@@ -1,0 +1,12 @@
+
+Microsoft (R) .NET Framework-Dienstprogramm für starke Namen, Version 4.0.30319.0
+Copyright (c) Microsoft Corporation. Alle Rechte vorbehalten.
+
+Öffentlicher Schlüssel (Hashalgorithmus: sha1):
+00240000048000009400000006020000002400005253413100040000010001000d25ce72bcbf58
+168e4feb7ade66b081e486716007a45ee2423dc704288acf7bf9bca97fa73199080f2692272105
+f06b191ed9d681090a205c1f7496d6fe881b0c8f307b28f4764a3ab2e0df45dc329523b2cd2368
+b69add8c33541743c034d3dfc166bd506e61455a21a95406165eef1a72e058ea6dbad83e1a0ee8
+06f27abf
+
+Das öffentliche Schlüsseltoken ist 76b8a40465f0104c.

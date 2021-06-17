@@ -9,10 +9,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 	ProjectSection(SolutionItems) = preProject
 		AssemblyInfo.cs = AssemblyInfo.cs
 		BlazorHero.CleanArchitecture.DotSettings = BlazorHero.CleanArchitecture.DotSettings
+		BlazorHero.CleanArchitecture.snk = BlazorHero.CleanArchitecture.snk
 		Directory.Build.props = Directory.Build.props
 		Features.md = Features.md
 		LICENSE = LICENSE
 		Package.Build.props = Package.Build.props
+		PublicToken.txt = PublicToken.txt
 		README.md = README.md
 		SolutionInfo.cs = SolutionInfo.cs
 		SolutionInfo.vb = SolutionInfo.vb
@@ -61,19 +63,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHero.CleanArchitectur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHero.CleanArchitecture.TestInfrastructure.Tests", "BlazorHero.CleanArchitecture.TestInfrastructure.Tests\BlazorHero.CleanArchitecture.TestInfrastructure.Tests.csproj", "{3D75C37B-17D4-44D4-BF12-8C9CEA166031}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Client.Tests", "BlazorHero.CleanArchitecture.Client.Tests\BlazorHero.CleanArchitecture.Client.Tests.csproj", "{F650E8AC-6A4D-49A0-BA33-9E97C89396DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHero.CleanArchitecture.Client.Tests", "BlazorHero.CleanArchitecture.Client.Tests\BlazorHero.CleanArchitecture.Client.Tests.csproj", "{F650E8AC-6A4D-49A0-BA33-9E97C89396DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Shared.Tests", "BlazorHero.CleanArchitecture.Shared.Tests\BlazorHero.CleanArchitecture.Shared.Tests.csproj", "{2A12C208-017A-4DF5-A630-6F99EAD77FBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHero.CleanArchitecture.Shared.Tests", "BlazorHero.CleanArchitecture.Shared.Tests\BlazorHero.CleanArchitecture.Shared.Tests.csproj", "{2A12C208-017A-4DF5-A630-6F99EAD77FBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Infrastructure.Tests", "BlazorHero.CleanArchitecture.Infrastructure.Tests\BlazorHero.CleanArchitecture.Infrastructure.Tests.csproj", "{CEB83CF7-F089-42F4-AA61-11CA2EFB02F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHero.CleanArchitecture.Infrastructure.Tests", "BlazorHero.CleanArchitecture.Infrastructure.Tests\BlazorHero.CleanArchitecture.Infrastructure.Tests.csproj", "{CEB83CF7-F089-42F4-AA61-11CA2EFB02F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Infrastructure.Shared.Tests", "BlazorHero.CleanArchitecture.Infrastructure.Shared.Tests\BlazorHero.CleanArchitecture.Infrastructure.Shared.Tests.csproj", "{700D2045-4706-4669-97F4-80992BA86532}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHero.CleanArchitecture.Infrastructure.Shared.Tests", "BlazorHero.CleanArchitecture.Infrastructure.Shared.Tests\BlazorHero.CleanArchitecture.Infrastructure.Shared.Tests.csproj", "{700D2045-4706-4669-97F4-80992BA86532}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Application.Tests", "BlazorHero.CleanArchitecture.Application.Tests\BlazorHero.CleanArchitecture.Application.Tests.csproj", "{5C8BC56F-5759-4259-936D-F29F84274C85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHero.CleanArchitecture.Application.Tests", "BlazorHero.CleanArchitecture.Application.Tests\BlazorHero.CleanArchitecture.Application.Tests.csproj", "{5C8BC56F-5759-4259-936D-F29F84274C85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Domain.Tests", "BlazorHero.CleanArchitecture.Domain.Tests\BlazorHero.CleanArchitecture.Domain.Tests.csproj", "{6BF93A83-3D97-45BC-91C1-CF538F9C222F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHero.CleanArchitecture.Domain.Tests", "BlazorHero.CleanArchitecture.Domain.Tests\BlazorHero.CleanArchitecture.Domain.Tests.csproj", "{6BF93A83-3D97-45BC-91C1-CF538F9C222F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHero.CleanArchitecture.Client.Infrastructure.Tests", "BlazorHero.CleanArchitecture.Client.Infrastructure.Tests\BlazorHero.CleanArchitecture.Client.Infrastructure.Tests.csproj", "{38911F9F-9D67-4271-91D3-5F0F8D51E57D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHero.CleanArchitecture.Client.Infrastructure.Tests", "BlazorHero.CleanArchitecture.Client.Infrastructure.Tests\BlazorHero.CleanArchitecture.Client.Infrastructure.Tests.csproj", "{38911F9F-9D67-4271-91D3-5F0F8D51E57D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHero.CleanArchitecture.Server.Tests", "BlazorHero.CleanArchitecture\Server.Tests\BlazorHero.CleanArchitecture.Server.Tests\BlazorHero.CleanArchitecture.Server.Tests.csproj", "{EB6AAEC5-A3F8-4590-B5A7-4EE607AF21C7}"
 EndProject

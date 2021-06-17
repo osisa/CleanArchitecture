@@ -1,0 +1,5 @@
+
+Microsoft (R) .NET Framework-Dienstprogramm für starke Namen, Version 4.0.30319.0
+Copyright (c) Microsoft Corporation. Alle Rechte vorbehalten.
+
+Das öffentliche Schlüsseltoken ist 76b8a40465f0104c.

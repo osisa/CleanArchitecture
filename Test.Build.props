@@ -15,8 +15,7 @@
         <PackageReference Include="MSTest.TestAdapter" Version="$(MSTestTestAdapterVersion)" />
         <PackageReference Include="MSTest.TestFramework" Version="$(MSTestTestFrameworkVersion)" />
         <PackageReference Include="FluentAssertions" Version="$(FluentAssertion)" />
-        <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationVersion)" />
-        <PackageReference Include="Moq" Version="4.16.1" />
+          <PackageReference Include="Moq" Version="4.16.1" />
 
         <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />

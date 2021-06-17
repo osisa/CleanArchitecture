@@ -46,6 +46,16 @@
     <ProjectReference Include="..\..\BlazorHero.CleanArchitecture.Shared\BlazorHero.CleanArchitecture.Shared.csproj" />
     <ProjectReference Include="..\Client\BlazorHero.CleanArchitecture.Client.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="CustomTest1" /> <!-- [assembly: InternalsVisibleTo("CustomTest1")] -->
+		<InternalsVisibleTo Include="CustomTest2, PublicKey=abc" /> <!-- [assembly: InternalsVisibleTo("CustomTest2, PublicKey=abc")] -->
+		<InternalsVisibleTo Include="$(AssemblyName).Custom" /> <!-- [assembly: InternalsVisibleTo("ClassLibrary1.Custom")] -->
+
+		<InternalsVisibleToSuffix Include=".Tests" /> <!-- [assembly: InternalsVisibleTo("ClassLibrary1.Tests")] -->
+		<InternalsVisibleToSuffix Include=".FunctionalTests" /> <!-- [assembly: InternalsVisibleTo("ClassLibrary1.FunctionalTests")] -->
+	</ItemGroup>
+
   <ItemGroup>
     <Folder Include="Files\Images\ProfilePictures\" />
   </ItemGroup>

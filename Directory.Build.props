@@ -1,6 +1,5 @@
 <Project>
   <PropertyGroup>
-    <SolutionOutputPath>$(SolutionDir)..\bin</SolutionOutputPath>
     <SolutionOutputPath>$(MSBuildThisFileDirectory)bin</SolutionOutputPath>
     <MicrosoftNETTestSdkVersion>16.9.4</MicrosoftNETTestSdkVersion>
     <MSTestTestAdapterVersion>2.2.4-preview-20210331-02</MSTestTestAdapterVersion>
@@ -9,21 +8,15 @@
     <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-    <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)osisaNoPwd.snk</AssemblyOriginatorKeyFile>
+    <!--<SignAssembly>True</SignAssembly>-->
+    <!--<AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)BlazorHero.CleanArchitecture.snk</AssemblyOriginatorKeyFile>-->
     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
     <NoWarn>NU5104,NU1701;NU5125;CS8002;CS3001;CS3002;CS3003;CS3024;CS0649;CS3009;CS0067;CS3027</NoWarn>
     <LangVersion>9</LangVersion>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <SystemConfigurationVersion>5.0.0</SystemConfigurationVersion>
-    <NETCoreVersion>5.0.0-rc.1.20451.14</NETCoreVersion>
     <LibraryFramework>netstandard2.0</LibraryFramework>
-    <CompileBasic>true</CompileBasic>
     <RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>
     <GetVersion>true</GetVersion>
-    <osisaVersion>0.2.0-alpha.4968</osisaVersion>
-    <osisaTestVersion>0.2.0-alpha.4960</osisaTestVersion>
-    <osisaNPOI>0.2.2-beta.0</osisaNPOI>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <PackageVersion Condition=" '$(UseFullSemVerForNuGet)' == 'false' ">$(GitVersion_NuGetVersion)</PackageVersion>
     <PackageVersion Condition=" '$(UseFullSemVerForNuGet)' == 'true' ">$(GitVersion_FullSemVer)</PackageVersion>
@@ -43,6 +36,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)\SolutionInfo.vb" Link="Properties\SolutionInfo.vb" />
     <!--<Compile Include="$(MSBuildThisFileDirectory)\CustomDictionary.xml" Link="CustomDictionary.xml" />-->
   </ItemGroup>
+
+	<!-- Add internals visible funcitonality see https://www.meziantou.net/declaring-internalsvisibleto-in-the-csproj.htm -->
+	<ItemGroup>
+		<PackageReference Include="Meziantou.MSBuild.InternalsVisibleTo" Version="1.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net472'">
     <DefineConstants>NETFULL</DefineConstants>
@@ -66,6 +67,14 @@
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1'">
     <DefineConstants>NETCORE3_1</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net50'">
+	<DefineConstants>NET5_0</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net60'">
+		<DefineConstants>NET6_0</DefineConstants>
   </PropertyGroup>
 
   <Target Name="Info">
