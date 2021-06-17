@@ -53,21 +53,7 @@
 		</AssemblyAttribute>
 	</ItemGroup>-->
 
-	<ItemGroup Condition=" '$(IsTestProject)'==''">
-		<PackageReference Include="Meziantou.MSBuild.InternalsVisibleTo" Version="1.0.2">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-	</ItemGroup>
 
-	<ItemGroup>
-		<!--<InternalsVisibleTo Include="CustomTest1" />  [assembly: InternalsVisibleTo("CustomTest1")] 
-		<InternalsVisibleTo Include="CustomTest2, PublicKey=abc" />  [assembly: InternalsVisibleTo("CustomTest2, PublicKey=abc")] 
-		<InternalsVisibleTo Include="$(AssemblyName).Custom" />  [assembly: InternalsVisibleTo("ClassLibrary1.Custom")]--> 
-
-		<InternalsVisibleToSuffix Include=".Tests" />  
-		<!--<InternalsVisibleToSuffix Include=".FunctionalTests" />  [assembly: InternalsVisibleTo("ClassLibrary1.FunctionalTests")]--> 
-	</ItemGroup>
 
   <ItemGroup>
     <Folder Include="Files\Images\ProfilePictures\" />

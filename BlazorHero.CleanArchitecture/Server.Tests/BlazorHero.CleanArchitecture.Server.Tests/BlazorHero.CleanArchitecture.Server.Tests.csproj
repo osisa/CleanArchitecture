@@ -39,11 +39,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
-	  <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="5.0.7" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\..\..\BlazorHero.CleanArchitecture.Client.Tests\BlazorHero.CleanArchitecture.Client.Tests.csproj" />
 	  <ProjectReference Include="..\..\..\BlazorHero.CleanArchitecture.TestInfrastructure\BlazorHero.CleanArchitecture.TestInfrastructure.csproj" />
 	  <ProjectReference Include="..\..\Server\BlazorHero.CleanArchitecture.Server.csproj" />
