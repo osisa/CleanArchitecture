@@ -48,13 +48,20 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<InternalsVisibleTo Include="CustomTest1" /> <!-- [assembly: InternalsVisibleTo("CustomTest1")] -->
-		<InternalsVisibleTo Include="CustomTest2, PublicKey=abc" /> <!-- [assembly: InternalsVisibleTo("CustomTest2, PublicKey=abc")] -->
-		<InternalsVisibleTo Include="$(AssemblyName).Custom" /> <!-- [assembly: InternalsVisibleTo("ClassLibrary1.Custom")] -->
-
-		<InternalsVisibleToSuffix Include=".Tests" /> <!-- [assembly: InternalsVisibleTo("ClassLibrary1.Tests")] -->
-		<InternalsVisibleToSuffix Include=".FunctionalTests" /> <!-- [assembly: InternalsVisibleTo("ClassLibrary1.FunctionalTests")] -->
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>BlazorHero.CleanArchitecture.Server.Tests</_Parameter1>
+			<!-- We use the value of AssemblyName to declare the value of the attribute -->
+		</AssemblyAttribute>
 	</ItemGroup>
+
+	<!--<ItemGroup>
+		<InternalsVisibleTo Include="CustomTest1" /> --><!-- [assembly: InternalsVisibleTo("CustomTest1")] --><!--
+		<InternalsVisibleTo Include="CustomTest2, PublicKey=abc" /> --><!-- [assembly: InternalsVisibleTo("CustomTest2, PublicKey=abc")] --><!--
+		<InternalsVisibleTo Include="$(AssemblyName).Custom" /> --><!-- [assembly: InternalsVisibleTo("ClassLibrary1.Custom")] --><!--
+
+		<InternalsVisibleToSuffix Include=".Tests" /> --><!-- [assembly: InternalsVisibleTo("ClassLibrary1.Tests")] --><!--
+		<InternalsVisibleToSuffix Include=".FunctionalTests" /> --><!-- [assembly: InternalsVisibleTo("ClassLibrary1.FunctionalTests")] --><!--
+	</ItemGroup>-->
 
   <ItemGroup>
     <Folder Include="Files\Images\ProfilePictures\" />
