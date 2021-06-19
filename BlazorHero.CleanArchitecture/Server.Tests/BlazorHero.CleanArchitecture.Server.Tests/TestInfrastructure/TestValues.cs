@@ -14,7 +14,7 @@ using Bunit;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection; 
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
 {
@@ -24,9 +24,13 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
 
         public const string Code = "123ABC";
 
+        public const string DefaultPermission = nameof(DefaultPermission);
+
         public const string Id = "4734f9bf-4a08-4973-9e33-1aaf44ddc620";
 
         public const string Origin = "https://example.net";
+
+        public const string Resource = nameof(Resource);
 
         public const string Route = "account/reset-password";
 
@@ -107,6 +111,18 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
 
         #endregion
 
+        #region Public Methods and Operators
+
+        public static ClaimsPrincipal CreateClaimsPrincipal(params Claim[] additionalClaims)
+        {
+            var claims = new List<Claim>(new[] { CreateNameIdentifierClaim() });
+            claims.AddRange(additionalClaims);
+
+            return new ClaimsPrincipal(new ClaimsIdentity(claims));
+        }
+
+        #endregion
+
         #region Methods
 
         internal static IWebHostBuilder CreateWebHostBuilder(string environment = Environments.Development)
@@ -133,11 +149,12 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
                 .ConfigureServices(s => s.AddHttpContextAccessor());
         }
 
-
-        public static ClaimsPrincipal CreateClaimsPrincipal()
+        private static Claim CreateNameIdentifierClaim(string issuer = DefaultIssuer)
         {
-            return new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, Id) }));
+            return new (ClaimTypes.NameIdentifier, Id, issuer);
         }
+
+        private const string DefaultIssuer = nameof(DefaultIssuer);
 
         #endregion
 

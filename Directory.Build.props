@@ -2,8 +2,8 @@
   <PropertyGroup>
     <SolutionOutputPath>$(MSBuildThisFileDirectory)bin</SolutionOutputPath>
     <MicrosoftNETTestSdkVersion>16.9.4</MicrosoftNETTestSdkVersion>
-    <MSTestTestAdapterVersion>2.2.4-preview-20210331-02</MSTestTestAdapterVersion>
-    <MSTestTestFrameworkVersion>2.2.4-preview-20210331-02</MSTestTestFrameworkVersion>
+    <MSTestTestAdapterVersion>2.2.4</MSTestTestAdapterVersion>
+    <MSTestTestFrameworkVersion>2.2.4</MSTestTestFrameworkVersion>
     <FluentAssertion>5.10.3</FluentAssertion>
     <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

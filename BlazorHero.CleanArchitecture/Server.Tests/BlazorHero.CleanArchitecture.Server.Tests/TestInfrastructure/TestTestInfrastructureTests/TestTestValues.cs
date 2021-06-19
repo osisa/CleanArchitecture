@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure.TestTestInfrastructure
+namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure.TestTestInfrastructureTests
 {
     [TestClass]
     public class TestTestValues
