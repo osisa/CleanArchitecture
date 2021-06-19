@@ -25,6 +25,8 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
 
             // Assert
             result.Data.Count.Should().Be(SeededUserCount);
+            result.Data[0].Id.Should().Be(Id0);
+            result.Data[1].Id.Should().Be(Id1);
         }
 
         [TestMethod]
@@ -34,10 +36,10 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var unitUnderTest = CreateUnitUnderTest();
 
            // Act
-            var result = unitUnderTest.GetAsync(Id).Result;
+            var result = unitUnderTest.GetAsync(Id0).Result;
 
             // Assert
-            result.Data.Id.Should().Be(Id);
+            result.Data.Id.Should().Be(Id0);
         }
         
         private static IUserService CreateUnitUnderTest()

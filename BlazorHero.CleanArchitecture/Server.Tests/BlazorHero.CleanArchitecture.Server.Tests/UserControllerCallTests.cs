@@ -10,8 +10,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 
-using BlazorHero.CleanArchitecture.Application.Models.Identity;
+//using BlazorHero.CleanArchitecture.Application.Models.Identity;
 using BlazorHero.CleanArchitecture.Application.Responses.Identity;
+using BlazorHero.CleanArchitecture.Infrastructure.Models.Identity;
 using BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure;
 using BlazorHero.CleanArchitecture.Shared.Wrapper;
 using BlazorHero.CleanArchitecture.TestInfrastructure;
@@ -70,7 +71,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             using (var client = server.CreateClient())
             {
                // Act
-                var result = client.GetAsync<Result<UserResponse>>($"/api/identity/user/{Id}");
+                var result = client.GetAsync<Result<UserResponse>>($"/api/identity/user/{Id0}");
 
                 // Assert
                 result.Succeeded.Should().BeTrue();
@@ -114,12 +115,12 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
                     
                     var userManager = server.Services.GetRequiredService<UserManager<BlazorHeroUser>>();
                     var userStore = server.Services.GetRequiredService<IUserStore<BlazorHeroUser>>();
-                    var user = userStore.FindByIdAsync(Id, CancellationToken.None).Result;//client.GetAsync<Result<UserResponse>>($"/api/identity/user/{Id}").Data;
+                    var user = userStore.FindByIdAsync(Id0, CancellationToken.None).Result;//client.GetAsync<Result<UserResponse>>($"/api/identity/user/{Id}").Data;
                     var code = userManager.GenerateEmailConfirmationTokenAsync(user).Result;
                     var code64 = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
                    // Act
-                    var result = client.GetAsync($"/api/identity/user/confirm-email?userId={Id}&code={code64}").Result;
+                    var result = client.GetAsync($"/api/identity/user/confirm-email?userId={Id0}&code={code64}").Result;
 
                     // Assert
                     result.EnsureSuccessStatusCode();
@@ -221,7 +222,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             using (var client = server.CreateClient())
             {
                // Act
-                var result = client.GetAsync<Result<UserRolesResponse>>($"/api/identity/user/roles/{Id}");
+                var result = client.GetAsync<Result<UserRolesResponse>>($"/api/identity/user/roles/{Id0}");
 
                 // Assert
                 result.Succeeded.Should().BeTrue();
@@ -311,7 +312,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             using (var client = server.CreateClient())
             {
                // Act
-                var result = client.PutAsync($"/api/identity/user/roles/{Id}", UpdateUserRolesRequest);
+                var result = client.PutAsync($"/api/identity/user/roles/{Id0}", UpdateUserRolesRequest);
 
                 // Assert
                 result.EnsureSuccessStatusCode();

@@ -28,6 +28,9 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
 
         public const string Id = "4734f9bf-4a08-4973-9e33-1aaf44ddc620";
 
+        public const string Id0 = "64999b63-d952-4898-841c-c2621afd170f";
+        public const string Id1 = "789aba66-2e16-40a8-81f8-4156d18959b5";
+
         public const string Origin = "https://example.net";
 
         public const string Resource = nameof(Resource);
@@ -62,7 +65,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
                                                                Email = TestUserValues.Email,
                                                                EmailConfirmed = true,
                                                                FirstName = TestUserValues.FirstName,
-                                                               Id = Id,
+                                                               Id = Id0,
                                                                IsActive = true,
                                                                LastName = TestUserValues.LastName,
                                                                PhoneNumber = null,
@@ -74,27 +77,27 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
                                                                      {
                                                                          UserRoles = new List<UserRoleModel>
                                                                                      {
-                                                                                         new() { RoleName = "Administrator", Selected = true },
-                                                                                         new() { RoleName = "Basic", Selected = false }
+                                                                                         new() { RoleName = "Basic", Selected = true, RoleDescription = "Basic role with default permissions"},
+                                                                                         new() { RoleName = "Administrator", Selected = false, RoleDescription = "Administrator role with full permissions" }
                                                                                      }
                                                                      };
 
         public static readonly ResetPasswordRequest ResetPasswordRequest = new()
                                                                            {
                                                                                Email = TestUserValues.Email,
-                                                                               Password = TestUserValues.Password,
+                                                                               Password = BlazorHero.CleanArchitecture.Shared.Constants.User.UserConstants.DefaultPassword,
                                                                                Token = Token
                                                                            };
 
         public static readonly ToggleUserStatusRequest ToggleUserStatusRequest = new()
                                                                                  {
                                                                                      ActivateUser = true,
-                                                                                     UserId = Id
+                                                                                     UserId = Id0
                                                                                  };
 
         public static readonly UpdateUserRolesRequest UpdateUserRolesRequest = new()
                                                                                {
-                                                                                   UserId = Id,
+                                                                                   UserId = Id0,
                                                                                    UserRoles = UserRolesResponse.UserRoles
                                                                                };
 
@@ -162,19 +165,19 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
         {
             #region Constants
 
-            public const string Email = "mukesh@blazorhero.com";
+            public const string Email = "john@blazorhero.com";
 
-            public const string FirstName = "Mukesh";
+            public const string FirstName = "John";
 
-            public const string LastName = "Murugan";
+            public const string LastName = "Doe";
 
-            public const string Password = "Password1$";
+            public const string Password = BlazorHero.CleanArchitecture.Shared.Constants.User.UserConstants.DefaultPassword;
 
             public const string PhoneNumber = "123";
 
             public const string ProfilePicture = @"http://profilepicture.png";
 
-            public const string UserName = "mukesh";
+            public const string UserName = "johndoe";
 
             #endregion
         }

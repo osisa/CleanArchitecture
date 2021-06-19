@@ -43,4 +43,8 @@
 	  <ProjectReference Include="..\..\..\BlazorHero.CleanArchitecture.TestInfrastructure\BlazorHero.CleanArchitecture.TestInfrastructure.csproj" />
 	  <ProjectReference Include="..\..\Server\BlazorHero.CleanArchitecture.Server.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.10.0" />
+	</ItemGroup>
 </Project>

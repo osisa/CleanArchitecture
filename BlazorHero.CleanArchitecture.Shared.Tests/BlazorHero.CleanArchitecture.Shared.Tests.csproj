@@ -4,5 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
-	<Import Project="..\Test.Build.props"/>
+	<Import Project="..\Test.Build.props" />
+
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.10.0" />
+	</ItemGroup>
 </Project>

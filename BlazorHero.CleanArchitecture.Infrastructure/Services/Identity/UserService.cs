@@ -66,6 +66,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Services.Identity
             {
                 return await Result.FailAsync(string.Format(_localizer["Username {0} is already taken."], request.UserName));
             }
+
             var user = new BlazorHeroUser
             {
                 Email = request.Email,

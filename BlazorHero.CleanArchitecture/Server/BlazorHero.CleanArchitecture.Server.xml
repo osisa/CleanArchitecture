@@ -4,6 +4,26 @@
         <name>BlazorHero.CleanArchitecture.Server</name>
     </assembly>
     <members>
+        <member name="F:Info.SolutionInfo.Company">
+            <summary>
+                Solution wide company name for the assemblyInfo files.
+            </summary>
+        </member>
+        <member name="F:Info.SolutionInfo.Copyright">
+            <summary>
+                Solution wide copyright description for the assemblyInfo files.
+            </summary>
+        </member>
+        <member name="F:Info.SolutionInfo.Product">
+            <summary>
+                Solution wide product description for the assemblyInfo files.
+            </summary>
+        </member>
+        <member name="F:Info.SolutionInfo.Trademark">
+            <summary>
+                Solution wide trademark description for the assemblyInfo files.
+            </summary>
+        </member>
         <member name="F:BlazorHero.CleanArchitecture.Server.Controllers.BaseApiController`1._mediatorInstance">
             <summary>
             Abstract BaseApi Controller Class

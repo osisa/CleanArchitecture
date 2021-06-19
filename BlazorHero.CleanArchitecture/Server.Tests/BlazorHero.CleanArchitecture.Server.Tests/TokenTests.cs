@@ -4,7 +4,9 @@
 // </copyright>
 //  --------------------------------------------------------------------------------------------------------------------
 
-using BlazorHero.CleanArchitecture.Application.Models.Identity;
+//using BlazorHero.CleanArchitecture.Application.Models.Identity;
+
+using BlazorHero.CleanArchitecture.Infrastructure.Models.Identity;
 
 using FluentAssertions;
 
