@@ -1,9 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
+using AutoMapper;
+
+using BlazorHero.CleanArchitecture.Application.Interfaces.Services;
+using BlazorHero.CleanArchitecture.Application.Interfaces.Services.Identity;
 using BlazorHero.CleanArchitecture.Application.Requests.Identity;
 using BlazorHero.CleanArchitecture.Application.Responses.Identity;
+using BlazorHero.CleanArchitecture.Infrastructure.Models.Identity;
+using BlazorHero.CleanArchitecture.Infrastructure.Services.Identity;
 using BlazorHero.CleanArchitecture.Shared.Constants.Permission;
 using BlazorHero.CleanArchitecture.TestInfrastructure;
 using BlazorHero.CleanArchitecture.TestInfrastructure.Extensions;
@@ -11,10 +18,20 @@ using BlazorHero.CleanArchitecture.TestInfrastructure.Users;
 
 using Bunit;
 
+using Castle.Core.Logging;
+
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+
+using Moq;
 
 namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
 {
@@ -32,6 +49,8 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
         public const string Id1 = "789aba66-2e16-40a8-81f8-4156d18959b5";
 
         public const string Origin = "https://example.net";
+
+        public const string Root = "http://localhost/";
 
         public const string Resource = nameof(Resource);
 
@@ -72,6 +91,15 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
                                                                ProfilePictureDataUrl = null,
                                                                UserName = TestUserValues.UserName
                                                            };
+
+
+        public static readonly BlazorHeroUser User=new()
+                                                   {
+                                                       FirstName = TestUserValues.FirstName, 
+                                                       LastName =  TestUserValues.LastName,
+                                                       Email = TestUserValues.Email,
+                                                       UserName = TestUserValues.UserName
+                                                   };
 
         public static readonly UserRolesResponse UserRolesResponse = new()
                                                                      {
@@ -114,6 +142,9 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
 
         #endregion
 
+
+
+
         #region Public Methods and Operators
 
         public static ClaimsPrincipal CreateClaimsPrincipal(params Claim[] additionalClaims)
@@ -155,6 +186,54 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
         private static Claim CreateNameIdentifierClaim(string issuer = DefaultIssuer)
         {
             return new (ClaimTypes.NameIdentifier, Id, issuer);
+        }
+
+
+        internal static IUserService CreateUserService()
+        {
+
+
+            var userManager =new Mock<UserManager<BlazorHeroUser>>(); // CreateUserManager();//
+            var mapper = new Mock<IMapper>();
+            var roleManager = new Mock<RoleManager<BlazorHeroRole>>();
+            var mailService = new Mock<IMailService>();
+            var localizer = new Mock<IStringLocalizer<UserService>>();
+            var excelService = new Mock<IExcelService>();
+            var currentUserService = new Mock<ICurrentUserService>();
+
+            return new UserService(userManager.Object, mapper.Object, roleManager.Object, mailService.Object, localizer.Object, excelService.Object, currentUserService.Object);
+        }
+
+        internal static IUserStore<BlazorHeroUser> CreateUserStore()
+        {
+
+
+            //var userManager = CreateUserManager();//new Mock<UserManager<BlazorHeroUser>>();
+            //var mapper = new Mock<IMapper>();
+            //var roleManager = new Mock<RoleManager<BlazorHeroRole>>();
+            //var mailService = new Mock<IMailService>();
+            //var localizer = new Mock<IStringLocalizer<UserService>>();
+            //var excelService = new Mock<IExcelService>();
+            //var currentUserService = new Mock<ICurrentUserService>();
+
+            var dbContext = new Mock<DbContext>();
+
+            return new UserStore<BlazorHeroUser>(dbContext.Object);
+        }
+
+        internal static UserManager<BlazorHeroUser> CreateUserManager()
+        {
+            var userStore = new Mock<IUserStore<BlazorHeroUser>>();
+            var optionsAccessor = new Mock<IOptions<IdentityOptions>>();
+            var passwordHasher = new Mock<IPasswordHasher<BlazorHeroUser>>();
+            var userValidators = new Mock<IEnumerable<IUserValidator<BlazorHeroUser>>>();
+            var passwordValidators = new Mock<IEnumerable<IPasswordValidator<BlazorHeroUser>>>();
+            var keyNormalizer = new Mock<ILookupNormalizer>();
+            var errors = new IdentityErrorDescriber();
+            var services = new Mock<IServiceProvider>();
+            var logger = new Mock<ILogger<UserManager<BlazorHeroUser>>>();
+
+            return new UserManager<BlazorHeroUser>(userStore.Object, optionsAccessor.Object, passwordHasher.Object, userValidators.Object, passwordValidators.Object, keyNormalizer.Object, errors, services.Object, logger.Object);
         }
 
         private const string DefaultIssuer = nameof(DefaultIssuer);

@@ -2,7 +2,6 @@
 
 using BlazorHero.CleanArchitecture.Application.Interfaces.Services;
 using BlazorHero.CleanArchitecture.Application.Interfaces.Services.Identity;
-using BlazorHero.CleanArchitecture.Client.Infrastructure.Managers.Identity.Users;
 using BlazorHero.CleanArchitecture.Infrastructure.Models.Identity;
 using BlazorHero.CleanArchitecture.Infrastructure.Services.Identity;
 using BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure;
@@ -10,7 +9,6 @@ using BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure;
 using FluentAssertions;
 
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -73,11 +71,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         
         private static IUserService CreateUnitUnderTest()
         {
-            //var hostBuilder = CreateWebHostBuilder();
-            //var services = hostBuilder.Build().Services;
-            
-            //return services.GetRequiredService<IUserService>();
-            var userManager = new Mock<UserManager<BlazorHeroUser>>();
+            var userManager = CreateUserManager();//new Mock<UserManager<BlazorHeroUser>>();
             var mapper = new Mock<IMapper>();
             var roleManager = new Mock<RoleManager<BlazorHeroRole>>();
             var mailService = new Mock<IMailService>();
@@ -85,7 +79,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var excelService = new Mock<IExcelService>();
             var currentUserService = new Mock<ICurrentUserService>();
 
-            return new UserService(userManager.Object, mapper.Object, roleManager.Object, mailService.Object, localizer.Object, excelService.Object, currentUserService.Object);
+            return new UserService(userManager, mapper.Object, roleManager.Object, mailService.Object, localizer.Object, excelService.Object, currentUserService.Object);
         }
         #endregion
     }

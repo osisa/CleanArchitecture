@@ -45,6 +45,7 @@
 	<ItemGroup>
 	  <!--<ProjectReference Include="..\..\..\BlazorHero.CleanArchitecture.Client.Tests\BlazorHero.CleanArchitecture.Client.Tests.csproj" />-->
 	  <ProjectReference Include="..\..\..\BlazorHero.CleanArchitecture.TestInfrastructure\BlazorHero.CleanArchitecture.TestInfrastructure.csproj" />
+	  <ProjectReference Include="..\..\..\Common.Web.Contracts\Common.Web.Contracts.csproj" />
 	  <ProjectReference Include="..\..\Server\BlazorHero.CleanArchitecture.Server.csproj" />
 	</ItemGroup>
 
