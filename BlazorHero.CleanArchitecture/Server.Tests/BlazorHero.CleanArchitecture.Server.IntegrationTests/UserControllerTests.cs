@@ -3,33 +3,29 @@
 using BlazorHero.CleanArchitecture.Application.Interfaces.Services.Identity;
 using BlazorHero.CleanArchitecture.Application.Responses.Identity;
 using BlazorHero.CleanArchitecture.Server.Controllers.Identity;
-using BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure;
 using BlazorHero.CleanArchitecture.Shared.Wrapper;
 
 using FluentAssertions;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Moq;
+using static BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructure.TestValues;
 
-using static BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure.TestValues;
-
-namespace BlazorHero.CleanArchitecture.Server.Tests
+namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
 {
     [TestClass]
     public class UserControllerTests
     {
-        #region Public Methods and Operators
-
         [TestMethod]
         public void GetAll()
         {
             // Arrange
             var unitUnderTest = CreateUnitUnderTest();
 
-            // Act
-            var result = unitUnderTest.GetAll().Result;
+           // Act
+            var result =  unitUnderTest.GetAll().Result;
 
             // Assert
             var okObjectResult = (OkObjectResult)result;
@@ -52,21 +48,13 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             resultValue.Data.Count.Should().Be(SeededUserCount);
         }
 
-        #endregion
-
-        #region Methods
-
         private static UserController CreateUnitUnderTest()
         {
-            var list= new List<UserResponse>(new[] { TestValues.UserResponse });
-            var userService = new Mock<IUserService>();
-            userService
-                .Setup(i => i.GetAllAsync())
-                .ReturnsAsync(Result<List<UserResponse>>.Success(list));
+            var hostBuilder = CreateWebHostBuilder();
+            var services = hostBuilder.Build().Services;
+            var userService= services.GetRequiredService<IUserService>();
 
-            return new UserController(userService.Object);
+            return new UserController(userService);
         }
-
-        #endregion
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BlazorHero.CleanArchitecture.Server.Controllers.Identity
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/identity/user")]
     [ApiController]
     public class UserController : ControllerBase

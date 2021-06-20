@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
     <SolutionOutputPath>$(MSBuildThisFileDirectory)bin</SolutionOutputPath>
-    <MicrosoftNETTestSdkVersion>16.9.4</MicrosoftNETTestSdkVersion>
+    <MicrosoftNETTestSdkVersion>16.10.0</MicrosoftNETTestSdkVersion>
     <MSTestTestAdapterVersion>2.2.4</MSTestTestAdapterVersion>
     <MSTestTestFrameworkVersion>2.2.4</MSTestTestFrameworkVersion>
     <FluentAssertion>5.10.3</FluentAssertion>
@@ -48,6 +48,7 @@
 		<!--<InternalsVisibleTo Include="CustomTest2, PublicKey=abc" />  [assembly: InternalsVisibleTo("CustomTest2, PublicKey=abc")] -->
 		<!--<InternalsVisibleTo Include="$(AssemblyName).Custom" />  [assembly: InternalsVisibleTo("ClassLibrary1.Custom")]-->
 		<InternalsVisibleToSuffix Include=".Tests" />
+		<InternalsVisibleToSuffix Include=".IntegrationTests" />
 		<!--<InternalsVisibleToSuffix Include=".FunctionalTests" />  [assembly: InternalsVisibleTo("ClassLibrary1.FunctionalTests")]-->
   </ItemGroup>
 

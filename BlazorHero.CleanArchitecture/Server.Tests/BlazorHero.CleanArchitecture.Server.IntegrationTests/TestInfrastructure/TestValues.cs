@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
+namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructure
 {
     internal static class TestValues
     {
@@ -128,29 +128,29 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
 
         #region Methods
 
-        //internal static IWebHostBuilder CreateWebHostBuilder(string environment = Environments.Development)
-        //{
-        //    using var ctx = new TestContext();
+        internal static IWebHostBuilder CreateWebHostBuilder(string environment = Environments.Development)
+        {
+            using var ctx = new TestContext();
 
-        //    //var authContext = ctx.AddTestAuthorization();
-        //    //authContext.SetAuthorized("TEST USER");
-        //    //authContext.SetRoles("admin", "superuser");
-        //    //authContext.SetPolicies("content-editor");
-        //    //authContext.SetClaims(new Claim(ClaimTypes.Email, "test@example.com"));
+            //var authContext = ctx.AddTestAuthorization();
+            //authContext.SetAuthorized("TEST USER");
+            //authContext.SetRoles("admin", "superuser");
+            //authContext.SetPolicies("content-editor");
+            //authContext.SetClaims(new Claim(ClaimTypes.Email, "test@example.com"));
 
-        //    return new WebHostBuilder()
-        //        .UseEnvironment(environment) // You can set the environment you want (development, staging, production)
-        //        //.UseEnvironment("Development") // You can set the environment you want (development, staging, production)
-        //        .UseConfiguration(
-        //            new ConfigurationBuilder()
-        //                .AddJsonFile($"appsettings.{environment}.json") //the file is set to be copied to the output directory if newer
-        //                .Build()
-        //        )
-        //        .UseStartup<TestStartup>()
-        //        .ConfigureServices(s => s.AddTestUser(DefaultUser))
-        //        .ConfigureServices(s => s.AddSingleton<IAuthenticationHandler, TestAuthenticationHandler>()) // Startup class of your web app project
-        //        .ConfigureServices(s => s.AddHttpContextAccessor());
-        //}
+            return new WebHostBuilder()
+                .UseEnvironment(environment) // You can set the environment you want (development, staging, production)
+                //.UseEnvironment("Development") // You can set the environment you want (development, staging, production)
+                .UseConfiguration(
+                    new ConfigurationBuilder()
+                        .AddJsonFile($"appsettings.{environment}.json") //the file is set to be copied to the output directory if newer
+                        .Build()
+                )
+                .UseStartup<TestStartup>()
+                .ConfigureServices(s => s.AddTestUser(DefaultUser))
+                .ConfigureServices(s => s.AddSingleton<IAuthenticationHandler, TestAuthenticationHandler>()) // Startup class of your web app project
+                .ConfigureServices(s => s.AddHttpContextAccessor());
+        }
 
         private static Claim CreateNameIdentifierClaim(string issuer = DefaultIssuer)
         {

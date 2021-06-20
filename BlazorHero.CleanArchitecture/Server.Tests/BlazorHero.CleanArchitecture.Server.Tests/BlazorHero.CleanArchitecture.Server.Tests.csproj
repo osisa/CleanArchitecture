@@ -7,7 +7,11 @@
 	<Import Project="..\..\..\Test.Build.props" />
 
 	<ItemGroup>
+	  <Compile Remove="HostServicesTests.cs" />
+	  <Compile Remove="IdentityTests.cs" />
 	  <Compile Remove="TestInfrastructure\TestUserService.cs" />
+	  <Compile Remove="TokenTests.cs" />
+	  <Compile Remove="UserControllerCallTests.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -39,12 +43,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\BlazorHero.CleanArchitecture.Client.Tests\BlazorHero.CleanArchitecture.Client.Tests.csproj" />
+	  <!--<ProjectReference Include="..\..\..\BlazorHero.CleanArchitecture.Client.Tests\BlazorHero.CleanArchitecture.Client.Tests.csproj" />-->
 	  <ProjectReference Include="..\..\..\BlazorHero.CleanArchitecture.TestInfrastructure\BlazorHero.CleanArchitecture.TestInfrastructure.csproj" />
 	  <ProjectReference Include="..\..\Server\BlazorHero.CleanArchitecture.Server.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.10.0" />
-	</ItemGroup>
 </Project>
