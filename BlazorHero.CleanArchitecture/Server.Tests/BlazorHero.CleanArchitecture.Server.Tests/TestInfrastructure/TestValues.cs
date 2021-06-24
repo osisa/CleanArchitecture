@@ -18,6 +18,7 @@ using BlazorHero.CleanArchitecture.TestInfrastructure.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -151,19 +152,27 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
 
         #region Methods
 
-        internal static UserManager<BlazorHeroUser> CreateUserManager()
+        internal static UserManager<BlazorHeroUser> CreateBlazorHeroUserManager()
         {
-            var userStore = new Mock<IUserStore<BlazorHeroUser>>();
+            var store = new Mock<IUserStore<BlazorHeroUser>>(); // CreateUserStore(); // 
+            var userQueryable=store.As<IQueryableUserStore<BlazorHeroUser>>();
+
+            var users = new[] { User }.AsQueryable();
+
+            userQueryable.Setup(i => i.Users).Returns(users);
+            //userQueryable.Setup(i => i.GetEnumerator()).Returns(((IEnumerable<BlazorHeroUser>)new [] { User }).GetEnumerator());
+            //store.SetupGet(i=>i.)
+
             var optionsAccessor = new Mock<IOptions<IdentityOptions>>();
             var passwordHasher = new Mock<IPasswordHasher<BlazorHeroUser>>();
-            var userValidators = new Mock<IEnumerable<IUserValidator<BlazorHeroUser>>>();
-            var passwordValidators = new Mock<IEnumerable<IPasswordValidator<BlazorHeroUser>>>();
+            var userValidators = new List<IUserValidator < BlazorHeroUser >>(new [] { new Mock<IUserValidator<BlazorHeroUser>>().Object});
+            var passwordValidators = new List<IPasswordValidator<BlazorHeroUser>>(new [] {new Mock<IPasswordValidator<BlazorHeroUser>>().Object});
             var keyNormalizer = new Mock<ILookupNormalizer>();
             var errors = new IdentityErrorDescriber();
             var services = new Mock<IServiceProvider>();
             var logger = new Mock<ILogger<UserManager<BlazorHeroUser>>>();
 
-            return new UserManager<BlazorHeroUser>(userStore.Object, optionsAccessor.Object, passwordHasher.Object, userValidators.Object, passwordValidators.Object, keyNormalizer.Object, errors, services.Object, logger.Object);
+            return new UserManager<BlazorHeroUser>(store.Object, optionsAccessor.Object, passwordHasher.Object, userValidators, passwordValidators, keyNormalizer.Object, errors, services.Object, logger.Object);
         }
 
         internal static IUserService CreateUserService()
@@ -190,7 +199,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
             //var currentUserService = new Mock<ICurrentUserService>();
 
             var dbContext = new Mock<DbContext>();
-
+            
             return new UserStore<BlazorHeroUser>(dbContext.Object);
         }
 

@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 
 using BlazorHero.CleanArchitecture.Application.Interfaces.Services;
-using BlazorHero.CleanArchitecture.Application.Interfaces.Services.Identity;
 using BlazorHero.CleanArchitecture.Infrastructure.Models.Identity;
 using BlazorHero.CleanArchitecture.Infrastructure.Services.Identity;
-using BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure;
 
 using FluentAssertions;
 
@@ -22,6 +20,18 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
     public class UserServiceTests
     {
         #region Public Methods and Operators
+
+        [TestMethod]
+        public void Constructor()
+        {
+            // Arrange
+
+            // Act
+            var result = CreateUnitUnderTest();
+
+            // Assert
+            result.Should().NotBeNull();
+        }
 
         [TestMethod]
         public void GetAll()
@@ -54,8 +64,6 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             //result.Data[1].Id.Should().Be(Id1);
         }
 
-
-
         [TestMethod]
         public void Get()
         {
@@ -69,17 +77,17 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             result.Data.Id.Should().Be(Id0);
         }
         
-        private static IUserService CreateUnitUnderTest()
+        private static UserService CreateUnitUnderTest()
         {
-            var userManager = CreateUserManager();//new Mock<UserManager<BlazorHeroUser>>();
-            var mapper = new Mock<IMapper>();
-            var roleManager = new Mock<RoleManager<BlazorHeroRole>>();
-            var mailService = new Mock<IMailService>();
-            var localizer = new Mock<IStringLocalizer<UserService>>();
-            var excelService = new Mock<IExcelService>();
-            var currentUserService = new Mock<ICurrentUserService>();
+            var userManager = CreateBlazorHeroUserManager();//new Mock<UserManager<BlazorHeroUser>>();
+            var mapper = new Mock<IMapper>().Object;
+            var roleManager = new Mock<RoleManager<BlazorHeroRole>>().Object;
+            var mailService = new Mock<IMailService>().Object;
+            var localizer = new Mock<IStringLocalizer<UserService>>().Object;
+            var excelService = new Mock<IExcelService>().Object;
+            var currentUserService = new Mock<ICurrentUserService>().Object;
 
-            return new UserService(userManager, mapper.Object, roleManager.Object, mailService.Object, localizer.Object, excelService.Object, currentUserService.Object);
+            return new UserService(userManager, mapper, roleManager, mailService, localizer, excelService, currentUserService);
         }
         #endregion
     }
