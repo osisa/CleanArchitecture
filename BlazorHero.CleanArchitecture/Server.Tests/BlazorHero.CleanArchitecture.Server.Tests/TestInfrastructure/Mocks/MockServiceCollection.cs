@@ -74,7 +74,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure.Mocks
 
         private static ILookupNormalizer CreateKeyNormalizer() => new Mock<ILookupNormalizer>().Object;
 
-        private static ILogger<BlazorHeroUser> CreateLogger() => new Mock<ILogger<BlazorHeroUser>>().Object;
+        private static ILogger<UserManager<BlazorHeroUser>> CreateLogger() => new Mock<ILogger<UserManager<BlazorHeroUser>>>().Object;
 
         private static IPasswordHasher<BlazorHeroUser> CreatePasswordHasher() => new Mock<IPasswordHasher<BlazorHeroUser>>().Object;
 

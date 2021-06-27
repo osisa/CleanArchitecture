@@ -9,8 +9,10 @@ using BlazorHero.CleanArchitecture.Application.Interfaces.Services.Identity;
 using BlazorHero.CleanArchitecture.Application.Responses.Identity;
 using BlazorHero.CleanArchitecture.Infrastructure.Models.Identity;
 using BlazorHero.CleanArchitecture.Infrastructure.Services.Identity;
+using BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure.Mocks;
 
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -50,8 +52,16 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
             //var services = new Mock<IServiceProvider>();
             //var logger = new Mock<ILogger<UserManager<BlazorHeroUser>>>();
 
+            var serviceCollection = new ServiceCollection();
+            MockServiceProvider.ConfigureServices(serviceCollection);
+            serviceCollection.AddTransient<UserManager<BlazorHeroUser>>();
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+            
+
+            return serviceProvider.GetService<UserManager<BlazorHeroUser>>();
+
             //return new UserManager<BlazorHeroUser>(store, optionsAccessor.Object, passwordHasher.Object, userValidators, passwordValidators, keyNormalizer.Object, errors, services.Object, logger.Object);
-            return manager.Object;
+            //return manager.Object;
         }
 
         //public DbContext CreateDbContext()
