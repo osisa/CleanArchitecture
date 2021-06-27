@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 using BlazorHero.CleanArchitecture.Infrastructure.Models.Identity;
 using BlazorHero.CleanArchitecture.TestInfrastructure;
 
-using Bunit;
-
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -19,10 +16,13 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure.Mocks
 {
     public class MockUserManager : UserManager<BlazorHeroUser>
     {
-        #region Constructors and Destructors
-
+        #region Fields
 
         private readonly IList<BlazorHeroUser> _users = new List<BlazorHeroUser> { TestValues.User };
+
+        #endregion
+
+        #region Constructors and Destructors
 
         public MockUserManager()
             : base(CreateUserStore(), CreateIdentityOptions(), CreatePasswordHasher(), CreateUserValidators(), CreatePasswordValidators(), CreateKeyNormalizer(), CreateIdentityErrorDescriber(), CreateServiceProvider(), CreateLogger())
@@ -31,29 +31,37 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure.Mocks
 
         #endregion
 
+        #region Public Properties
+
+        public override IQueryable<BlazorHeroUser> Users => new TestAsyncEnumerable<BlazorHeroUser>(_users);
+
+        #endregion
+
         #region Public Methods and Operators
 
         public override Task<IdentityResult> CreateAsync(BlazorHeroUser user) => Task.FromResult(IdentityResult.Success);
-        
-        private static IUserStore<BlazorHeroUser> CreateUserStore() => TestValueFactory.CreateUserStore();
+
+        #endregion
+
+        #region Methods
+
+        private static IdentityErrorDescriber CreateIdentityErrorDescriber() => new();
 
         private static IOptions<IdentityOptions> CreateIdentityOptions() => new Mock<IOptions<IdentityOptions>>().Object;
 
-        private static IPasswordHasher<BlazorHeroUser> CreatePasswordHasher() => new Mock<IPasswordHasher<BlazorHeroUser>>().Object;
-
-        private static IEnumerable<IUserValidator<BlazorHeroUser>> CreateUserValidators() => new List<IUserValidator<BlazorHeroUser>>(new[] { new Mock<IUserValidator<BlazorHeroUser>>().Object });
-
-        private static IEnumerable<IPasswordValidator<BlazorHeroUser>> CreatePasswordValidators() => new List<IPasswordValidator<BlazorHeroUser>>(new[] { new Mock<IPasswordValidator<BlazorHeroUser>>().Object });
-        
         private static ILookupNormalizer CreateKeyNormalizer() => new Mock<ILookupNormalizer>().Object;
-
-        private static IdentityErrorDescriber CreateIdentityErrorDescriber() => new ();
-
-        private static IServiceProvider CreateServiceProvider() => new Mock<IServiceProvider>().Object;
 
         private static ILogger<UserManager<BlazorHeroUser>> CreateLogger() => new Mock<ILogger<UserManager<BlazorHeroUser>>>().Object;
 
-        public override IQueryable<BlazorHeroUser> Users => new TestAsyncEnumerable<BlazorHeroUser>(_users);
+        private static IPasswordHasher<BlazorHeroUser> CreatePasswordHasher() => new Mock<IPasswordHasher<BlazorHeroUser>>().Object;
+
+        private static IEnumerable<IPasswordValidator<BlazorHeroUser>> CreatePasswordValidators() => new List<IPasswordValidator<BlazorHeroUser>>(new[] { new Mock<IPasswordValidator<BlazorHeroUser>>().Object });
+
+        private static IServiceProvider CreateServiceProvider() => new Mock<IServiceProvider>().Object;
+
+        private static IUserStore<BlazorHeroUser> CreateUserStore() => TestValueFactory.CreateUserStore();
+
+        private static IEnumerable<IUserValidator<BlazorHeroUser>> CreateUserValidators() => new List<IUserValidator<BlazorHeroUser>>(new[] { new Mock<IUserValidator<BlazorHeroUser>>().Object });
 
         #endregion
     }
@@ -90,5 +98,4 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure.Mocks
     //dbContextMock
     //    .Setup(p => p.Set<BlazorHeroUser>())
     //    .Returns(() => dbSet);
-
 }

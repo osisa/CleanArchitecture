@@ -12,6 +12,7 @@ using BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure.Mocks;
 using FluentAssertions;
 
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -85,23 +86,20 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         {
             var userManager = new MockUserManager();//TestValueFactory.CreateBlazorHeroUserManager();//new Mock<UserManager<BlazorHeroUser>>();
 
-            var config = new MapperConfiguration(cfg => {
-                cfg.CreateMap<BlazorHeroUser, UserResponse>();
-            });
-
-            var mapper = config.CreateMapper();
             //var mapper = new Mock<IMapper>();
             //mapper.Setup(i => i.Map<List<UserResponse>>(It.IsAny<List<BlazorHeroUser>>())).Returns(new List<UserResponse> { TestValues.UserResponse });  // _mapper.Map<List<UserResponse>>(users);
             //mapper.Setup(i => i.Map<UserResponse>(It.IsAny<BlazorHeroUser>())).Returns(TestValues.UserResponse );  // _mapper.Map<List<UserResponse>>(users);
 
             //var mapp = new AutoMapper.AdvancedConfiguration().;
-
+            var mapper = TestValueFactory.CreateMapper();
 
             var roleManager = TestValueFactory.CreateRoleManager();
             var mailService = new Mock<IMailService>().Object;
             var localizer = new Mock<IStringLocalizer<UserService>>().Object;
             var excelService = new Mock<IExcelService>().Object;
             var currentUserService = new Mock<ICurrentUserService>().Object;
+
+            //return ActivatorUtilities.CreateInstance<UserService>()
 
             return new UserService(userManager, mapper, roleManager, mailService, localizer, excelService, currentUserService);
         }
