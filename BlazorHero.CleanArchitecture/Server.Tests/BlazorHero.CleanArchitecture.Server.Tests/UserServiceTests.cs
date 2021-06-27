@@ -1,8 +1,13 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+
+using AutoMapper;
 
 using BlazorHero.CleanArchitecture.Application.Interfaces.Services;
+using BlazorHero.CleanArchitecture.Application.Responses.Identity;
 using BlazorHero.CleanArchitecture.Infrastructure.Models.Identity;
 using BlazorHero.CleanArchitecture.Infrastructure.Services.Identity;
+using BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure;
+using BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure.Mocks;
 
 using FluentAssertions;
 
@@ -43,9 +48,8 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var result = unitUnderTest.GetAllAsync().Result;
 
             // Assert
-            result.Data.Count.Should().Be(SeededUserCount);
-            result.Data[0].Id.Should().Be(Id0);
-            result.Data[1].Id.Should().Be(Id1);
+            result.Data.Count.Should().Be(1);
+            result.Data[0].Id.Should().Be(TestValues.Id);
         }
 
         [TestMethod]
@@ -71,17 +75,29 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             var unitUnderTest = CreateUnitUnderTest();
 
            // Act
-            var result = unitUnderTest.GetAsync(Id0).Result;
+            var result = unitUnderTest.GetAsync(Id).Result;
 
             // Assert
-            result.Data.Id.Should().Be(Id0);
+            result.Data.Id.Should().Be(Id);
         }
         
         private static UserService CreateUnitUnderTest()
         {
-            var userManager = CreateBlazorHeroUserManager();//new Mock<UserManager<BlazorHeroUser>>();
-            var mapper = new Mock<IMapper>().Object;
-            var roleManager = new Mock<RoleManager<BlazorHeroRole>>().Object;
+            var userManager = new MockUserManager();//TestValueFactory.CreateBlazorHeroUserManager();//new Mock<UserManager<BlazorHeroUser>>();
+
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<BlazorHeroUser, UserResponse>();
+            });
+
+            var mapper = config.CreateMapper();
+            //var mapper = new Mock<IMapper>();
+            //mapper.Setup(i => i.Map<List<UserResponse>>(It.IsAny<List<BlazorHeroUser>>())).Returns(new List<UserResponse> { TestValues.UserResponse });  // _mapper.Map<List<UserResponse>>(users);
+            //mapper.Setup(i => i.Map<UserResponse>(It.IsAny<BlazorHeroUser>())).Returns(TestValues.UserResponse );  // _mapper.Map<List<UserResponse>>(users);
+
+            //var mapp = new AutoMapper.AdvancedConfiguration().;
+
+
+            var roleManager = TestValueFactory.CreateRoleManager();
             var mailService = new Mock<IMailService>().Object;
             var localizer = new Mock<IStringLocalizer<UserService>>().Object;
             var excelService = new Mock<IExcelService>().Object;

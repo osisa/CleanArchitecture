@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Claims;
+using System.Threading;
 
 using AutoMapper;
 
@@ -13,17 +16,22 @@ using BlazorHero.CleanArchitecture.Infrastructure.Models.Identity;
 using BlazorHero.CleanArchitecture.Infrastructure.Services.Identity;
 using BlazorHero.CleanArchitecture.Shared.Constants.Permission;
 using BlazorHero.CleanArchitecture.Shared.Constants.User;
+using BlazorHero.CleanArchitecture.Shared.Models;
+using BlazorHero.CleanArchitecture.TestInfrastructure;
+using BlazorHero.CleanArchitecture.TestInfrastructure.EntityFramework;
 using BlazorHero.CleanArchitecture.TestInfrastructure.Users;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using Moq;
+
+using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
 namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
 {
@@ -89,6 +97,7 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
 
         public static readonly BlazorHeroUser User = new()
                                                      {
+                                                         Id =Id,
                                                          FirstName = TestUserValues.FirstName,
                                                          LastName = TestUserValues.LastName,
                                                          Email = TestUserValues.Email,
@@ -152,56 +161,24 @@ namespace BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure
 
         #region Methods
 
-        internal static UserManager<BlazorHeroUser> CreateBlazorHeroUserManager()
+
+        public class AWrapper : IAsyncQueryProvider
         {
-            var store = new Mock<IUserStore<BlazorHeroUser>>(); // CreateUserStore(); // 
-            var userQueryable=store.As<IQueryableUserStore<BlazorHeroUser>>();
+            public IQueryable CreateQuery(Expression expression) => throw new NotImplementedException();
 
-            var users = new[] { User }.AsQueryable();
+            public IQueryable<TElement> CreateQuery<TElement>(Expression expression) => throw new NotImplementedException();
 
-            userQueryable.Setup(i => i.Users).Returns(users);
-            //userQueryable.Setup(i => i.GetEnumerator()).Returns(((IEnumerable<BlazorHeroUser>)new [] { User }).GetEnumerator());
-            //store.SetupGet(i=>i.)
+            public object? Execute(Expression expression) => throw new NotImplementedException();
 
-            var optionsAccessor = new Mock<IOptions<IdentityOptions>>();
-            var passwordHasher = new Mock<IPasswordHasher<BlazorHeroUser>>();
-            var userValidators = new List<IUserValidator < BlazorHeroUser >>(new [] { new Mock<IUserValidator<BlazorHeroUser>>().Object});
-            var passwordValidators = new List<IPasswordValidator<BlazorHeroUser>>(new [] {new Mock<IPasswordValidator<BlazorHeroUser>>().Object});
-            var keyNormalizer = new Mock<ILookupNormalizer>();
-            var errors = new IdentityErrorDescriber();
-            var services = new Mock<IServiceProvider>();
-            var logger = new Mock<ILogger<UserManager<BlazorHeroUser>>>();
+            public TResult Execute<TResult>(Expression expression) => throw new NotImplementedException();
 
-            return new UserManager<BlazorHeroUser>(store.Object, optionsAccessor.Object, passwordHasher.Object, userValidators, passwordValidators, keyNormalizer.Object, errors, services.Object, logger.Object);
+            public TResult ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken = new CancellationToken()) => throw new NotImplementedException();
         }
 
-        internal static IUserService CreateUserService()
-        {
-            var userManager = new Mock<UserManager<BlazorHeroUser>>(); // CreateUserManager();//
-            var mapper = new Mock<IMapper>();
-            var roleManager = new Mock<RoleManager<BlazorHeroRole>>();
-            var mailService = new Mock<IMailService>();
-            var localizer = new Mock<IStringLocalizer<UserService>>();
-            var excelService = new Mock<IExcelService>();
-            var currentUserService = new Mock<ICurrentUserService>();
+     
 
-            return new UserService(userManager.Object, mapper.Object, roleManager.Object, mailService.Object, localizer.Object, excelService.Object, currentUserService.Object);
-        }
-
-        internal static IUserStore<BlazorHeroUser> CreateUserStore()
-        {
-            //var userManager = CreateUserManager();//new Mock<UserManager<BlazorHeroUser>>();
-            //var mapper = new Mock<IMapper>();
-            //var roleManager = new Mock<RoleManager<BlazorHeroRole>>();
-            //var mailService = new Mock<IMailService>();
-            //var localizer = new Mock<IStringLocalizer<UserService>>();
-            //var excelService = new Mock<IExcelService>();
-            //var currentUserService = new Mock<ICurrentUserService>();
-
-            var dbContext = new Mock<DbContext>();
-            
-            return new UserStore<BlazorHeroUser>(dbContext.Object);
-        }
+        
+     
 
         //internal static IWebHostBuilder CreateWebHostBuilder(string environment = Environments.Development)
         //{

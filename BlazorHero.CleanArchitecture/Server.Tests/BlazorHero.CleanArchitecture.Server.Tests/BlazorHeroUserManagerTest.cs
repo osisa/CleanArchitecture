@@ -1,23 +1,20 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
-using BlazorHero.CleanArchitecture.Client.Infrastructure.Managers.Identity.Users;
 using BlazorHero.CleanArchitecture.Infrastructure.Models.Identity;
 using BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure;
 
 using FluentAssertions;
 
 using Microsoft.AspNetCore.Identity;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BlazorHero.CleanArchitecture.Server.Tests
 {
     [TestClass]
     public class BlazorHeroUserManagerTest
     {
+        #region Public Methods and Operators
+
         [TestMethod]
         public void Constructor()
         {
@@ -30,12 +27,11 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             result.Should().NotBeNull();
         }
 
-
         [TestMethod]
         public void Users()
         {
             // Arrange
-            var unitUnderTest=CreateUnitUnderTest();
+            var unitUnderTest = CreateUnitUnderTest();
 
             // Act
             var result = unitUnderTest.Users.ToArray();
@@ -44,9 +40,15 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
             result.Length.Should().Be(1);
         }
 
-        private static  UserManager<BlazorHeroUser> CreateUnitUnderTest()
+        #endregion
+
+        #region Methods
+
+        private static UserManager<BlazorHeroUser> CreateUnitUnderTest()
         {
-            return TestValues.CreateBlazorHeroUserManager();
+            return TestValueFactory.CreateBlazorHeroUserManager();
         }
+
+        #endregion
     }
 }

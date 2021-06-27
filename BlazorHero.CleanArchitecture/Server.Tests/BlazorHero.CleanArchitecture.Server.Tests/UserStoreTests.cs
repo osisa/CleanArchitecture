@@ -1,20 +1,10 @@
 ﻿using System.Threading;
 
-using AutoMapper;
-
-using BlazorHero.CleanArchitecture.Application.Interfaces.Services;
-using BlazorHero.CleanArchitecture.Application.Interfaces.Services.Identity;
-using BlazorHero.CleanArchitecture.Infrastructure.Models.Identity;
-using BlazorHero.CleanArchitecture.Infrastructure.Services.Identity;
 using BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure;
 
 using FluentAssertions;
 
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Localization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using Moq;
 
 using static BlazorHero.CleanArchitecture.Server.Tests.TestInfrastructure.TestValues;
 
@@ -29,14 +19,85 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
         public void CreateAsync()
         {
             // Arrange
-            var unitUnderTest = CreateUserStore();
-            
-           // Act
+            var unitUnderTest = TestValueFactory.CreateUserStore();
+
+            // Act
             var result = unitUnderTest.CreateAsync(User, CancellationToken.None).Result;
 
             // Assert
             result.Succeeded.Should().BeTrue();
         }
+
+        //[TestMethod]
+        //public void CreateAsync()
+        //{
+        //    // Arrange
+        //    var unitUnderTest = TestValueFactory.CreateUserStore();
+
+        //    // Act
+        //    var result = unitUnderTest.(User, CancellationToken.None).Result;
+
+        //    // Assert
+        //    result.Succeeded.Should().BeTrue();
+        //}
+
+        [TestMethod]
+        public void FindByIdAsync()
+        {
+            // Arrange
+            var unitUnderTest = TestValueFactory.CreateUserStore();
+
+            // Act
+            var result = unitUnderTest.FindByIdAsync(User.Id, default).Result;
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Id.Should().Be(User.Id);
+            //result.Should().BeEquivalentTo(User);
+        }
+
+        //[TestMethod]
+        //public void Users()
+        //{
+        //    // Arrange
+        //    var unitUnderTest = TestValueFactory.CreateUserStore();
+
+        //    // Act
+        //    var result = unitUnderTest.Users.ToArray();
+
+        //    // Assert
+        //    result.Length.Should().Be(1);
+        //    result[0].Should().BeEquivalentTo(User);
+        //    result[0].Id.Should().Be(Id);
+        //}
+
+        //[TestMethod]
+        //public void ConvertIdFromString()
+        //{
+        //    // Arrange
+        //    var unitUnderTest = TestValueFactory.CreateUserStore();
+
+        //    // Act
+        //    var result = unitUnderTest.ConvertIdFromString(Id);
+
+        //    // Assert
+        //    result.Should().Be(Id);
+        //}
+
+        //[TestMethod]
+        //public void ConvertIdToString()
+        //{
+        //    // Arrange
+        //    var unitUnderTest = TestValueFactory.CreateUserStore();
+
+        //    // Act
+        //    var result = unitUnderTest.ConvertIdToString(Id);
+
+        //    // Assert
+        //    result.Should().Be(Id);
+        //}
+
+        #endregion
 
         //[TestMethod]
         //public void FindByNameAsync()
@@ -90,6 +151,5 @@ namespace BlazorHero.CleanArchitecture.Server.Tests
 
         //    return new UserService(userManager, mapper.Object, roleManager.Object, mailService.Object, localizer.Object, excelService.Object, currentUserService.Object);
         //}
-        #endregion
     }
 }
