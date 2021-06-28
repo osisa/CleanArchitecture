@@ -146,38 +146,12 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
                     TestContext.WriteLine("Connection: {0}", connectionString);
 
                     host.Start();
-                    //host.Run();
-                    //var context2 = host.Services.GetRequiredService<BlazorHeroContext>();
-
-                    //using (var scope = host.Services.CreateScope())
-                    //{
-                    //    var services = scope.ServiceProvider;
-
-                    //    try
-                    //    {
-                    //        var context = services.GetRequiredService<BlazorHeroContext>();
-
-                    //        //if (context.Database.IsSqlServer())
-                    //        //{
-                    //        //    context.Database.Migrate();
-                    //        //}
-
-                    //        users = context.Users.ToArray();
-                    //    }
-                    //    catch (Exception ex)
-                    //    {
-                    //        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-                    //        logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-
-                    //        throw;
-                    //    }
-                    //}
-
-
+                   
                     //// Assert
                     users = context.Users.ToArray();
                     users.Length.Should().Be(2);
+
+                    host.StopAsync().GetAwaiter().GetResult();
                 }
                 catch (Exception ex)
                 {

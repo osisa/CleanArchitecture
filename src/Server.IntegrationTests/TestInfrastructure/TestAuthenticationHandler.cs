@@ -10,6 +10,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using BlazorHero.CleanArchitecture.Shared.Constants.Permission;
 
 //using BlazorHero.CleanArchitecture.TestInfrastructure.Users;
 
@@ -91,16 +92,28 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
 
             //var claims = new[] { new Claim(ClaimTypes.Name, "Test user"), perm };
 
+
+            ////public static ITestUser DefaultUser =
+
+            /// new TestUser(nameof(DefaultUser), Permissions.Users.View, Permissions.Users.Edit);
+
             ////var claims = new List<Claim> { new(ClaimTypes.Name, _testUser.Name) }; // { new Claim(ClaimTypes.Name, "Test user"), perm };
             ////claims.AddRange(_testUser.Permissions.Select(p => new Claim("Permission", p)));
 
-            ////var identity = new ClaimsIdentity(claims, "Test");
-            ////var principal = new ClaimsPrincipal(identity);
-            ////var ticket = new AuthenticationTicket(principal, "Test");
 
-            ////var result = AuthenticateResult.Success(ticket);
+            var claims = new List<Claim> { new(ClaimTypes.Name, "DefaultUser") }; // { new Claim(ClaimTypes.Name, "Test user"), perm };
+            claims.Add(new Claim("Permission", Permissions.Users.View)); //, Permissions.Users.Edit));
 
-            ////return Task.FromResult(result);
+            //claims.AddRange(_testUser.Permissions.Select(p => new Claim("Permission", p)));
+
+
+            var identity = new ClaimsIdentity(claims, "Test");
+            var principal = new ClaimsPrincipal(identity);
+            var ticket = new AuthenticationTicket(principal, "Test");
+
+            var result = AuthenticateResult.Success(ticket);
+
+            return Task.FromResult(result);
             throw new NotImplementedException();
         }
 

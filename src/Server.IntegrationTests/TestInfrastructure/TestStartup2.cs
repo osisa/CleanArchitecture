@@ -46,6 +46,14 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
 
             services.AddCors();
             services.AddSignalR();
+
+
+            services
+                .AddMvc()
+                .AddApplicationPart(typeof(UserController).Assembly)
+                .AddApplicationPart(this.GetType().Assembly);
+
+
             services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
             services.AddCurrentUserService();
             services.AddSerialization();
@@ -55,6 +63,14 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
             services.AddServerLocalization();
             services.AddIdentity();
             services.AddJwtAuthentication(services.GetApplicationSettings(_configuration));
+
+            services.AddAuthentication(
+                options =>
+                {
+                    options.DefaultAuthenticateScheme = TestAuthenticationHandler.AuthScheme;
+                    options.DefaultChallengeScheme = TestAuthenticationHandler.AuthScheme;
+                }).AddScheme<AuthenticationSchemeOptions, TestAuthenticationHandler>(TestAuthenticationHandler.AuthScheme, _ => { });
+
             services.AddApplicationLayer();
             services.AddApplicationServices();
             services.AddRepositories();
