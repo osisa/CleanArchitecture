@@ -114,7 +114,6 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
             var result = AuthenticateResult.Success(ticket);
 
             return Task.FromResult(result);
-            throw new NotImplementedException();
         }
 
         #endregion

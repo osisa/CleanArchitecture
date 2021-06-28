@@ -23,6 +23,10 @@ namespace BlazorHero.CleanArchitecture.Infrastructure
         private readonly UserManager<BlazorHeroUser> _userManager;
         private readonly RoleManager<BlazorHeroRole> _roleManager;
 
+
+        public const string Id0 = "64999b63-d952-4898-841c-c2621afd170f";
+        public const string Id1 = "789aba66-2e16-40a8-81f8-4156d18959b5";
+
         public DatabaseSeeder(
             UserManager<BlazorHeroUser> userManager,
             RoleManager<BlazorHeroRole> roleManager,
@@ -60,6 +64,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure
                 //Check if User Exists
                 var superUser = new BlazorHeroUser
                 {
+                    Id=Id1,
                     FirstName = "Mukesh",
                     LastName = "Murugan",
                     Email = "mukesh@blazorhero.com",
@@ -108,6 +113,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure
                 //Check if User Exists
                 var basicUser = new BlazorHeroUser
                 {
+                    Id=Id0,
                     FirstName = "John",
                     LastName = "Doe",
                     Email = "john@blazorhero.com",
