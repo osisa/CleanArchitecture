@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>BlazorHero.CleanArchitecture.TestInfrastructure.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <Import Project="..\..\Test.Build.props" />
+
+  <ItemGroup>
+    <Compile Remove="History\**" />
+    <Compile Remove="Scenario\**" />
+    <Compile Remove="Then\**" />
+    <Compile Remove="When\**" />
+    <EmbeddedResource Remove="History\**" />
+    <EmbeddedResource Remove="Scenario\**" />
+    <EmbeddedResource Remove="Then\**" />
+    <EmbeddedResource Remove="When\**" />
+    <None Remove="History\**" />
+    <None Remove="Scenario\**" />
+    <None Remove="Then\**" />
+    <None Remove="When\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="MockHttpClientTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TestInfrastructure\TestInfrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
