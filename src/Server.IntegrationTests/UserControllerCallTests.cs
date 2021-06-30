@@ -360,7 +360,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
             using (var client = server.CreateClient())
             {
                // Act
-                var result = client.PutAsync($"/api/identity/user/roles/{Id0}", UpdateUserRolesRequest);
+                var result = client.PutAsync($"/api/identity/user/roles/{UpdateUserRolesRequest.UserId}", UpdateUserRolesRequest);
 
                 // Assert
                 result.EnsureSuccessStatusCode();
