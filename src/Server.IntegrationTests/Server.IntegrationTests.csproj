@@ -10,6 +10,8 @@
     <ItemGroup>
       <Compile Remove="TestInfrastructure\TestStartup.cs" />
       <Compile Remove="TestInfrastructure\WebHostBuilderHelper.cs" />
+      <Compile Remove="UserControllerTests.cs" />
+      <Compile Remove="UserServiceTests.cs" />
     </ItemGroup>
   
 	<ItemGroup>

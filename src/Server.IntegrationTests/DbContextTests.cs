@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
-using BlazorHero.CleanArchitecture.Application.Interfaces.Services;
-using BlazorHero.CleanArchitecture.Infrastructure;
+using BlazorHero.CleanArchitecture.Application.Responses.Identity;
 using BlazorHero.CleanArchitecture.Infrastructure.Contexts;
 using BlazorHero.CleanArchitecture.Infrastructure.Models.Identity;
 using BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructure;
+using BlazorHero.CleanArchitecture.Shared.Wrapper;
+using BlazorHero.CleanArchitecture.TestInfrastructure;
 
 using FluentAssertions;
 
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,11 +20,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Moq;
-
 using Serilog;
-
-using static BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructure.TestValues;
 
 namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
 {
@@ -57,7 +56,17 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
         }
 
         [TestMethod]
-        public void CreateWebHostBuilder()
+        public void Constructor()
+        {
+            // Act
+            var result = CreateUnitUnderTest();
+
+            // Assert
+            result.Should().NotBeNull();
+        }
+
+        [TestMethod]
+        public void CreateWebHostBuilder2()
         {
             // Act
             var result = TestValues.CreateWebHostBuilder();
@@ -82,231 +91,248 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
             TestContext.WriteLine("DefaultConnection: {0}", result);
         }
 
-        [TestMethod]
-        public void Constructor()
-        {
-            // Act
-            var result = CreateUnitUnderTest();
+        //[TestMethod]
+        //public void GetUsers()
+        //{
+        //    // Arrange
+        //    var unitUnderTest = CreateUnitUnderTest();
 
-            // Assert
-            result.Should().NotBeNull();
-        }
+        //    // Act
+        //    var result = unitUnderTest.Users.ToArray();
 
+        //    // Assert
+        //    result.Length.Should().Be(2);
+        //}
+
+        //[TestMethod]
+        //public void GetUsers2()
+        //{
+        //    // Arrange
+        //    //var webHostBuilder = TestValues.CreateWebHostBuilder();
+        //    //var host = webHostBuilder.Build();
+
+        //    // Act
+        //    //var users = CreateUnitUnderTest2();
+        //    var args = new string[] { };
+
+        //    var hostBuilder = Host.CreateDefaultBuilder(args)
+        //        .UseSerilog()
+        //        .ConfigureWebHostDefaults(
+        //            webBuilder =>
+        //            {
+        //                webBuilder.UseStaticWebAssets();
+        //                webBuilder.UseStartup<TestStartup2>();
+        //            });
+
+        //    var host = hostBuilder.Build();
+
+        //    BlazorHeroUser[] users;
+        //    using (var scope = host.Services.CreateScope())
+        //    {
+        //        var services = scope.ServiceProvider;
+
+        //        try
+        //        {
+        //            var context = services.GetRequiredService<BlazorHeroContext>();
+
+        //            if (context.Database.IsSqlServer())
+        //            {
+        //                context.Database.Migrate();
+        //            }
+
+        //            var configuration = host.Services.GetRequiredService<IConfiguration>();
+        //            var connectionString = configuration.GetConnectionString("DefaultConnection");
+        //            TestContext.WriteLine("Connection: {0}", connectionString);
+
+        //            host.Start();
+
+        //            //// Assert
+        //            users = context.Users.ToArray();
+        //            users.Length.Should().Be(2);
+
+        //            host.StopAsync().GetAwaiter().GetResult();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+        //            logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+
+        //            throw;
+        //        }
+        //    }
+
+            //var configuration = host.Services.GetRequiredService<IConfiguration>();
+            //var connectionString = configuration.GetConnectionString("DefaultConnection");
+            //TestContext.WriteLine("Connection: {0}", connectionString);
+
+            ////host.Run();
+            ////var services = host.Services;
+
+            //var context2 = host.Services.GetRequiredService<BlazorHeroContext>();
+
+            ////using (var scope = host.Services.CreateScope())
+            ////{
+            ////    var services = scope.ServiceProvider;
+
+            ////    try
+            ////    {
+            ////        var context = services.GetRequiredService<BlazorHeroContext>();
+
+            ////        //if (context.Database.IsSqlServer())
+            ////        //{
+            ////        //    context.Database.Migrate();
+            ////        //}
+
+            ////        users = context.Users.ToArray();
+            ////    }
+            ////    catch (Exception ex)
+            ////    {
+            ////        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+            ////        logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+
+            ////        throw;
+            ////    }
+            ////}
+
+            //// Assert
+        //    //var users = context2.Users.ToArray();
+        //    users.Length.Should().Be(2);
+
+        //    //return null;
+        //}
+
+        //[TestMethod]
+        //public void GetUsers3()
+        //{
+        //    // Arrange
+        //    //var webHostBuilder = TestValues.CreateWebHostBuilder();
+        //    //var host = webHostBuilder.Build();
+
+        //    // Act
+        //    //var users = CreateUnitUnderTest2();
+        //    var args = new string[] { };
+
+        //    var hostBuilder = Host.CreateDefaultBuilder(args)
+        //        .UseSerilog()
+        //        .ConfigureWebHostDefaults(
+        //            webBuilder =>
+        //            {
+        //                webBuilder.UseStaticWebAssets();
+        //                webBuilder.UseStartup<TestStartup2>();
+        //            });
+
+        //    var host = hostBuilder.Build();
+
+        //    BlazorHeroUser[] users;
+        //    using (var scope = host.Services.CreateScope())
+        //    {
+        //        var services = scope.ServiceProvider;
+
+        //        try
+        //        {
+        //            var context = services.GetRequiredService<BlazorHeroContext>();
+
+        //            if (context.Database.IsSqlServer())
+        //            {
+        //                context.Database.Migrate();
+        //            }
+
+        //            var configuration = host.Services.GetRequiredService<IConfiguration>();
+        //            var connectionString = configuration.GetConnectionString("DefaultConnection");
+        //            TestContext.WriteLine("Connection: {0}", connectionString);
+
+        //            host.Start();
+
+        //            //// Assert
+        //            users = context.Users.ToArray();
+        //            users.Length.Should().Be(2);
+
+        //            host.StopAsync().GetAwaiter().GetResult();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+        //            logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+
+        //            throw;
+        //        }
+        //    }
+
+        //    //var configuration = host.Services.GetRequiredService<IConfiguration>();
+        //    //var connectionString = configuration.GetConnectionString("DefaultConnection");
+        //    //TestContext.WriteLine("Connection: {0}", connectionString);
+
+        //    ////host.Run();
+        //    ////var services = host.Services;
+
+        //    //var context2 = host.Services.GetRequiredService<BlazorHeroContext>();
+
+        //    ////using (var scope = host.Services.CreateScope())
+        //    ////{
+        //    ////    var services = scope.ServiceProvider;
+
+        //    ////    try
+        //    ////    {
+        //    ////        var context = services.GetRequiredService<BlazorHeroContext>();
+
+        //    ////        //if (context.Database.IsSqlServer())
+        //    ////        //{
+        //    ////        //    context.Database.Migrate();
+        //    ////        //}
+
+        //    ////        users = context.Users.ToArray();
+        //    ////    }
+        //    ////    catch (Exception ex)
+        //    ////    {
+        //    ////        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+        //    ////        logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+
+        //    ////        throw;
+        //    ////    }
+        //    ////}
+
+        //    //// Assert
+        //    //var users = context2.Users.ToArray();
+        //    users.Length.Should().Be(2);
+
+        //    //return null;
+        //}
+
+        #endregion
 
         [TestMethod]
         public void GetUsers()
         {
-            // Arrange
-            var unitUnderTest = CreateUnitUnderTest();
+            var webHostBuilder = TestValues.CreateWebHostBuilder();
 
             // Act
-            var result = unitUnderTest.Users.ToArray();
-
-            // Assert
-            result.Length.Should().Be(2);
-        }
-
-        [TestMethod]
-        public void GetUsers2()
-        {
-            // Arrange
-            //var webHostBuilder = TestValues.CreateWebHostBuilder();
-            //var host = webHostBuilder.Build();
-
-            // Act
-            //var users = CreateUnitUnderTest2();
-            var args = new string[] { };
-
-            var hostBuilder= Host.CreateDefaultBuilder(args)
-                    .UseSerilog()
-                    .ConfigureWebHostDefaults(webBuilder =>
-                    {
-                        webBuilder.UseStaticWebAssets();
-                        webBuilder.UseStartup<TestStartup2>();
-                    });
-
-            var host = hostBuilder.Build();
-
-            BlazorHeroUser[] users;
-            using (var scope = host.Services.CreateScope())
+            using (var server = new TestServer(webHostBuilder))
             {
-                var services = scope.ServiceProvider;
+                var db = server.Host.Services.GetRequiredService<BlazorHeroContext>();
+                //using (var client = server.CreateClient())
+                //{
+                //    // Assert
+                //    var result = client.GetAsync<Result<List<UserResponse>>>("/api/identity/user");
 
-                try
-                {
-                    var context = services.GetRequiredService<BlazorHeroContext>();
+                //    result.Succeeded.Should().BeTrue();
 
-                    if (context.Database.IsSqlServer())
-                    {
-                        context.Database.Migrate();
-                    }
+                //    result.Data.Should().NotBeNull();
+                //    result.Data.Count.Should().Be(2);
+                //    result.Data[0].Should().BeEquivalentTo(TestValues.UserResponse);
+                //}
+                var users = db.Users.ToArray();
+                users.Length.Should().Be(2);
 
-                    var configuration = host.Services.GetRequiredService<IConfiguration>();
-                    var connectionString = configuration.GetConnectionString("DefaultConnection");
-                    TestContext.WriteLine("Connection: {0}", connectionString);
-
-                    host.Start();
-                   
-                    //// Assert
-                    users = context.Users.ToArray();
-                    users.Length.Should().Be(2);
-
-                    host.StopAsync().GetAwaiter().GetResult();
-                }
-                catch (Exception ex)
-                {
-                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-                    logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-
-                    throw;
-                }
+                server.Host.StopAsync().GetAwaiter().GetResult();
             }
-
-
-            //var configuration = host.Services.GetRequiredService<IConfiguration>();
-            //var connectionString = configuration.GetConnectionString("DefaultConnection");
-            //TestContext.WriteLine("Connection: {0}", connectionString);
-
-            ////host.Run();
-            ////var services = host.Services;
-            
-            //var context2 = host.Services.GetRequiredService<BlazorHeroContext>();
-
-            ////using (var scope = host.Services.CreateScope())
-            ////{
-            ////    var services = scope.ServiceProvider;
-
-            ////    try
-            ////    {
-            ////        var context = services.GetRequiredService<BlazorHeroContext>();
-
-            ////        //if (context.Database.IsSqlServer())
-            ////        //{
-            ////        //    context.Database.Migrate();
-            ////        //}
-
-            ////        users = context.Users.ToArray();
-            ////    }
-            ////    catch (Exception ex)
-            ////    {
-            ////        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-            ////        logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-
-            ////        throw;
-            ////    }
-            ////}
-
-
-            //// Assert
-            //var users = context2.Users.ToArray();
-            users.Length.Should().Be(2);
-
-            //return null;
-
         }
 
-        [TestMethod]
-        public void GetUsers3()
-        {
-            // Arrange
-            //var webHostBuilder = TestValues.CreateWebHostBuilder();
-            //var host = webHostBuilder.Build();
+        #region Methods
 
-            // Act
-            //var users = CreateUnitUnderTest2();
-            var args = new string[] { };
-
-            var hostBuilder = Host.CreateDefaultBuilder(args)
-                    .UseSerilog()
-                    .ConfigureWebHostDefaults(webBuilder =>
-                    {
-                        webBuilder.UseStaticWebAssets();
-                        webBuilder.UseStartup<TestStartup2>();
-                    });
-
-            var host = hostBuilder.Build();
-
-            BlazorHeroUser[] users;
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-
-                try
-                {
-                    var context = services.GetRequiredService<BlazorHeroContext>();
-
-                    if (context.Database.IsSqlServer())
-                    {
-                        context.Database.Migrate();
-                    }
-
-                    var configuration = host.Services.GetRequiredService<IConfiguration>();
-                    var connectionString = configuration.GetConnectionString("DefaultConnection");
-                    TestContext.WriteLine("Connection: {0}", connectionString);
-
-                    host.Start();
-
-                    //// Assert
-                    users = context.Users.ToArray();
-                    users.Length.Should().Be(2);
-
-                    host.StopAsync().GetAwaiter().GetResult();
-                }
-                catch (Exception ex)
-                {
-                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-                    logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-
-                    throw;
-                }
-            }
-
-
-            //var configuration = host.Services.GetRequiredService<IConfiguration>();
-            //var connectionString = configuration.GetConnectionString("DefaultConnection");
-            //TestContext.WriteLine("Connection: {0}", connectionString);
-
-            ////host.Run();
-            ////var services = host.Services;
-
-            //var context2 = host.Services.GetRequiredService<BlazorHeroContext>();
-
-            ////using (var scope = host.Services.CreateScope())
-            ////{
-            ////    var services = scope.ServiceProvider;
-
-            ////    try
-            ////    {
-            ////        var context = services.GetRequiredService<BlazorHeroContext>();
-
-            ////        //if (context.Database.IsSqlServer())
-            ////        //{
-            ////        //    context.Database.Migrate();
-            ////        //}
-
-            ////        users = context.Users.ToArray();
-            ////    }
-            ////    catch (Exception ex)
-            ////    {
-            ////        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-            ////        logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-
-            ////        throw;
-            ////    }
-            ////}
-
-
-            //// Assert
-            //var users = context2.Users.ToArray();
-            users.Length.Should().Be(2);
-
-            //return null;
-
-        }
         private static BlazorHeroContext CreateUnitUnderTest()
         {
             var webHostBuilder = TestValues.CreateWebHostBuilder();
@@ -365,7 +391,6 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
             //    }
             //}
 
-
             //var context = webHostBuilder.Build().Services.GetRequiredService<BlazorHeroContext>();
 
             //var environment = "Development";
@@ -377,7 +402,6 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
             //            .Build()
             //    );
 
-
             //var services = webHostBuilder.Build().Services;
             //var configuration = services.GetRequiredService<IConfiguration>();
             //var connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -385,11 +409,8 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
             //var optionBuilder = new DbContextOptionsBuilder<BlazorHeroContext>();
             //optionBuilder.UseSqlServer(connectionString);
 
-
             //var currentUserService = new Mock<ICurrentUserService>().Object;
             //var dateTimeService = new Mock<IDateTimeService>().Object;
-
-
 
             //var context= new BlazorHeroContext(optionBuilder.Options, currentUserService, dateTimeService);
             //context.Database.EnsureDeleted();
@@ -397,10 +418,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
 
             //var seeder = services.GetService<IDatabaseSeeder>();
             //seeder.Initialize();
-
-
         }
-
 
         private static BlazorHeroUser[] CreateUnitUnderTest2()
         {
@@ -409,7 +427,6 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
 
             var environment = "Development";
             webHostBuilder
-
                 .UseEnvironment(environment) // You can set the environment you want (development, staging, production)
                 //.UseEnvironment("Development") // You can set the environment you want (development, staging, production)
                 .UseConfiguration(
@@ -419,12 +436,10 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
                 )
                 .UseStartup<TestStartup2>();
 
-
             var host = webHostBuilder.Build();
             host.Run();
 
-
-            var context=host.Services.GetRequiredService<BlazorHeroContext>();
+            var context = host.Services.GetRequiredService<BlazorHeroContext>();
 
             return context.Users.ToArray();
             //.ConfigureServices(s => s.AddTestUser(DefaultUser))
@@ -484,7 +499,6 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
             //    }
             //}
 
-
             //var context = webHostBuilder.Build().Services.GetRequiredService<BlazorHeroContext>();
 
             //var environment = "Development";
@@ -496,7 +510,6 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
             //            .Build()
             //    );
 
-
             //var services = webHostBuilder.Build().Services;
             //var configuration = services.GetRequiredService<IConfiguration>();
             //var connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -504,11 +517,8 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
             //var optionBuilder = new DbContextOptionsBuilder<BlazorHeroContext>();
             //optionBuilder.UseSqlServer(connectionString);
 
-
             //var currentUserService = new Mock<ICurrentUserService>().Object;
             //var dateTimeService = new Mock<IDateTimeService>().Object;
-
-
 
             //var context= new BlazorHeroContext(optionBuilder.Options, currentUserService, dateTimeService);
             //context.Database.EnsureDeleted();
@@ -516,8 +526,6 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
 
             //var seeder = services.GetService<IDatabaseSeeder>();
             //seeder.Initialize();
-
-
         }
 
         #endregion

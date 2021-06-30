@@ -5,6 +5,8 @@
 //  --------------------------------------------------------------------------------------------------------------------
 
 //using BlazorHero.CleanArchitecture.Application.Models.Identity;
+
+////using BlazorHero.CleanArchitecture.TestInfrastructure;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -16,7 +18,6 @@ using BlazorHero.CleanArchitecture.Infrastructure.Models.Identity;
 using BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructure;
 using BlazorHero.CleanArchitecture.Shared.Wrapper;
 using BlazorHero.CleanArchitecture.TestInfrastructure;
-////using BlazorHero.CleanArchitecture.TestInfrastructure;
 
 using FluentAssertions;
 
@@ -31,10 +32,10 @@ using Newtonsoft.Json;
 
 using static BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructure.TestValues;
 
-namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
+namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Identity
 {
     [TestClass]
-    public class UserControllerCallTests
+    public class AccountControllerCallTests
     {
         #region Public Methods and Operators
 
