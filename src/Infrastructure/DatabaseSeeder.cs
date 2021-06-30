@@ -43,6 +43,8 @@ namespace BlazorHero.CleanArchitecture.Infrastructure
 
         public void Initialize()
         {
+            //_db.Database.EnsureCreated();
+
             AddAdministrator();
             AddBasicUser();
             _db.SaveChanges();

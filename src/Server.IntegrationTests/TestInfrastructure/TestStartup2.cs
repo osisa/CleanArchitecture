@@ -1,6 +1,7 @@
 ﻿using System.IO;
 
 using BlazorHero.CleanArchitecture.Application.Extensions;
+using BlazorHero.CleanArchitecture.Infrastructure.Contexts;
 using BlazorHero.CleanArchitecture.Infrastructure.Extensions;
 using BlazorHero.CleanArchitecture.Server.Controllers.Identity;
 using BlazorHero.CleanArchitecture.Server.Extensions;
@@ -157,6 +158,14 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
                 });
             app.UseEndpoints();
             app.ConfigureSwagger();
+
+            
+
+            var db=app.ApplicationServices.GetService<BlazorHeroContext>();
+
+            db.Database.EnsureCreated();
+
+
             app.Initialize(_configuration);
 
             //app.UseExceptionHandling(env);

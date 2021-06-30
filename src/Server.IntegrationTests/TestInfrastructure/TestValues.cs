@@ -87,9 +87,10 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
                                                                      };
 
         public static readonly ResetPasswordRequest ResetPasswordRequest = new()
-                                                                           {
+                                                                           { 
+                                                                               ConfirmPassword = Shared.Constants.User.UserConstants.DefaultPassword,
                                                                                Email = TestUserValues.Email,
-                                                                               Password = BlazorHero.CleanArchitecture.Shared.Constants.User.UserConstants.DefaultPassword,
+                                                                               Password = Shared.Constants.User.UserConstants.DefaultPassword,
                                                                                Token = Token
                                                                            };
 
@@ -155,6 +156,11 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
                 .ConfigureServices(s => s.AddSingleton<IAuthenticationHandler, TestAuthenticationHandler>()) // Startup class of your web app project
                 .ConfigureServices(s => s.AddHttpContextAccessor());
 
+
+            //BlazorHeroContext xx;
+            //xx.Database.Cr()
+
+            
 
             return hostBuilder;
             //var host = hostBuilder.Build();

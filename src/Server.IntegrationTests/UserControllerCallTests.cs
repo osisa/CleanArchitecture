@@ -57,6 +57,53 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
                     result.Data.Count.Should().Be(2);
                     result.Data[0].Should().BeEquivalentTo(TestValues.UserResponse);
                 }
+
+                server.Host.StopAsync().GetAwaiter().GetResult();
+            }
+        }
+
+        //[TestMethod]
+        //public void GetAll2()
+        //{
+        //    // Arrange
+        //    var webHostBuilder = CreateWebHostBuilder();
+
+        //    // Act
+        //    using (var server = new TestServer(webHostBuilder))
+        //    {
+        //        //server.Host.Start();
+        //        using (var client = server.CreateClient())
+        //        {
+        //            var result = client.GetAsync<Result<List<UserResponse>>>("/api/identity/user");
+
+        //            result.Succeeded.Should().BeTrue();
+
+        //            result.Data.Should().NotBeNull();
+        //            result.Data.Count.Should().Be(2);
+        //            result.Data[0].Should().BeEquivalentTo(TestValues.UserResponse);
+        //        }
+        //    }
+        //}
+
+        [TestMethod]
+        public void GetAll3()
+        {
+            // Arrange
+            var webHostBuilder = CreateWebHostBuilder();
+
+            // Act
+            using (var server = new TestServer(webHostBuilder))
+            {
+                using (var client = server.CreateClient())
+                {
+                    var result = client.GetAsync<Result<List<UserResponse>>>("/api/identity/user");
+
+                    result.Succeeded.Should().BeTrue();
+
+                    result.Data.Should().NotBeNull();
+                    result.Data.Count.Should().Be(2);
+                    result.Data[0].Should().BeEquivalentTo(TestValues.UserResponse);
+                }
             }
         }
 

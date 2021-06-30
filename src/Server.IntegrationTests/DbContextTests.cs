@@ -206,6 +206,107 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests
             //return null;
 
         }
+
+        [TestMethod]
+        public void GetUsers3()
+        {
+            // Arrange
+            //var webHostBuilder = TestValues.CreateWebHostBuilder();
+            //var host = webHostBuilder.Build();
+
+            // Act
+            //var users = CreateUnitUnderTest2();
+            var args = new string[] { };
+
+            var hostBuilder = Host.CreateDefaultBuilder(args)
+                    .UseSerilog()
+                    .ConfigureWebHostDefaults(webBuilder =>
+                    {
+                        webBuilder.UseStaticWebAssets();
+                        webBuilder.UseStartup<TestStartup2>();
+                    });
+
+            var host = hostBuilder.Build();
+
+            BlazorHeroUser[] users;
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                try
+                {
+                    var context = services.GetRequiredService<BlazorHeroContext>();
+
+                    if (context.Database.IsSqlServer())
+                    {
+                        context.Database.Migrate();
+                    }
+
+                    var configuration = host.Services.GetRequiredService<IConfiguration>();
+                    var connectionString = configuration.GetConnectionString("DefaultConnection");
+                    TestContext.WriteLine("Connection: {0}", connectionString);
+
+                    host.Start();
+
+                    //// Assert
+                    users = context.Users.ToArray();
+                    users.Length.Should().Be(2);
+
+                    host.StopAsync().GetAwaiter().GetResult();
+                }
+                catch (Exception ex)
+                {
+                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+                    logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+
+                    throw;
+                }
+            }
+
+
+            //var configuration = host.Services.GetRequiredService<IConfiguration>();
+            //var connectionString = configuration.GetConnectionString("DefaultConnection");
+            //TestContext.WriteLine("Connection: {0}", connectionString);
+
+            ////host.Run();
+            ////var services = host.Services;
+
+            //var context2 = host.Services.GetRequiredService<BlazorHeroContext>();
+
+            ////using (var scope = host.Services.CreateScope())
+            ////{
+            ////    var services = scope.ServiceProvider;
+
+            ////    try
+            ////    {
+            ////        var context = services.GetRequiredService<BlazorHeroContext>();
+
+            ////        //if (context.Database.IsSqlServer())
+            ////        //{
+            ////        //    context.Database.Migrate();
+            ////        //}
+
+            ////        users = context.Users.ToArray();
+            ////    }
+            ////    catch (Exception ex)
+            ////    {
+            ////        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+            ////        logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+
+            ////        throw;
+            ////    }
+            ////}
+
+
+            //// Assert
+            //var users = context2.Users.ToArray();
+            users.Length.Should().Be(2);
+
+            //return null;
+
+        }
         private static BlazorHeroContext CreateUnitUnderTest()
         {
             var webHostBuilder = TestValues.CreateWebHostBuilder();

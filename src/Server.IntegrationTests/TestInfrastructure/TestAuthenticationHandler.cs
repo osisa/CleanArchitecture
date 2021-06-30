@@ -38,7 +38,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
         /// <summary>
         ///     The default user id, injected into the claims for all requests.
         /// </summary>
-        public static readonly Guid UserId = Guid.Parse("687d7c63-9a15-4faf-af5a-140782baa24d");
+        public static readonly Guid UserId = Guid.Parse(TestValues.Id0);// Guid.Parse("687d7c63-9a15-4faf-af5a-140782baa24d");
 
         #endregion
 
@@ -82,7 +82,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
         /// </summary>
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            var perm = new Claim("Permission", "Permissions.Users.View");
+            //var perm = new Claim("Permission", "Permissions.Users.View");
 
             //var authenticationTicket = new AuthenticationTicket(
             //    new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { DefaultUserIdClaim, perm }, AuthScheme)),
@@ -101,8 +101,13 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
             ////claims.AddRange(_testUser.Permissions.Select(p => new Claim("Permission", p)));
 
 
+            //var xx = ClaimTypes.NameIdentifier;
+            //var yy = ClaimTypes.Name;
+
             var claims = new List<Claim> { new(ClaimTypes.Name, "DefaultUser") }; // { new Claim(ClaimTypes.Name, "Test user"), perm };
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, UserId.ToString()));
             claims.Add(new Claim("Permission", Permissions.Users.View)); //, Permissions.Users.Edit));
+            claims.Add(new Claim("Permission", Permissions.Users.Edit)); //, Permissions.Users.Edit));
 
             //claims.AddRange(_testUser.Permissions.Select(p => new Claim("Permission", p)));
 
