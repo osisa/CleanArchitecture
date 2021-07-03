@@ -1,9 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>BlazorHero.CleanArchitecture.TestInfrastructure</RootNamespace>
   </PropertyGroup>
+
+  <Import Project="..\..\Test.Build.props" />
 
   <ItemGroup>
     <Compile Remove="Content\**" />

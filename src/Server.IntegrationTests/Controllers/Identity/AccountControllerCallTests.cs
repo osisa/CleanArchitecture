@@ -8,7 +8,6 @@
 
 ////using BlazorHero.CleanArchitecture.TestInfrastructure;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -18,6 +17,7 @@ using BlazorHero.CleanArchitecture.Infrastructure.Models.Identity;
 using BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructure;
 using BlazorHero.CleanArchitecture.Shared.Wrapper;
 using BlazorHero.CleanArchitecture.TestInfrastructure;
+using BlazorHero.CleanArchitecture.TestInfrastructure.TestSupport;
 
 using FluentAssertions;
 
@@ -35,120 +35,77 @@ using static BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastruc
 namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Identity
 {
     [TestClass]
-    public class AccountControllerCallTests
+    public class AccountControllerCallTests : TestBase
     {
+        private const string BaseAddress = "/api/identity/account";
+
         #region Public Methods and Operators
 
         [TestMethod]
-        public void GetAll()
+        public void GetProfilePictureAsync()
         {
             // Arrange
             var webHostBuilder = CreateWebHostBuilder();
-            
-           // Act
-            using (var server = new TestServer(webHostBuilder))
-            {
-                using (var client = server.CreateClient())
-                {
-                    var result = client.GetAsync<Result<List<UserResponse>>>("/api/identity/user");
 
-                    result.Succeeded.Should().BeTrue();
-
-                    result.Data.Should().NotBeNull();
-                    result.Data.Count.Should().Be(2);
-                    result.Data[0].Should().BeEquivalentTo(TestValues.UserResponse);
-                }
-
-                server.Host.StopAsync().GetAwaiter().GetResult();
-            }
-        }
-
-        //[TestMethod]
-        //public void GetAll2()
-        //{
-        //    // Arrange
-        //    var webHostBuilder = CreateWebHostBuilder();
-
-        //    // Act
-        //    using (var server = new TestServer(webHostBuilder))
-        //    {
-        //        //server.Host.Start();
-        //        using (var client = server.CreateClient())
-        //        {
-        //            var result = client.GetAsync<Result<List<UserResponse>>>("/api/identity/user");
-
-        //            result.Succeeded.Should().BeTrue();
-
-        //            result.Data.Should().NotBeNull();
-        //            result.Data.Count.Should().Be(2);
-        //            result.Data[0].Should().BeEquivalentTo(TestValues.UserResponse);
-        //        }
-        //    }
-        //}
-
-        [TestMethod]
-        public void GetAll3()
-        {
-            // Arrange
-            var webHostBuilder = CreateWebHostBuilder();
+            using var server = new TestServer(webHostBuilder);
+            using var client = server.CreateClient();
 
             // Act
-            using (var server = new TestServer(webHostBuilder))
-            {
-                using (var client = server.CreateClient())
-                {
-                    var result = client.GetAsync<Result<List<UserResponse>>>("/api/identity/user");
+            var result = client.GetAsync<Result>($"{BaseAddress}/profile-picture/{TestValues.UserResponse.Id}");
 
-                    result.Succeeded.Should().BeTrue();
-
-                    result.Data.Should().NotBeNull();
-                    result.Data.Count.Should().Be(2);
-                    result.Data[0].Should().BeEquivalentTo(TestValues.UserResponse);
-                }
-            }
+            // Assert
+            result.Succeeded.Should().BeTrue();
+            result.Messages.Count.Should().Be(0);
         }
-
+        
         [TestMethod]
-        public void GetById()
+        public void UpdateProfile()
         {
             // Arrange
             var webHostBuilder = CreateWebHostBuilder();
 
-           // Act
-            using (var server = new TestServer(webHostBuilder))
+            using var server = new TestServer(webHostBuilder);
+            using var client = server.CreateClient();
 
-            using (var client = server.CreateClient())
-            {
-               // Act
-                var result = client.GetAsync<Result<UserResponse>>($"/api/identity/user/{Id0}");
+            // Act
+            var result = client.PutAsync($"{BaseAddress}/{nameof(UpdateProfile)}", AccountControllerValues.UpdateProfileRequest);
 
-                // Assert
-                result.Succeeded.Should().BeTrue();
-                result.Data.Should().BeEquivalentTo(TestValues.UserResponse);
-            }
+            // Assert
+            result.EnsureSuccessStatusCode();
         }
 
-        //[TestMethod]
-        //public void ConfirmEmailAsync()
-        //{
-        //    // Arrange
-        //    var webHostBuilder = CreateWebHostBuilder();
+        [TestMethod]
+        public void UpdateProfilePictureAsync()
+        {
+            // Arrange
+            var webHostBuilder = CreateWebHostBuilder();
 
-        //   // Act
-        //    using (var server = new TestServer(webHostBuilder))
-        //    {
-        //        using (var client = server.CreateClient())
-        //        {
-        //           // Act
-        //            var result = client.GetAsync($"/api/identity/user/confirm-email?userId={Id}&code={Code}").Result;
+            using var server = new TestServer(webHostBuilder);
+            using var client = server.CreateClient();
 
-        //            // Assert
-        //            result.EnsureSuccessStatusCode();
-        //        }
-        //    }
-        //}
+            // Act
+            var result = client.PostAsync($"{BaseAddress}/profile-picture/{TestValues.UserResponse.Id}", AccountControllerValues.UpdateProfilePictureRequest);
 
+            // Assert
+            result.EnsureSuccessStatusCode();
+        }
+        
+        [TestMethod]
+        public void ChangePassword()
+        {
+            // Arrange
+            var webHostBuilder = CreateWebHostBuilder();
 
+            using var server = new TestServer(webHostBuilder);
+            using var client = server.CreateClient();
+
+            // Act
+            var result = client.PutAsync($"{BaseAddress}/{nameof(ChangePassword)}", AccountControllerValues.ChangePasswordRequest);
+
+            // Assert
+            result.EnsureSuccessStatusCode();
+        }
+        
         [TestMethod]
         public void ConfirmEmailAsync()
         {
@@ -189,7 +146,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
                 using (var client = server.CreateClient())
                 {
                     var req = new HttpRequestMessage(HttpMethod.Post, "/api/identity/user/forgot-password");
-                    var data = JsonConvert.SerializeObject(ForgotPasswordRequest);
+                    var data = JsonConvert.SerializeObject(TestValues.ForgotPasswordRequest);
 
                     StringContent httpContent = new(data, Encoding.UTF8, "application/json");
                     req.Content = httpContent;
@@ -218,48 +175,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             // Assert
             result.Should().NotBeNull();
         }
-
-        //[TestMethod]
-        //public void ForgotPasswordAsyn2()
-        //{
-        //    // Arrange
-        //    var webHostBuilder = CreateWebHostBuilder();
-
-        //   // Act
-        //    using (var server = new TestServer(webHostBuilder))
-        //    {
-
-
-        //        using (var client = server.CreateClient())
-        //        {
-        //           // Act
-        //            var result = client.PostAsync("/api/identity/user/forgot-password", ForgotPasswordRequest);
-
-        //            // Assert
-        //            result.EnsureSuccessStatusCode();
-        //        }
-        //    }
-        //}
-
-        //[TestMethod]
-        //public void GetRolesAsync()
-        //{
-        //    // Arrange
-        //    var webHostBuilder = CreateWebHostBuilder();
-
-        //   // Act
-        //    using (var server = new TestServer(webHostBuilder))
-        //    using (var client = server.CreateClient())
-        //    {
-        //       // Act
-        //        var result = client.GetAsync<Result<UserRolesResponse>>($"/api/identity/user/roles/{Id}");
-
-        //        // Assert
-        //        result.Succeeded.Should().BeTrue();
-        //        result.Data.UserRoles.Should().BeEquivalentTo(TestValues.UserRolesResponse.UserRoles);
-        //    }
-        //}
-
+        
         [TestMethod]
         public void GetRolesForUserIdAsync()
         {
@@ -291,7 +207,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             {
                // Act
                 //client.
-                var result = client.PostAsync("/api/identity/user", RegisterRequest);
+                var result = client.PostAsync("/api/identity/user", TestValues.RegisterRequest);
 
                 // Assert
                 result.EnsureSuccessStatusCode();
@@ -309,7 +225,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using (var client = server.CreateClient())
             {
                // Act
-                var result = client.PostAsync("/api/identity/user/reset-password", ResetPasswordRequest);
+                var result = client.PostAsync("/api/identity/user/reset-password", TestValues.ResetPasswordRequest);
 
                 // Assert
                 result.EnsureSuccessStatusCode();
@@ -343,7 +259,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using (var client = server.CreateClient())
             {
                // Act
-                var result = client.PostAsync("/api/identity/user/toggle-status", ToggleUserStatusRequest);
+                var result = client.PostAsync("/api/identity/user/toggle-status", TestValues.ToggleUserStatusRequest);
 
                 // Assert
                 result.EnsureSuccessStatusCode();
@@ -361,7 +277,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using (var client = server.CreateClient())
             {
                // Act
-                var result = client.PutAsync($"/api/identity/user/roles/{UpdateUserRolesRequest.UserId}", UpdateUserRolesRequest);
+                var result = client.PutAsync($"/api/identity/user/roles/{TestValues.UpdateUserRolesRequest.UserId}", TestValues.UpdateUserRolesRequest);
 
                 // Assert
                 result.EnsureSuccessStatusCode();

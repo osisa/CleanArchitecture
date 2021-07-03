@@ -39,6 +39,8 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
     {
         #region Public Methods and Operators
 
+        private const string BaseAddress = "/api/identity/user";
+
         [TestMethod]
         public void GetAll()
         {
@@ -51,7 +53,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
                 using (var client = server.CreateClient())
                 {
                     // Assert
-                    var result = client.GetAsync<Result<List<UserResponse>>>("/api/identity/user");
+                    var result = client.GetAsync<Result<List<UserResponse>>>(BaseAddress); //"/api/identity/user");
 
                     result.Succeeded.Should().BeTrue();
 
@@ -63,52 +65,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
                 server.Host.StopAsync().GetAwaiter().GetResult();
             }
         }
-
-        //[TestMethod]
-        //public void GetAll2()
-        //{
-        //    // Arrange
-        //    var webHostBuilder = CreateWebHostBuilder();
-
-        //    // Act
-        //    using (var server = new TestServer(webHostBuilder))
-        //    {
-        //        //server.Host.Start();
-        //        using (var client = server.CreateClient())
-        //        {
-        //            var result = client.GetAsync<Result<List<UserResponse>>>("/api/identity/user");
-
-        //            result.Succeeded.Should().BeTrue();
-
-        //            result.Data.Should().NotBeNull();
-        //            result.Data.Count.Should().Be(2);
-        //            result.Data[0].Should().BeEquivalentTo(TestValues.UserResponse);
-        //        }
-        //    }
-        //}
-
-        [TestMethod]
-        public void GetAll3()
-        {
-            // Arrange
-            var webHostBuilder = CreateWebHostBuilder();
-
-            // Act
-            using (var server = new TestServer(webHostBuilder))
-            {
-                using (var client = server.CreateClient())
-                {
-                    var result = client.GetAsync<Result<List<UserResponse>>>("/api/identity/user");
-
-                    result.Succeeded.Should().BeTrue();
-
-                    result.Data.Should().NotBeNull();
-                    result.Data.Count.Should().Be(2);
-                    result.Data[0].Should().BeEquivalentTo(TestValues.UserResponse);
-                }
-            }
-        }
-
+        
         [TestMethod]
         public void GetById()
         {
@@ -350,6 +307,50 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
                 result.EnsureSuccessStatusCode();
             }
         }
+
+
+        [TestMethod]
+        public void Export()
+        {
+            // Arrange
+            var webHostBuilder = CreateWebHostBuilder();
+
+            // Act
+            using (var server = new TestServer(webHostBuilder))
+            using (var client = server.CreateClient())
+            {
+                // Act
+                var result = client.GetStringAsync("/api/identity/user/export").Result;
+                
+
+                // Assert
+                result.Should().NotBeEmpty();
+
+                //todo: translate export data
+
+                //result.EnsureSuccessStatusCode();
+            }
+        }
+
+        //[TestMethod]
+        //public void Export2()
+        //{
+        //    // Arrange
+        //    var webHostBuilder = CreateWebHostBuilder();
+
+        //    // Act
+        //    using (var server = new TestServer(webHostBuilder))
+        //    using (var client = server.CreateClient())
+        //    {
+        //        // Act
+        //        var result = client.GetStringAsync("/api/identity/user/export").Result;
+
+        //        // Assert
+        //        result.Should().Be("x");
+        //        //result.EnsureSuccessStatusCode();
+        //    }
+        //}
+
 
         [TestMethod]
         public void UpdateRolesAsync()

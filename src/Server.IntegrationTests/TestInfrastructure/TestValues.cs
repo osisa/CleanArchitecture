@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
 
+using BlazorHero.CleanArchitecture.Application.Enums;
 using BlazorHero.CleanArchitecture.Application.Requests.Identity;
 using BlazorHero.CleanArchitecture.Application.Responses.Identity;
-using BlazorHero.CleanArchitecture.Infrastructure.Contexts;
-using BlazorHero.CleanArchitecture.Shared.Constants.Permission;
-////using BlazorHero.CleanArchitecture.TestInfrastructure;
-////using BlazorHero.CleanArchitecture.TestInfrastructure.Extensions;
-////using BlazorHero.CleanArchitecture.TestInfrastructure.Users;
-
-using Bunit;
+using BlazorHero.CleanArchitecture.Shared.Constants.User;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructure
 {
@@ -33,6 +24,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
         public const string Id = "4734f9bf-4a08-4973-9e33-1aaf44ddc620";
 
         public const string Id0 = "64999b63-d952-4898-841c-c2621afd170f";
+
         public const string Id1 = "789aba66-2e16-40a8-81f8-4156d18959b5";
 
         public const string Origin = "https://example.net";
@@ -46,76 +38,6 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
         public const string Token = "TestToken";
 
         public const int UserCount = 999;
-
-        #endregion
-
-        #region Static Fields
-
-        public static readonly RegisterRequest RegisterRequest = new()
-                                                                 {
-                                                                     ActivateUser = true,
-                                                                     AutoConfirmEmail = true,
-                                                                     ConfirmPassword = TestUserValues.Password,
-                                                                     Email = TestUserValues.Email,
-                                                                     FirstName = TestUserValues.FirstName,
-                                                                     LastName = TestUserValues.LastName,
-                                                                     Password = TestUserValues.Password,
-                                                                     PhoneNumber = TestUserValues.PhoneNumber,
-                                                                     UserName = TestUserValues.UserName
-                                                                 };
-
-        public static readonly UserResponse UserResponse = new()
-                                                           {
-                                                               Email = TestUserValues.Email,
-                                                               EmailConfirmed = true,
-                                                               FirstName = TestUserValues.FirstName,
-                                                               Id = Id0,
-                                                               IsActive = true,
-                                                               LastName = TestUserValues.LastName,
-                                                               PhoneNumber = null,
-                                                               ProfilePictureDataUrl = null,
-                                                               UserName = TestUserValues.UserName
-                                                           };
-
-        public static readonly UserRolesResponse UserRolesResponse = new()
-                                                                     {
-                                                                         UserRoles = new List<UserRoleModel>
-                                                                                     {
-                                                                                         new() { RoleName = "Basic", Selected = true, RoleDescription = "Basic role with default permissions"},
-                                                                                         new() { RoleName = "Administrator", Selected = false, RoleDescription = "Administrator role with full permissions" }
-                                                                                     }
-                                                                     };
-
-        public static readonly ResetPasswordRequest ResetPasswordRequest = new()
-                                                                           { 
-                                                                               ConfirmPassword = Shared.Constants.User.UserConstants.DefaultPassword,
-                                                                               Email = TestUserValues.Email,
-                                                                               Password = Shared.Constants.User.UserConstants.DefaultPassword,
-                                                                               Token = Token
-                                                                           };
-
-        public static readonly ToggleUserStatusRequest ToggleUserStatusRequest = new()
-                                                                                 {
-                                                                                     ActivateUser = true,
-                                                                                     UserId = Id0
-                                                                                 };
-
-        public static readonly UpdateUserRolesRequest UpdateUserRolesRequest = new()
-                                                                               {
-                                                                                   UserId = Id0,
-                                                                                   UserRoles = UserRolesResponse.UserRoles
-                                                                               };
-
-        public static readonly ForgotPasswordRequest ForgotPasswordRequest = new()
-                                                                             {
-                                                                                 Email = TestUserValues.Email
-                                                                             };
-
-        ////public static ITestUser AdminUser = new TestUser(nameof(AdminUser), Permissions.Users.View);
-
-        ////public static ITestUser DefaultUser = new TestUser(nameof(DefaultUser), Permissions.Users.View, Permissions.Users.Edit);
-
-        ////public static IDictionary<string, ITestUser> TestUsers = new[] { DefaultUser, AdminUser }.ToDictionary(u => u.Name);
 
         #endregion
 
@@ -133,6 +55,16 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
 
         #region Methods
 
+        //internal static HttpClient CreateTestClient()
+        //{
+        //    var webHostBuilder = CreateWebHostBuilder();
+
+        //    using var server = new TestServer(webHostBuilder);
+        //    using var client= server.CreateClient();
+
+        //    return client;
+        //}
+
         internal static IWebHostBuilder CreateWebHostBuilder(string environment = "Development")
         {
             ////using var ctx = new TestContext();
@@ -143,9 +75,9 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
             //////authContext.SetPolicies("content-editor");
             //////authContext.SetClaims(new Claim(ClaimTypes.Email, "test@example.com"));
 
-            var hostBuilder= new WebHostBuilder()
+            var hostBuilder = new WebHostBuilder()
                 .UseEnvironment(environment) // You can set the environment you want (development, staging, production)
-                                             //.UseEnvironment("Development") // You can set the environment you want (development, staging, production)
+                //.UseEnvironment("Development") // You can set the environment you want (development, staging, production)
                 .UseConfiguration(
                     new ConfigurationBuilder()
                         .AddJsonFile($"appsettings.{environment}.json") //the file is set to be copied to the output directory if newer
@@ -156,11 +88,8 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
                 .ConfigureServices(s => s.AddSingleton<IAuthenticationHandler, TestAuthenticationHandler>()) // Startup class of your web app project
                 .ConfigureServices(s => s.AddHttpContextAccessor());
 
-
             //BlazorHeroContext xx;
             //xx.Database.Cr()
-
-            
 
             return hostBuilder;
             //var host = hostBuilder.Build();
@@ -190,10 +119,8 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
 
         private static Claim CreateNameIdentifierClaim(string issuer = DefaultIssuer)
         {
-            return new (ClaimTypes.NameIdentifier, Id, issuer);
+            return new(ClaimTypes.NameIdentifier, Id, issuer);
         }
-
-        private const string DefaultIssuer = nameof(DefaultIssuer);
 
         #endregion
 
@@ -207,8 +134,8 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
         //        )
         //        .UseStartup<TestStartup>(); // Startup class of your web app project
 
-
         private static class TestUserValues
+
         {
             #region Constants
 
@@ -218,7 +145,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
 
             public const string LastName = "Doe";
 
-            public const string Password = BlazorHero.CleanArchitecture.Shared.Constants.User.UserConstants.DefaultPassword;
+            public const string Password = UserConstants.DefaultPassword;
 
             public const string PhoneNumber = "123";
 
@@ -228,8 +155,123 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
 
             #endregion
         }
+
+            private const string DefaultIssuer = nameof(DefaultIssuer);
+
+          
+                #region Constants
+
+
+
+                #endregion
+
+                #region Static Fields
+
+              
+
+                public static readonly ForgotPasswordRequest ForgotPasswordRequest = new()
+                                                                                     {
+                                                                                         Email = TestUserValues.Email
+                                                                                     };
+
+                public static readonly RegisterRequest RegisterRequest = new()
+                                                                         {
+                                                                             ActivateUser = true,
+                                                                             AutoConfirmEmail = true,
+                                                                             ConfirmPassword = TestUserValues.Password,
+                                                                             Email = TestUserValues.Email,
+                                                                             FirstName = TestUserValues.FirstName,
+                                                                             LastName = TestUserValues.LastName,
+                                                                             Password = TestUserValues.Password,
+                                                                             PhoneNumber = TestUserValues.PhoneNumber,
+                                                                             UserName = TestUserValues.UserName
+                                                                         };
+
+        #endregion
+
+
+        public static readonly ResetPasswordRequest ResetPasswordRequest = new()
+                                                                           {
+                                                                               ConfirmPassword = UserConstants.DefaultPassword,
+                                                                               Email = TestUserValues.Email,
+                                                                               Password = UserConstants.DefaultPassword,
+                                                                               Token = Token
+                                                                           };
+
+        public static readonly ToggleUserStatusRequest ToggleUserStatusRequest = new()
+                                                                                 {
+                                                                                     ActivateUser = true,
+                                                                                     UserId = Id0
+                                                                                 };
+
+  
+        public static class AccountControllerValues
+        {
+            public static readonly ChangePasswordRequest ChangePasswordRequest = new()
+                                                                                 {
+                                                                                     ConfirmNewPassword = TestUserValues.Password,
+                                                                                     NewPassword = TestUserValues.Password,
+                                                                                     Password = TestUserValues.Password
+                                                                                 };
+
+         
+
+            public static readonly UpdateProfileRequest UpdateProfileRequest = new()
+                                                                               {
+                                                                                   Email = TestUserValues.Email,
+                                                                                   FirstName = TestUserValues.FirstName,
+                                                                                   LastName = TestUserValues.LastName,
+                                                                                   PhoneNumber = TestUserValues.PhoneNumber
+                                                                               };
+
+            public static readonly UpdateProfilePictureRequest UpdateProfilePictureRequest = new()
+                                                                                             {
+                                                                                                 Data = null,
+                                                                                                 Extension = "png",
+                                                                                                 FileName = "TestFile",
+                                                                                                 UploadType = UploadType.ProfilePicture
+                                                                                             };
+        }
+
+        public static readonly UserRolesResponse UserRolesResponse = new()
+                                                                     {
+                                                                         UserRoles = new List<UserRoleModel>
+                                                                                     {
+                                                                                         new() { RoleName = "Basic", Selected = true, RoleDescription = "Basic role with default permissions" },
+                                                                                         new() { RoleName = "Administrator", Selected = false, RoleDescription = "Administrator role with full permissions" }
+                                                                                     }
+                                                                     };
+
+            public static readonly UpdateUserRolesRequest UpdateUserRolesRequest = new()
+                                                                                   {
+                                                                                       UserId = Id0,
+                                                                                       UserRoles = UserRolesResponse.UserRoles
+                                                                                   };
+
+            public static readonly UserResponse UserResponse = new()
+                                                               {
+                                                                   Email = TestUserValues.Email,
+                                                                   EmailConfirmed = true,
+                                                                   FirstName = TestUserValues.FirstName,
+                                                                   Id = Id0,
+                                                                   IsActive = true,
+                                                                   LastName = TestUserValues.LastName,
+                                                                   PhoneNumber = TestUserValues.PhoneNumber,
+                                                                   ProfilePictureDataUrl = string.Empty,
+                                                                   //ProfilePictureDataUrl = TestUserValues.ProfilePicture, //todo: transfer image data and verify it
+                                                                   UserName = TestUserValues.UserName
+                                                               };
+
+
+        }
+
+        ////public static ITestUser AdminUser = new TestUser(nameof(AdminUser), Permissions.Users.View);
+
+        ////public static ITestUser DefaultUser = new TestUser(nameof(DefaultUser), Permissions.Users.View, Permissions.Users.Edit);
+
+        ////public static IDictionary<string, ITestUser> TestUsers = new[] { DefaultUser, AdminUser }.ToDictionary(u => u.Name);
     }
-}
+
 
 //public static TestContext GetBlazorTestContext()
 //{

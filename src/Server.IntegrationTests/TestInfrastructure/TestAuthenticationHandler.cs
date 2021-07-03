@@ -108,6 +108,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
             claims.Add(new Claim(ClaimTypes.NameIdentifier, UserId.ToString()));
             claims.Add(new Claim("Permission", Permissions.Users.View)); //, Permissions.Users.Edit));
             claims.Add(new Claim("Permission", Permissions.Users.Edit)); //, Permissions.Users.Edit));
+            claims.Add(new Claim("Permission",   Permissions.Users.Export));
 
             //claims.AddRange(_testUser.Permissions.Select(p => new Claim("Permission", p)));
 
