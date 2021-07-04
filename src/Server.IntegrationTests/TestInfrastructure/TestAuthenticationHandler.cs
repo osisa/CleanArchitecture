@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -46,7 +45,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
 
         //private readonly ITestUser _testUser;
 
-        private readonly Claim DefaultUserIdClaim = new Claim(UserIdClaimType, UserId.ToString());
+        //private readonly Claim DefaultUserIdClaim = new Claim(UserIdClaimType, UserId.ToString());
 
         #endregion
 
@@ -83,7 +82,6 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             //var perm = new Claim("Permission", "Permissions.Users.View");
-
             //var authenticationTicket = new AuthenticationTicket(
             //    new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { DefaultUserIdClaim, perm }, AuthScheme)),
             //    new AuthenticationProperties(),
@@ -91,16 +89,12 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
             //return Task.FromResult(AuthenticateResult.Success(authenticationTicket));
 
             //var claims = new[] { new Claim(ClaimTypes.Name, "Test user"), perm };
-
-
+            
             ////public static ITestUser DefaultUser =
-
-            /// new TestUser(nameof(DefaultUser), Permissions.Users.View, Permissions.Users.Edit);
-
+            //// new TestUser(nameof(DefaultUser), Permissions.Users.View, Permissions.Users.Edit);
             ////var claims = new List<Claim> { new(ClaimTypes.Name, _testUser.Name) }; // { new Claim(ClaimTypes.Name, "Test user"), perm };
             ////claims.AddRange(_testUser.Permissions.Select(p => new Claim("Permission", p)));
-
-
+            
             //var xx = ClaimTypes.NameIdentifier;
             //var yy = ClaimTypes.Name;
 
@@ -109,11 +103,14 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
             claims.Add(new Claim("Permission", Permissions.Users.View)); //, Permissions.Users.Edit));
             claims.Add(new Claim("Permission", Permissions.Users.Edit)); //, Permissions.Users.Edit));
             claims.Add(new Claim("Permission",   Permissions.Users.Export));
+            claims.Add(new Claim("Permission", Permissions.RoleClaims.View));
+            claims.Add(new Claim("Permission", Permissions.RoleClaims.Create));
+            claims.Add(new Claim("Permission", Permissions.RoleClaims.Delete));
 
-            //claims.AddRange(_testUser.Permissions.Select(p => new Claim("Permission", p)));
+           //claims.AddRange(_testUser.Permissions.Select(p => new Claim("Permission", p)));
 
 
-            var identity = new ClaimsIdentity(claims, "Test");
+           var identity = new ClaimsIdentity(claims, "Test");
             var principal = new ClaimsPrincipal(identity);
             var ticket = new AuthenticationTicket(principal, "Test");
 
