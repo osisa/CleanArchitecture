@@ -26,6 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Environments.cs" />
+    <Compile Remove="HttpClientExtensions.cs" />
     <Compile Remove="HttpContentExtensions.cs" />
     <Compile Remove="HttpRequestMessageExtensions.cs" />
     <Compile Remove="HttpResponseMessageExtensions.cs" />

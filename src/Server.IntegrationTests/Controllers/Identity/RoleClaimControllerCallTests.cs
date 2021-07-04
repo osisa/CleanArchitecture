@@ -1,12 +1,9 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="o.s.i.s.a. GmbH" file="UserControllerCallTests.cs">
-//    (c) 2014. See licence text in binary folder.
-// </copyright>
-//  --------------------------------------------------------------------------------------------------------------------
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using BlazorHero.CleanArchitecture.Application.Responses.Identity;
+using BlazorHero.CleanArchitecture.Infrastructure.Contexts;
+using BlazorHero.CleanArchitecture.Server.Controllers.Identity;
+using BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructure;
 using BlazorHero.CleanArchitecture.Shared.Wrapper;
 using BlazorHero.CleanArchitecture.TestInfrastructure;
 using BlazorHero.CleanArchitecture.TestInfrastructure.TestSupport;
@@ -14,6 +11,8 @@ using BlazorHero.CleanArchitecture.TestInfrastructure.TestSupport;
 using FluentAssertions;
 
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using static BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructure.TestValues;
@@ -71,12 +70,16 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using var server = new TestServer(webHostBuilder);
             using var client = server.CreateClient();
 
+            client.Post(RoleControllerCallTests.BaseAddress, RoleControllerValues.NewRoleRequest);
+
+            var blazorHeroContext = server.Services.GetRequiredService<BlazorHeroContext>();
+            var role = blazorHeroContext.Roles.SingleAsync(r => r.NormalizedName == RoleControllerValues.NewRoleRequest.Name.ToUpperInvariant()).Result;
+            
             // Act
-            var result = client.Post($"{BaseAddress}", RoleClaimControllerValues.NewRoleClaimRequest);
+            var result = client.Post($"{BaseAddress}", RoleClaimControllerValues.CreateRoleClaimRequest(role.Id));
 
             // Assert
             result.EnsureSuccessStatusCode();
-            
         }
 
         [TestMethod]
@@ -88,13 +91,23 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using var server = new TestServer(webHostBuilder);
             using var client = server.CreateClient();
 
+
+            var blazorHeroContext = server.Services.GetRequiredService<BlazorHeroContext>();
+            var roleClaim = blazorHeroContext.RoleClaims.SingleAsync(r => r.ClaimValue == "TestClaimValue").Result;
+
+            //client.Post($"{BaseAddress}", RoleClaimControllerValues.NewRoleClaimRequest).EnsureSuccessStatusCode();
+
+            //client.Post($"{RoleControllerCallTests.BaseAddress}", RoleControllerValues.NewRoleRequest).EnsureSuccessStatusCode();
+
+            //var blazorHeroContext = server.Services.GetRequiredService<BlazorHeroContext>();
+            //var roleId = blazorHeroContext.Roles.SingleAsync(r => r.NormalizedName == RoleControllerValues.NewRoleRequest.Name.ToUpperInvariant()).Result.Id;
+
             // Act
-            var result = client.DeleteAsync($"{BaseAddress}/{RoleClaimControllerValues.RoleId}").Result;
+            var result = client.Delete($"{BaseAddress}/{roleClaim.Id}");
 
             // Assert
             result.EnsureSuccessStatusCode();
         }
-
 
         #endregion
     }

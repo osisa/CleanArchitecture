@@ -207,23 +207,23 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
         public static class RoleClaimControllerValues
         {
 
-            public const string RoleId = "55";
-            public static readonly RoleClaimRequest NewRoleClaimRequest = new()
+            //public const string RoleId = "55";
+            public static RoleClaimRequest CreateRoleClaimRequest(string roleId) => new()
                                                                        {
-                                                                           Description = nameof(NewRoleClaimRequest),
-                                                                           Group = nameof(NewRoleClaimRequest.Group),
+                                                                           Description = nameof(RoleClaimRequest.Description),
+                                                                           Group = nameof(RoleClaimRequest.Group),
                                                                            Id = 0,
-                                                                           RoleId = "b2d98921-aca7-46b2-9b26-68c204247afb", // queried by hand... todo: update hardcoded db test seeding
+                                                                           RoleId = roleId,
                                                                            Selected = false,
-                                                                           Type = "A",
-                                                                           Value = "Val"
+                                                                           Type = "TestClaimType",
+                                                                           Value = "TestClaimValue"
                                                                            
                                                                        };
         }
 
         public static class RoleControllerValues
         {
-            public const string RoleId = "2da7c8b9-8fa6-40eb-9fc9-ab9d64dc255c";
+            //public const string RoleId = "2da7c8b9-8fa6-40eb-9fc9-ab9d64dc255c";
             public static readonly RoleRequest NewRoleRequest = new()
                                                                           {
                                                                               Description = nameof(NewRoleRequest),

@@ -1,10 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="o.s.i.s.a. GmbH" file="UserControllerCallTests.cs">
-//    (c) 2014. See licence text in binary folder.
-// </copyright>
-//  --------------------------------------------------------------------------------------------------------------------
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using BlazorHero.CleanArchitecture.Application.Responses.Identity;
 using BlazorHero.CleanArchitecture.Infrastructure.Contexts;
@@ -26,7 +20,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
     [TestClass]
     public class RoleControllerCallTests : TestBase
     {
-        private const string BaseAddress = "api/identity/role";
+        internal const string BaseAddress = "api/identity/role";
 
         #region Public Methods and Operators
 
@@ -76,7 +70,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using var server = new TestServer(webHostBuilder);
             using var client = server.CreateClient();
 
-            client.PostAsync($"{BaseAddress}", RoleControllerValues.NewRoleRequest);
+            client.Post($"{BaseAddress}", RoleControllerValues.NewRoleRequest);
 
             var blazorHeroContext = server.Services.GetRequiredService<BlazorHeroContext>();
             var role = blazorHeroContext.Roles.SingleAsync(r => r.Name == RoleControllerValues.NewRoleRequest.Name).Result;

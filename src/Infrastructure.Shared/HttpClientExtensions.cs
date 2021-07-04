@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 
 using BlazorHero.CleanArchitecture.Shared.Wrapper;
+
+//using Microsoft.AspNetCore.Mvc.Formatters;
 
 using Newtonsoft.Json;
 
@@ -69,8 +72,9 @@ namespace BlazorHero.CleanArchitecture.TestInfrastructure
         
         private static string SerializeObject<T>(T value) =>  JsonConvert.SerializeObject(value);
         
-        private static StringContent CreateStringContent<T>(T value) => new(SerializeObject(value), ApplicationJson);
-                
+        private static StringContent CreateStringContent<T>(T value) => new(SerializeObject(value),Encoding, ApplicationJson);
+
+        
         #endregion
     }
 }

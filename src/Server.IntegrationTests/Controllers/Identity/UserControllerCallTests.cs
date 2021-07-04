@@ -9,6 +9,7 @@ using BlazorHero.CleanArchitecture.Infrastructure.Models.Identity;
 using BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructure;
 using BlazorHero.CleanArchitecture.Shared.Wrapper;
 using BlazorHero.CleanArchitecture.TestInfrastructure;
+using BlazorHero.CleanArchitecture.TestInfrastructure.TestSupport;
 
 using FluentAssertions;
 
@@ -26,7 +27,7 @@ using static BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastruc
 namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Identity
 {
     [TestClass]
-    public class UserControllerCallTests
+    public class UserControllerCallTests : TestBase
     {
         #region Constants
 
@@ -40,11 +41,9 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
         public void CheckOrigin()
         {
             // Arrange
-            var origin = Origin;
-            var route = Route;
-
+            
             // Act
-            var result = new Uri(string.Concat($"{origin}/", route));
+            var result = new Uri(string.Concat($"{Origin}/", Route));
 
             // Assert
             result.Should().NotBeNull();
@@ -62,7 +61,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             // Act
             var userManager = server.Services.GetRequiredService<UserManager<BlazorHeroUser>>();
             var userStore = server.Services.GetRequiredService<IUserStore<BlazorHeroUser>>();
-            var user = userStore.FindByIdAsync(Id0, CancellationToken.None).Result; //client.GetAsync<Result<UserResponse>>($"/api/identity/user/{Id}").Data;
+            var user = userStore.FindByIdAsync(Id0, CancellationToken.None).Result; 
             var code = userManager.GenerateEmailConfirmationTokenAsync(user).Result;
             var code64 = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
@@ -103,16 +102,16 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using var server = new TestServer(webHostBuilder);
             using var client = server.CreateClient();
             
-            var req = new HttpRequestMessage(HttpMethod.Post, $"{BaseAddress}/forgot-password");
+            var request = new HttpRequestMessage(HttpMethod.Post, $"{BaseAddress}/forgot-password");
             var data = JsonConvert.SerializeObject(ForgotPasswordRequest);
 
-            StringContent httpContent = new(data, Encoding.UTF8, "application/json");
-            req.Content = httpContent;
-            req.Headers.Add("origin", Origin);
+            StringContent httpContent = new(data, Encoding.UTF8, HttpClientExtensions.ApplicationJson);
+            request.Content = httpContent;
+            request.Headers.Add("origin", Origin);
 
             // Act
             //var result = client.PostAsync("/api/identity/user/forgot-password", ForgotPasswordRequest);
-            var result = client.SendAsync(req).Result;
+            var result = client.SendAsync(request).Result;
 
             // Assert
             result.EnsureSuccessStatusCode();
