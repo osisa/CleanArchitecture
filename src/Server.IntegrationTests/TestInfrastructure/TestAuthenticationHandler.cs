@@ -106,11 +106,14 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
             claims.Add(new Claim("Permission", Permissions.RoleClaims.View));
             claims.Add(new Claim("Permission", Permissions.RoleClaims.Create));
             claims.Add(new Claim("Permission", Permissions.RoleClaims.Delete));
+            claims.Add(new Claim("Permission", Permissions.Roles.View));
+            claims.Add(new Claim("Permission", Permissions.Roles.Create));
+            claims.Add(new Claim("Permission", Permissions.Roles.Delete));
 
-           //claims.AddRange(_testUser.Permissions.Select(p => new Claim("Permission", p)));
+            //claims.AddRange(_testUser.Permissions.Select(p => new Claim("Permission", p)));
 
 
-           var identity = new ClaimsIdentity(claims, "Test");
+            var identity = new ClaimsIdentity(claims, "Test");
             var principal = new ClaimsPrincipal(identity);
             var ticket = new AuthenticationTicket(principal, "Test");
 

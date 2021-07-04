@@ -8,6 +8,8 @@ using System;
 using System.Net;
 using System.Net.Http;
 
+using BlazorHero.CleanArchitecture.Shared.Wrapper;
+
 using Newtonsoft.Json;
 
 namespace BlazorHero.CleanArchitecture.TestInfrastructure
@@ -67,6 +69,14 @@ namespace BlazorHero.CleanArchitecture.TestInfrastructure
             var resp = @this.PutAsync(uri, httpContent).Result;
 
             return resp;
+        }
+
+        public static IResult<T> ToResult<T>(this HttpContent @this)
+        {
+            var json = @this.ReadAsStringAsync().Result;
+            var value=JsonConvert.DeserializeObject<Result<T>>(json);
+
+            return value;
         }
 
         #endregion

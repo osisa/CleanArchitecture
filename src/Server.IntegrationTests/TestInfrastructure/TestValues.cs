@@ -219,8 +219,17 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
                                                                            Value = "Val"
                                                                            
                                                                        };
+        }
 
-
+        public static class RoleControllerValues
+        {
+            public const string RoleId = "2da7c8b9-8fa6-40eb-9fc9-ab9d64dc255c";
+            public static readonly RoleRequest NewRoleRequest = new()
+                                                                          {
+                                                                              Description = nameof(NewRoleRequest),
+                                                                              Id = null,
+                                                                              Name = "TestRole"
+                                                                          };
         }
 
         private static class TestUserValues
