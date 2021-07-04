@@ -232,6 +232,22 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
                                                                           };
         }
 
+
+
+        public static class TokenControllerValues
+        {
+            public static readonly TokenRequest TokenRequest = new()
+                                                                {
+                                                                   Password = TestUserValues.Password,
+                                                                   Email = TestUserValues.Email
+                                                                };
+
+            public static readonly RefreshTokenRequest RefreshTokenRequest = new()
+                                                                             {
+                                                                                 Token = TestValues.Token,
+                                                                                 RefreshToken = TestValues.Token
+                                                                             };
+        }
         private static class TestUserValues
 
         {

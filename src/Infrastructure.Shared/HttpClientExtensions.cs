@@ -31,6 +31,9 @@ namespace BlazorHero.CleanArchitecture.TestInfrastructure
         public static HttpResponseMessage Post<T>(this HttpClient @this, string uriText, T value)
             => @this.PostAsync(CreateUri(uriText), value).Result;
 
+        public static HttpResponseMessage Post<T>(this HttpClient @this, string uriText)
+            => @this.PostAsync(CreateUri(uriText), string.Empty).Result;
+
         public static HttpResponseMessage Put<T>(this HttpClient @this, string uriText, T value)
             => @this.PutAsync(CreateUri(uriText), value).Result;
 
