@@ -53,7 +53,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
                 using (var client = server.CreateClient())
                 {
                     // Assert
-                    var result = client.GetAsync<Result<List<UserResponse>>>(BaseAddress); //"/api/identity/user");
+                    var result = client.Get<Result<List<UserResponse>>>(BaseAddress); //"/api/identity/user");
 
                     result.Succeeded.Should().BeTrue();
 
@@ -78,7 +78,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using (var client = server.CreateClient())
             {
                // Act
-                var result = client.GetAsync<Result<UserResponse>>($"/api/identity/user/{Id0}");
+                var result = client.Get<Result<UserResponse>>($"/api/identity/user/{Id0}");
 
                 // Assert
                 result.Succeeded.Should().BeTrue();
@@ -229,7 +229,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using (var client = server.CreateClient())
             {
                // Act
-                var result = client.GetAsync<Result<UserRolesResponse>>($"/api/identity/user/roles/{Id0}");
+                var result = client.Get<Result<UserRolesResponse>>($"/api/identity/user/roles/{Id0}");
 
                 // Assert
                 result.Succeeded.Should().BeTrue();
@@ -249,7 +249,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             {
                // Act
                 //client.
-                var result = client.PostAsync("/api/identity/user", RegisterRequest);
+                var result = client.Post("/api/identity/user", RegisterRequest);
 
                 // Assert
                 result.EnsureSuccessStatusCode();
@@ -267,7 +267,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using (var client = server.CreateClient())
             {
                // Act
-                var result = client.PostAsync("/api/identity/user/reset-password", ResetPasswordRequest);
+                var result = client.Post("/api/identity/user/reset-password", ResetPasswordRequest);
 
                 // Assert
                 result.EnsureSuccessStatusCode();
@@ -301,7 +301,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using (var client = server.CreateClient())
             {
                // Act
-                var result = client.PostAsync("/api/identity/user/toggle-status", ToggleUserStatusRequest);
+                var result = client.Post("/api/identity/user/toggle-status", ToggleUserStatusRequest);
 
                 // Assert
                 result.EnsureSuccessStatusCode();
@@ -363,7 +363,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using (var client = server.CreateClient())
             {
                // Act
-                var result = client.PutAsync($"/api/identity/user/roles/{UpdateUserRolesRequest.UserId}", UpdateUserRolesRequest);
+                var result = client.Put($"/api/identity/user/roles/{UpdateUserRolesRequest.UserId}", UpdateUserRolesRequest);
 
                 // Assert
                 result.EnsureSuccessStatusCode();

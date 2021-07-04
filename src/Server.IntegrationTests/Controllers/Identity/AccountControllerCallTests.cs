@@ -51,7 +51,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using var client = server.CreateClient();
 
             // Act
-            var result = client.GetAsync<Result>($"{BaseAddress}/profile-picture/{TestValues.UserResponse.Id}");
+            var result = client.Get<Result>($"{BaseAddress}/profile-picture/{TestValues.UserResponse.Id}");
 
             // Assert
             result.Succeeded.Should().BeTrue();
@@ -68,7 +68,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using var client = server.CreateClient();
 
             // Act
-            var result = client.PutAsync($"{BaseAddress}/{nameof(UpdateProfile)}", AccountControllerValues.UpdateProfileRequest);
+            var result = client.Put($"{BaseAddress}/{nameof(UpdateProfile)}", AccountControllerValues.UpdateProfileRequest);
 
             // Assert
             result.EnsureSuccessStatusCode();
@@ -84,7 +84,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using var client = server.CreateClient();
 
             // Act
-            var result = client.PostAsync($"{BaseAddress}/profile-picture/{TestValues.UserResponse.Id}", AccountControllerValues.UpdateProfilePictureRequest);
+            var result = client.Post($"{BaseAddress}/profile-picture/{TestValues.UserResponse.Id}", AccountControllerValues.UpdateProfilePictureRequest);
 
             // Assert
             result.EnsureSuccessStatusCode();
@@ -100,7 +100,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using var client = server.CreateClient();
 
             // Act
-            var result = client.PutAsync($"{BaseAddress}/{nameof(ChangePassword)}", AccountControllerValues.ChangePasswordRequest);
+            var result = client.Put($"{BaseAddress}/{nameof(ChangePassword)}", AccountControllerValues.ChangePasswordRequest);
 
             // Assert
             result.EnsureSuccessStatusCode();
@@ -187,7 +187,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using (var client = server.CreateClient())
             {
                // Act
-                var result = client.GetAsync<Result<UserRolesResponse>>($"/api/identity/user/roles/{Id0}");
+                var result = client.Get<Result<UserRolesResponse>>($"/api/identity/user/roles/{Id0}");
 
                 // Assert
                 result.Succeeded.Should().BeTrue();
@@ -207,7 +207,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             {
                // Act
                 //client.
-                var result = client.PostAsync("/api/identity/user", TestValues.RegisterRequest);
+                var result = client.Post("/api/identity/user", TestValues.RegisterRequest);
 
                 // Assert
                 result.EnsureSuccessStatusCode();
@@ -225,7 +225,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using (var client = server.CreateClient())
             {
                // Act
-                var result = client.PostAsync("/api/identity/user/reset-password", TestValues.ResetPasswordRequest);
+                var result = client.Post("/api/identity/user/reset-password", TestValues.ResetPasswordRequest);
 
                 // Assert
                 result.EnsureSuccessStatusCode();
@@ -259,7 +259,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using (var client = server.CreateClient())
             {
                // Act
-                var result = client.PostAsync("/api/identity/user/toggle-status", TestValues.ToggleUserStatusRequest);
+                var result = client.Post("/api/identity/user/toggle-status", TestValues.ToggleUserStatusRequest);
 
                 // Assert
                 result.EnsureSuccessStatusCode();
@@ -277,7 +277,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using (var client = server.CreateClient())
             {
                // Act
-                var result = client.PutAsync($"/api/identity/user/roles/{TestValues.UpdateUserRolesRequest.UserId}", TestValues.UpdateUserRolesRequest);
+                var result = client.Put($"/api/identity/user/roles/{TestValues.UpdateUserRolesRequest.UserId}", TestValues.UpdateUserRolesRequest);
 
                 // Assert
                 result.EnsureSuccessStatusCode();

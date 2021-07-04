@@ -40,7 +40,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using var client = server.CreateClient();
 
             // Act
-            var result = client.GetAsync<Result<List<RoleResponse>>>($"{BaseAddress}");
+            var result = client.Get<Result<List<RoleResponse>>>($"{BaseAddress}");
 
             // Assert
             result.Should().NotBeNull();
@@ -75,7 +75,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using var client = server.CreateClient();
 
             // Act
-            var result = client.PostAsync($"{BaseAddress}", RoleControllerValues.NewRoleRequest);
+            var result = client.Post($"{BaseAddress}", RoleControllerValues.NewRoleRequest);
 
             // Assert
             result.EnsureSuccessStatusCode();

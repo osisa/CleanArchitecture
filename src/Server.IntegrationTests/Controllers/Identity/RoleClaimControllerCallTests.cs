@@ -37,7 +37,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using var client = server.CreateClient();
 
             // Act
-            var result = client.GetAsync<Result<List<RoleClaimResponse>>>($"{BaseAddress}");
+            var result = client.Get<Result<List<RoleClaimResponse>>>($"{BaseAddress}");
 
             // Assert
             result.Should().NotBeNull();
@@ -55,7 +55,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using var client = server.CreateClient();
 
             // Act
-            var result = client.GetAsync<Result<List<RoleClaimResponse>>>($"{BaseAddress}/{Id0}");
+            var result = client.Get<Result<List<RoleClaimResponse>>>($"{BaseAddress}/{Id0}");
 
             // Assert
             result.Succeeded.Should().BeTrue();
@@ -72,7 +72,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using var client = server.CreateClient();
 
             // Act
-            var result = client.PostAsync($"{BaseAddress}", RoleClaimControllerValues.NewRoleClaimRequest);
+            var result = client.Post($"{BaseAddress}", RoleClaimControllerValues.NewRoleClaimRequest);
 
             // Assert
             result.EnsureSuccessStatusCode();
