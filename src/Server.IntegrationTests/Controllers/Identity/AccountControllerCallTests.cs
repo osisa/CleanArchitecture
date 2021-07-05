@@ -1,4 +1,5 @@
 ﻿
+using BlazorHero.CleanArchitecture.Infrastructure.Shared;
 using BlazorHero.CleanArchitecture.Shared.Wrapper;
 using BlazorHero.CleanArchitecture.TestInfrastructure;
 using BlazorHero.CleanArchitecture.TestInfrastructure.TestSupport;

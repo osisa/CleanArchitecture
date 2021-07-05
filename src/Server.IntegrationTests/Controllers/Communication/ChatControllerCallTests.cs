@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 
 using BlazorHero.CleanArchitecture.Application.Responses.Identity;
-using BlazorHero.CleanArchitecture.Infrastructure.Contexts;
 using BlazorHero.CleanArchitecture.Infrastructure.Shared;
 using BlazorHero.CleanArchitecture.Shared.Wrapper;
 using BlazorHero.CleanArchitecture.TestInfrastructure;
@@ -10,41 +9,41 @@ using BlazorHero.CleanArchitecture.TestInfrastructure.TestSupport;
 using FluentAssertions;
 
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using static BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructure.TestValues;
 
-namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Identity
+namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Communication
 {
     [TestClass]
-    public class RoleControllerCallTests : TestBase
+    public class ChatControllerCallTests : TestBase
     {
-        internal const string BaseAddress = "api/identity/role";
+        #region Constants
+
+        private const string BaseAddress = "/api/chats";
+
+        #endregion
 
         #region Public Methods and Operators
 
         [TestMethod]
-        public void GetAll()
+        public void GetChatHistoryAsync()
         {
             // Arrange
             var webHostBuilder = CreateWebHostBuilder();
 
             using var server = new TestServer(webHostBuilder);
             using var client = server.CreateClient();
-
+            
             // Act
-            var result = client.Get<Result<List<RoleResponse>>>($"{BaseAddress}");
+            var result = client.Get<Result<List<ChatHistoryResponse>>>($"{BaseAddress}/{ChatsControllerValues.ContactId}");
 
             // Assert
-            result.Should().NotBeNull();
-            result.Data.Count.Should().BeGreaterThan(0);
-            TestContext.WriteLine("");
+            result.Succeeded.Should().BeTrue();
         }
 
         [TestMethod]
-        public void Post()
+        public void GetChatUsersAsync()
         {
             // Arrange
             var webHostBuilder = CreateWebHostBuilder();
@@ -53,17 +52,15 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using var client = server.CreateClient();
 
             // Act
-            var result = client.Post($"{BaseAddress}", RoleControllerValues.NewRoleRequest);
+            var result = client.Get<Result<List<ChatUserResponse>>>($"{BaseAddress}/users");
 
             // Assert
-            result.EnsureSuccessStatusCode();
-            
-            var text = result.Content.ToResult<string>();
-            TestContext.WriteLine("Text:{0}", text.Messages[0]);
+            result.Succeeded.Should().BeTrue();
+            result.Messages.Count.Should().Be(0);
         }
 
         [TestMethod]
-        public void Delete()
+        public void SaveMessageAsync()
         {
             // Arrange
             var webHostBuilder = CreateWebHostBuilder();
@@ -71,13 +68,8 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             using var server = new TestServer(webHostBuilder);
             using var client = server.CreateClient();
 
-            client.Post($"{BaseAddress}", RoleControllerValues.NewRoleRequest);
-
-            var blazorHeroContext = server.Services.GetRequiredService<BlazorHeroContext>();
-            var role = blazorHeroContext.Roles.SingleAsync(r => r.Name == RoleControllerValues.NewRoleRequest.Name).Result;
-            
             // Act
-            var result = client.DeleteAsync($"{BaseAddress}/{role.Id}").Result;
+            var result = client.Post($"{BaseAddress}", ChatsControllerValues.History);
 
             // Assert
             result.EnsureSuccessStatusCode();

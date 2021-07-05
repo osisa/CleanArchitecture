@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 
 using BlazorHero.CleanArchitecture.Shared.Wrapper;
 
-//using Microsoft.AspNetCore.Mvc.Formatters;
+using Newtonsoft.Json; //using Microsoft.AspNetCore.Mvc.Formatters;
 
-using Newtonsoft.Json;
-
-namespace BlazorHero.CleanArchitecture.TestInfrastructure
+namespace BlazorHero.CleanArchitecture.Infrastructure.Shared
 {
     public static class HttpClientExtensions
     {

@@ -47,6 +47,7 @@ namespace BlazorHero.CleanArchitecture.Client.Shared.Components
         protected abstract RenderFragment Inherited();
 
         private TEntityId EntityId => FromStringToEntityIdTypeConverter.Invoke(EntityIdString);
+
         private string CurrentUserId { get; set; }
         private List<GetAllExtendedAttributesByEntityIdResponse<TId, TEntityId>> _model;
         private Dictionary<string, List<GetAllExtendedAttributesByEntityIdResponse<TId, TEntityId>>> GroupedExtendedAttributes { get; } = new();

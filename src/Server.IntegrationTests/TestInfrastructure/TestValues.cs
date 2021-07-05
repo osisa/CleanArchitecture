@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 
 using BlazorHero.CleanArchitecture.Application.Enums;
+using BlazorHero.CleanArchitecture.Application.Interfaces.Chat;
+using BlazorHero.CleanArchitecture.Application.Models.Chat;
 using BlazorHero.CleanArchitecture.Application.Requests.Identity;
 using BlazorHero.CleanArchitecture.Application.Responses.Identity;
 using BlazorHero.CleanArchitecture.Shared.Constants.User;
@@ -202,12 +204,9 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
 
             #endregion
         }
-
-
+        
         public static class RoleClaimControllerValues
         {
-
-            //public const string RoleId = "55";
             public static RoleClaimRequest CreateRoleClaimRequest(string roleId) => new()
                                                                        {
                                                                            Description = nameof(RoleClaimRequest.Description),
@@ -231,9 +230,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
                                                                               Name = "TestRole"
                                                                           };
         }
-
-
-
+        
         public static class TokenControllerValues
         {
             public static readonly TokenRequest TokenRequest = new()
@@ -247,6 +244,15 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
                                                                                  Token = TestValues.Token,
                                                                                  RefreshToken = TestValues.Token
                                                                              };
+        }
+
+        public static class ChatsControllerValues
+        {
+            public const string ContactId = nameof(ContactId);
+
+
+            public static ChatHistory<IChatUser> History = new ();
+
         }
         private static class TestUserValues
 
