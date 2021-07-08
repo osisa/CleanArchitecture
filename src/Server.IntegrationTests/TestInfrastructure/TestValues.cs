@@ -223,12 +223,26 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
         public static class RoleControllerValues
         {
             //public const string RoleId = "2da7c8b9-8fa6-40eb-9fc9-ab9d64dc255c";
+            public const string RoleId = "582dd709-5612-4f8c-98b9-2a73e761abc3";
             public static readonly RoleRequest NewRoleRequest = new()
                                                                           {
                                                                               Description = nameof(NewRoleRequest),
                                                                               Id = null,
                                                                               Name = "TestRole"
                                                                           };
+
+            public static readonly PermissionRequest PermissionRequest = new PermissionRequest()
+                                                                         {
+                                                                             RoleClaims = new List<RoleClaimRequest> { new RoleClaimRequest() { RoleId = RoleId }, new RoleClaimRequest() },
+                                                                             RoleId = RoleId
+                                                                         };
+
+            public static readonly RoleClaimRequest RoleClaimRequest = new RoleClaimRequest()
+                                                                       {
+                                                                           RoleId = RoleId, Group = "TestGroup", Type = "TestType",Description = "TestDescription",Selected = false,Value = "TestValue"
+                                                                       };
+
+
         }
         
         public static class TokenControllerValues
@@ -249,11 +263,17 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
         public static class ChatsControllerValues
         {
             public const string ContactId = nameof(ContactId);
-
-
-            public static ChatHistory<IChatUser> History = new ();
-
+            
+            public static readonly ChatHistory<IChatUser> History = new ();
         }
+        
+        public static class ExtendedAttributeControllerValues
+        {
+            public const string EntityName = "Document";
+
+            public const int EntityId = 1;
+        }
+
         private static class TestUserValues
 
         {

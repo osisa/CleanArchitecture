@@ -185,7 +185,10 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
 
             // Assert
             result.Succeeded.Should().BeTrue();
-            result.Data.UserRoles.Should().BeEquivalentTo(TestValues.UserRolesResponse.UserRoles);
+            result.Data.UserRoles.Count.Should().Be(3);
+
+            result.Data.UserRoles[0].Should().BeEquivalentTo(TestValues.UserRolesResponse.UserRoles[0]);
+            result.Data.UserRoles[2].Should().BeEquivalentTo(TestValues.UserRolesResponse.UserRoles[1]);
         }
 
         [TestMethod]

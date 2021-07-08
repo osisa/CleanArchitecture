@@ -2,11 +2,10 @@
 
 using BlazorHero.CleanArchitecture.Application.Features.ExtendedAttributes.Queries.GetAll;
 using BlazorHero.CleanArchitecture.Application.Features.ExtendedAttributes.Queries.GetAllByEntityId;
-using BlazorHero.CleanArchitecture.Application.Responses.Identity;
+using BlazorHero.CleanArchitecture.Application.Features.ExtendedAttributes.Queries.GetById;
 using BlazorHero.CleanArchitecture.Client.Infrastructure.Routes;
 using BlazorHero.CleanArchitecture.Infrastructure.Shared;
 using BlazorHero.CleanArchitecture.Shared.Wrapper;
-using BlazorHero.CleanArchitecture.TestInfrastructure;
 using BlazorHero.CleanArchitecture.TestInfrastructure.TestSupport;
 
 using FluentAssertions;
@@ -22,9 +21,6 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Utili
     public class ExtendedAttributesControllerCallTests : TestBase
     {
         #region Public Methods and Operators
-
-        
-
 
         [TestMethod]
         public void Get()
@@ -44,9 +40,8 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Utili
             result.Succeeded.Should().BeTrue();
         }
 
-
         [TestMethod]
-        public void ByEntity()
+        public void GetAllByEntityId()
         {
             // Arrange
             var webHostBuilder = CreateWebHostBuilder();
@@ -54,12 +49,10 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Utili
             using var server = new TestServer(webHostBuilder);
             using var client = server.CreateClient();
 
-            //var baseAddress = "/" + ExtendedAttributesEndpoints.GetAll("Document") + "/by-entity/a";
-
-            var baseAddress = "/" + ExtendedAttributesEndpoints.GetAllByEntityId("Document","1") ;
+            var baseAddress = "/" + ExtendedAttributesEndpoints.GetAllByEntityId(ExtendedAttributeControllerValues.EntityName, ExtendedAttributeControllerValues.EntityId);
 
             // Act
-            var result = client.Get<Result<List<GetAllExtendedAttributesByEntityIdResponse<int,int>>>>(baseAddress);
+            var result = client.Get<Result<List<GetAllExtendedAttributesByEntityIdResponse<int, int>>>>(baseAddress);
 
             // Assert
             result.Succeeded.Should().BeTrue();
@@ -67,39 +60,44 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Utili
             result.Messages.Count.Should().Be(0);
         }
 
-        //[TestMethod]
-        //public void GetChatUsersAsync()
-        //{
-        //    // Arrange
-        //    var webHostBuilder = CreateWebHostBuilder();
+        [TestMethod]
+        public void GetById()
+        {
+            // Arrange
+            var webHostBuilder = CreateWebHostBuilder();
 
-        //    using var server = new TestServer(webHostBuilder);
-        //    using var client = server.CreateClient();
+            using var server = new TestServer(webHostBuilder);
+            using var client = server.CreateClient();
 
-        //    // Act
-        //    var result = client.Get<Result<List<ChatUserResponse>>>($"{BaseAddress}/users");
+            var baseAddress = "/" + ExtendedAttributesEndpoints.GetAll(ExtendedAttributeControllerValues.EntityName);
 
-        //    // Assert
-        //    result.Succeeded.Should().BeTrue();
-        //    result.Messages.Count.Should().Be(0);
-        //}
+            // Act
+            var result = client.Get<Result<GetExtendedAttributeByIdResponse<int, int>>>($"{baseAddress}/{ExtendedAttributeControllerValues.EntityId}");
 
-        //[TestMethod]
-        //public void SaveMessageAsync()
-        //{
-        //    // Arrange
-        //    var webHostBuilder = CreateWebHostBuilder();
+            // Assert
+            result.Succeeded.Should().BeTrue();
+            result.Data.Should().BeNull();
+            result.Messages.Count.Should().Be(0);
+        }
 
-        //    using var server = new TestServer(webHostBuilder);
-        //    using var client = server.CreateClient();
+        [TestMethod]
+        public void Post()
+        {
+            // Arrange
+            var webHostBuilder = CreateWebHostBuilder();
 
-        //    // Act
-        //    var result = client.Post($"{BaseAddress}", ChatsControllerValues.History);
+            using var server = new TestServer(webHostBuilder);
+            using var client = server.CreateClient();
 
-        //    // Assert
-        //    result.EnsureSuccessStatusCode();
-        //}
-        
+            var baseAddress = "/" + ExtendedAttributesEndpoints.GetAll(ExtendedAttributeControllerValues.EntityName);
+
+            // Act
+            var result = client.Post<Result<GetExtendedAttributeByIdResponse<int, int>>>($"{baseAddress}/{ExtendedAttributeControllerValues.EntityId}");
+
+            // Assert
+            result.Should().NotBeNull();
+        }
+
         #endregion
     }
 }
