@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -185,10 +186,12 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
 
             // Assert
             result.Succeeded.Should().BeTrue();
-            result.Data.UserRoles.Count.Should().Be(3);
+            result.Data.UserRoles.Count.Should().BeGreaterOrEqualTo(2);
 
-            result.Data.UserRoles[0].Should().BeEquivalentTo(TestValues.UserRolesResponse.UserRoles[0]);
-            result.Data.UserRoles[2].Should().BeEquivalentTo(TestValues.UserRolesResponse.UserRoles[1]);
+            var userRoles = result.Data.UserRoles.Where(r => r.RoleName != "TestRole").ToArray(); // ignoring this form other tests
+
+            userRoles[0].Should().BeEquivalentTo(TestValues.UserRolesResponse.UserRoles[0]);
+            userRoles[1].Should().BeEquivalentTo(TestValues.UserRolesResponse.UserRoles[1]);
         }
 
         [TestMethod]
