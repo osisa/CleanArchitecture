@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 
 using BlazorHero.CleanArchitecture.Application.Enums;
+using BlazorHero.CleanArchitecture.Application.Features.Brands.Commands.AddEdit;
+using BlazorHero.CleanArchitecture.Application.Features.Products.Commands.AddEdit;
 using BlazorHero.CleanArchitecture.Application.Interfaces.Chat;
 using BlazorHero.CleanArchitecture.Application.Models.Chat;
 using BlazorHero.CleanArchitecture.Application.Requests.Identity;
@@ -204,7 +206,41 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
 
             #endregion
         }
-        
+
+        public static class DashboardControllerValues
+        {
+            #region Static Fields
+
+           
+           
+
+            #endregion
+        }
+
+        public static class BrandControllerValues
+        {
+            public static AddEditBrandCommand CreateAddEditBrandCommand() => new()
+                                                                             {
+                                                                                 Description = nameof(AddEditBrandCommand.Description),
+                                                                                 Id = 0,
+                                                                                 Name = nameof(AddEditBrandCommand.Name),
+                                                                                 Tax = 1
+                                                                             };
+
+
+        }
+
+        public static class ProductControllerValues
+        {
+            public static AddEditProductCommand CreateRoleClaimRequest(string roleId) => new()
+                                                                                         {
+                                                                                             Description = $"Test{nameof(AddEditProductCommand.Description)}" 
+                                                                                              
+                                                                                            
+
+                                                                                         };
+        }
+
         public static class RoleClaimControllerValues
         {
             public static RoleClaimRequest CreateRoleClaimRequest(string roleId) => new()

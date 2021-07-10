@@ -107,6 +107,8 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
             claims.Add(new Claim("Permission", Permissions.RoleClaims.Create));
             claims.Add(new Claim("Permission", Permissions.RoleClaims.Delete));
             claims.Add(new Claim("Permission", Permissions.Roles.View));
+            claims.Add(new Claim("Permission", Permissions.RoleClaims.Edit));
+
             claims.Add(new Claim("Permission", Permissions.Roles.Create));
             claims.Add(new Claim("Permission", Permissions.Roles.Delete));
 
@@ -114,6 +116,16 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
 
             claims.Add(new Claim("Permission", Permissions.Documents.View));
             claims.Add(new Claim("Permission", Permissions.DocumentExtendedAttributes.View));
+
+            claims.Add( new Claim("Permission", Permissions.Dashboards.View));
+
+            claims.Add(new Claim("Permission", Permissions.Products.View));
+
+            claims.Add(new Claim("Permission", Permissions.Brands.View));
+            claims.Add(new Claim("Permission", Permissions.Brands.Create));
+            claims.Add(new Claim("Permission", Permissions.Brands.Delete));
+            claims.Add(new Claim("Permission", Permissions.Brands.Export));
+
 
             //claims.AddRange(_testUser.Permissions.Select(p => new Claim("Permission", p)));
 

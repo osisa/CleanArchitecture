@@ -41,16 +41,14 @@
 		<PrivateAssets>all</PrivateAssets>
 		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-		<!--<InternalsVisibleTo Include="CustomTest1" />  [assembly: InternalsVisibleTo("CustomTest1")] -->
-		<!--<InternalsVisibleTo Include="CustomTest2, PublicKey=abc" />  [assembly: InternalsVisibleTo("CustomTest2, PublicKey=abc")] -->
-		<!--<InternalsVisibleTo Include="$(AssemblyName).Custom" />  [assembly: InternalsVisibleTo("ClassLibrary1.Custom")]-->
-		<InternalsVisibleToSuffix Include=".Tests" />
-		<InternalsVisibleToSuffix Include=".IntegrationTests" />
-		<InternalsVisibleToSuffix Include="BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructure" />
-		<!--<InternalsVisibleToSuffix Include=".FunctionalTests" />  [assembly: InternalsVisibleTo("ClassLibrary1.FunctionalTests")]-->
+  
+	<!--<InternalsVisibleTo Include="CustomTest1" />  [assembly: InternalsVisibleTo("CustomTest1")] -->
+	<!--<InternalsVisibleTo Include="CustomTest2, PublicKey=abc" />  [assembly: InternalsVisibleTo("CustomTest2, PublicKey=abc")] -->
+	<!--<InternalsVisibleTo Include="$(AssemblyName).Custom" />  [assembly: InternalsVisibleTo("ClassLibrary1.Custom")]-->
+	<InternalsVisibleToSuffix Include=".Tests" />
+	<InternalsVisibleToSuffix Include=".IntegrationTests" />
+	<InternalsVisibleToSuffix Include="BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructure" />
+	<!--<InternalsVisibleToSuffix Include=".FunctionalTests" />  [assembly: InternalsVisibleTo("ClassLibrary1.FunctionalTests")]-->
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net472'">

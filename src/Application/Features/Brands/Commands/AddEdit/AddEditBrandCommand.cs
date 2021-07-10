@@ -1,32 +1,48 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using AutoMapper;
-using BlazorHero.CleanArchitecture.Application.Interfaces.Repositories;
-using BlazorHero.CleanArchitecture.Domain.Entities.Catalog;
-using BlazorHero.CleanArchitecture.Shared.Wrapper;
-using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Localization;
+
+using AutoMapper;
+
+using BlazorHero.CleanArchitecture.Application.Interfaces.Repositories;
+using BlazorHero.CleanArchitecture.Domain.Entities.Catalog;
 using BlazorHero.CleanArchitecture.Shared.Constants.Application;
+using BlazorHero.CleanArchitecture.Shared.Wrapper;
+
+using MediatR;
+
+using Microsoft.Extensions.Localization;
 
 namespace BlazorHero.CleanArchitecture.Application.Features.Brands.Commands.AddEdit
 {
     public partial class AddEditBrandCommand : IRequest<Result<int>>
     {
+        #region Public Properties
+
+        [Required] public string Description { get; set; }
+
         public int Id { get; set; }
-        [Required]
-        public string Name { get; set; }
-        [Required]
-        public string Description { get; set; }
-        [Required]
-        public decimal Tax { get; set; }
+
+        [Required] public string Name { get; set; }
+
+        [Required] public decimal Tax { get; set; }
+
+        #endregion
     }
 
     internal class AddEditBrandCommandHandler : IRequestHandler<AddEditBrandCommand, Result<int>>
     {
-        private readonly IMapper _mapper;
+        #region Fields
+
         private readonly IStringLocalizer<AddEditBrandCommandHandler> _localizer;
+
+        private readonly IMapper _mapper;
+
         private readonly IUnitOfWork<int> _unitOfWork;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         public AddEditBrandCommandHandler(IUnitOfWork<int> unitOfWork, IMapper mapper, IStringLocalizer<AddEditBrandCommandHandler> localizer)
         {
@@ -34,6 +50,10 @@ namespace BlazorHero.CleanArchitecture.Application.Features.Brands.Commands.AddE
             _mapper = mapper;
             _localizer = localizer;
         }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         public async Task<Result<int>> Handle(AddEditBrandCommand command, CancellationToken cancellationToken)
         {
@@ -62,5 +82,7 @@ namespace BlazorHero.CleanArchitecture.Application.Features.Brands.Commands.AddE
                 }
             }
         }
+
+        #endregion
     }
 }

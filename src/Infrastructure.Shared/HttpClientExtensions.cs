@@ -74,7 +74,10 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Shared
         
         private static StringContent CreateStringContent<T>(T value) => new(SerializeObject(value),Encoding, ApplicationJson);
 
-        
+
+        public static HttpResponseMessage Delete(this HttpClient @this, Uri uri)
+            => @this.DeleteAsync(uri).Result;
+
         #endregion
     }
 }

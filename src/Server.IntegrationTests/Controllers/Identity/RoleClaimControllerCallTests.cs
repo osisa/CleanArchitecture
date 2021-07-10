@@ -3,10 +3,7 @@
 using BlazorHero.CleanArchitecture.Application.Responses.Identity;
 using BlazorHero.CleanArchitecture.Infrastructure.Contexts;
 using BlazorHero.CleanArchitecture.Infrastructure.Shared;
-using BlazorHero.CleanArchitecture.Server.Controllers.Identity;
-using BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructure;
 using BlazorHero.CleanArchitecture.Shared.Wrapper;
-using BlazorHero.CleanArchitecture.TestInfrastructure;
 using BlazorHero.CleanArchitecture.TestInfrastructure.TestSupport;
 
 using FluentAssertions;
@@ -23,9 +20,45 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
     [TestClass]
     public class RoleClaimControllerCallTests : TestBase
     {
+        #region Constants
+
         private const string BaseAddress = "api/identity/roleClaim";
 
+        #endregion
+
         #region Public Methods and Operators
+
+        [TestMethod]
+        public void Delete()
+        {
+            // Arrange
+            var webHostBuilder = CreateWebHostBuilder();
+
+            using var server = new TestServer(webHostBuilder);
+            using var client = server.CreateClient();
+
+            var blazorHeroContext = server.Services.GetRequiredService<BlazorHeroContext>();
+
+            // ensure role
+            client.Post(RoleControllerCallTests.BaseAddress, RoleControllerValues.NewRoleRequest);
+            var role = blazorHeroContext.Roles.SingleAsync(r => r.NormalizedName == RoleControllerValues.NewRoleRequest.Name.ToUpperInvariant()).Result;
+            
+            // ensure roleClaim
+            client.Post($"{BaseAddress}", RoleClaimControllerValues.CreateRoleClaimRequest(role.Id));
+            var roleClaim = blazorHeroContext.RoleClaims.SingleAsync(r => r.ClaimValue == "TestClaimValue").Result;
+
+            //client.Post($"{BaseAddress}", RoleClaimControllerValues.NewRoleClaimRequest).EnsureSuccessStatusCode();
+            //client.Post($"{RoleControllerCallTests.BaseAddress}", RoleControllerValues.NewRoleRequest).EnsureSuccessStatusCode();
+
+            //var blazorHeroContext = server.Services.GetRequiredService<BlazorHeroContext>();
+            //var roleId = blazorHeroContext.Roles.SingleAsync(r => r.NormalizedName == RoleControllerValues.NewRoleRequest.Name.ToUpperInvariant()).Result.Id;
+
+            // Act
+            var result = client.Delete($"{BaseAddress}/{roleClaim.Id}");
+
+            // Assert
+            result.EnsureSuccessStatusCode();
+        }
 
         [TestMethod]
         public void GetAll()
@@ -44,7 +77,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             result.Data.Count.Should().BeGreaterThan(10);
             TestContext.WriteLine("");
         }
-        
+
         [TestMethod]
         public void GetAllByRoleId()
         {
@@ -61,7 +94,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
             result.Succeeded.Should().BeTrue();
             result.Data.Count.Should().Be(0);
         }
-        
+
         [TestMethod]
         public void Post()
         {
@@ -75,36 +108,9 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.Ident
 
             var blazorHeroContext = server.Services.GetRequiredService<BlazorHeroContext>();
             var role = blazorHeroContext.Roles.SingleAsync(r => r.NormalizedName == RoleControllerValues.NewRoleRequest.Name.ToUpperInvariant()).Result;
-            
+
             // Act
             var result = client.Post($"{BaseAddress}", RoleClaimControllerValues.CreateRoleClaimRequest(role.Id));
-
-            // Assert
-            result.EnsureSuccessStatusCode();
-        }
-
-        [TestMethod]
-        public void Delete()
-        {
-            // Arrange
-            var webHostBuilder = CreateWebHostBuilder();
-
-            using var server = new TestServer(webHostBuilder);
-            using var client = server.CreateClient();
-
-
-            var blazorHeroContext = server.Services.GetRequiredService<BlazorHeroContext>();
-            var roleClaim = blazorHeroContext.RoleClaims.SingleAsync(r => r.ClaimValue == "TestClaimValue").Result;
-
-            //client.Post($"{BaseAddress}", RoleClaimControllerValues.NewRoleClaimRequest).EnsureSuccessStatusCode();
-
-            //client.Post($"{RoleControllerCallTests.BaseAddress}", RoleControllerValues.NewRoleRequest).EnsureSuccessStatusCode();
-
-            //var blazorHeroContext = server.Services.GetRequiredService<BlazorHeroContext>();
-            //var roleId = blazorHeroContext.Roles.SingleAsync(r => r.NormalizedName == RoleControllerValues.NewRoleRequest.Name.ToUpperInvariant()).Result.Id;
-
-            // Act
-            var result = client.Delete($"{BaseAddress}/{roleClaim.Id}");
 
             // Assert
             result.EnsureSuccessStatusCode();
