@@ -120,6 +120,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
             claims.Add( new Claim("Permission", Permissions.Dashboards.View));
 
             claims.Add(new Claim("Permission", Permissions.Products.View));
+            claims.Add(new Claim("Permission", Permissions.Products.Create));
 
             claims.Add(new Claim("Permission", Permissions.Brands.View));
             claims.Add(new Claim("Permission", Permissions.Brands.Create));

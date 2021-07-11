@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using BlazorHero.CleanArchitecture.Application.Enums;
 using BlazorHero.CleanArchitecture.Application.Features.Brands.Commands.AddEdit;
@@ -232,13 +233,29 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.TestInfrastructur
 
         public static class ProductControllerValues
         {
-            public static AddEditProductCommand CreateRoleClaimRequest(string roleId) => new()
-                                                                                         {
-                                                                                             Description = $"Test{nameof(AddEditProductCommand.Description)}" 
-                                                                                              
-                                                                                            
+            public static AddEditProductCommand CreateAddEditProductCommand(int brandId) => new()
+                                                                                              {
+                                                                                                  Name= $"Test{nameof(AddEditProductCommand.Name)}",
+                                                                                                  Description = $"Test{nameof(AddEditProductCommand.Description)}",
+                                                                                                  BrandId = brandId,
+                                                                                                  Barcode = "TestBarCode",
+                                                                                                  Rate = decimal.Parse("1.0")
+                                                                                              };
 
-                                                                                         };
+
+            //public int Id { get; set; }
+            //[Required]
+            //public string Name { get; set; }
+            //[Required]
+            //public string Barcode { get; set; }
+            //[Required]
+            //public string Description { get; set; }
+            //public string ImageDataURL { get; set; }
+            //[Required]
+            //public decimal Rate { get; set; }
+            //[Required]
+            //public int BrandId { get; set; }
+            //public UploadRequest UploadRequest { get; set; }
         }
 
         public static class RoleClaimControllerValues

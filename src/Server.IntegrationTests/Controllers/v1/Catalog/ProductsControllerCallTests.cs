@@ -1,4 +1,7 @@
-﻿using BlazorHero.CleanArchitecture.Application.Features.Products.Queries.GetAllPaged;
+﻿using System.Collections.Generic;
+
+using BlazorHero.CleanArchitecture.Application.Features.Brands.Queries.GetAll;
+using BlazorHero.CleanArchitecture.Application.Features.Products.Queries.GetAllPaged;
 using BlazorHero.CleanArchitecture.Infrastructure.Shared;
 using BlazorHero.CleanArchitecture.Shared.Wrapper;
 using BlazorHero.CleanArchitecture.TestInfrastructure.TestSupport;
@@ -40,29 +43,33 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.v1.Ca
 
                 // Assert
                 result.Succeeded.Should().BeTrue();
-                result.TotalCount.Should().Be(0);
-                //result.Data.UserCount.Should().BeGreaterOrEqualTo(2);
-                //result.EnsureSuccessStatusCode();
             }
-
+         
 
             [TestMethod]
             public void Post()
             {
-                // Arrange  
+                // Arrange
                 var webHostBuilder = CreateWebHostBuilder();
 
                 using var server = new TestServer(webHostBuilder);
                 using var client = server.CreateClient();
 
-                // Act
-                //var result = client.Post($"{BaseAddress}", );
+                //ensure Brand
+                var resultEnsure = client.Post($"{BrandsControllerCallTests.BaseAddress}", BrandControllerValues.CreateAddEditBrandCommand());
+                resultEnsure.EnsureSuccessStatusCode();
 
+                var getAllBrands = client.Get<Result<List<GetAllBrandsResponse>>>($"{BrandsControllerCallTests.BaseAddress}");
+                getAllBrands.Data.Count.Should().BeGreaterOrEqualTo(1);
+                var brand0 = getAllBrands.Data.ToArray()[0];
+
+                var request = ProductControllerValues.CreateAddEditProductCommand(brand0.Id);
+
+                // Act
+                var result = client.Post($"{BaseAddress}", request);
+                
                 // Assert
-                //result.Succeeded.Should().BeTrue();
-                //result.TotalCount.Should().Be(0);
-                //result.Data.UserCount.Should().BeGreaterOrEqualTo(2);
-                //result.EnsureSuccessStatusCode();
+                result.EnsureSuccessStatusCode();
             }
 
             #endregion

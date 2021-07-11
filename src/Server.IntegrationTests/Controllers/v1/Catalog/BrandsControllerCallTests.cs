@@ -18,7 +18,7 @@ namespace BlazorHero.CleanArchitecture.Server.IntegrationTests.Controllers.v1.Ca
     {
         #region Constants
 
-        private const string BaseAddress = "api/v1/brands";
+        internal const string BaseAddress = "api/v1/brands";
 
         #endregion
 
